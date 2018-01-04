@@ -15,4 +15,8 @@ public interface Server {
      * 关闭服务器
      */
     void stop();
+
+    ServerStatus getStatus();
+
+    int getPort();
 }
