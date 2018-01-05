@@ -5,5 +5,5 @@ package com.ljm.server;
  * @date 2018-01-2018/1/5
  */
 public enum ServerStatus {
-    STARTED,STOPED
+    STARTED, STOPED
 }

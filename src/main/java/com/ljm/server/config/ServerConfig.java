@@ -6,18 +6,18 @@ package com.ljm.server.config;
  */
 public class ServerConfig {
 
-	public static final int DEFAULT_PORT = 18080;
-	private final int port;
+    public static final int DEFAULT_PORT = 18080;
+    private final int port;
 
-	public ServerConfig(int PORT) {
-		this.port = PORT;
-	}
+    public ServerConfig(int PORT) {
+        this.port = PORT;
+    }
 
-	public ServerConfig() {
-		this.port = DEFAULT_PORT;
-	}
+    public ServerConfig() {
+        this.port = DEFAULT_PORT;
+    }
 
-	public int getPort() {
-		return port;
-	}
+    public int getPort() {
+        return port;
+    }
 }

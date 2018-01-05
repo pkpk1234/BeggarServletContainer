@@ -8,11 +8,12 @@ import com.ljm.server.impl.SimpleServer;
  * @date 2018-01-2018/1/5
  */
 public class ServerFactory {
-	/**
-	 * 返回Server实例
-	 * @return
-	 */
-	public static Server getServer(ServerConfig serverConfig) {
-		return new SimpleServer(serverConfig);
-	}
+    /**
+     * 返回Server实例
+     *
+     * @return
+     */
+    public static Server getServer(ServerConfig serverConfig) {
+        return new SimpleServer(serverConfig);
+    }
 }
