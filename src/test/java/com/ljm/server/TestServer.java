@@ -1,9 +1,16 @@
 package com.ljm.server;
 
-import com.ljm.server.config.ServerConfig;
+import static org.junit.Assert.assertTrue;
+
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.net.SocketAddress;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import com.ljm.server.config.ServerConfig;
 
 /**
  * @author 李佳明 https://github.com/pkpk1234
@@ -35,4 +42,5 @@ public class TestServer {
 		int port = server.getPort();
 		assertTrue("默认端口号", ServerConfig.DEFAULT_PORT == port);
 	}
+
 }
