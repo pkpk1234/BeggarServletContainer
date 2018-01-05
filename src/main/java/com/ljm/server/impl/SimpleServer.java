@@ -14,7 +14,7 @@ import java.net.Socket;
  */
 public class SimpleServer implements Server {
 
-	private ServerStatus serverStatus = ServerStatus.STOPED;
+	private volatile ServerStatus serverStatus = ServerStatus.STOPED;
 	private final int port;
 	private ServerSocket serverSocket;
 
