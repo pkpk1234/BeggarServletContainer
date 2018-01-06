@@ -19,7 +19,7 @@ import static org.junit.Assert.assertTrue;
  * @author 李佳明 https://github.com/pkpk1234
  * @date 2018-01-2018/1/5
  */
-public class TestServerAcceptRequest {
+public class TestServerAcceptRequest extends TestServerBase {
     private static Logger logger = LoggerFactory.getLogger(TestServerAcceptRequest.class);
     private static Server server;
     // 设置超时时间为500毫秒
@@ -43,16 +43,8 @@ public class TestServerAcceptRequest {
                     logger.error(e.getMessage(), e);
                 }
             }).start();
+            waitServerStart(server);
 
-            //如果server未启动，就sleep一下
-            while (server.getStatus().equals(ServerStatus.STOPED)) {
-                logger.info("等待server启动");
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    logger.error(e.getMessage(), e);
-                }
-            }
             Socket socket = new Socket();
             SocketAddress endpoint = new InetSocketAddress("localhost",
                     ServerConfig.DEFAULT_PORT);

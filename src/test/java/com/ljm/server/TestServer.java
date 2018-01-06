@@ -6,6 +6,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.ljm.server.config.ServerConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
@@ -13,7 +15,7 @@ import java.io.IOException;
  * @author 李佳明 https://github.com/pkpk1234
  * @date 2018-01-2018/1/4
  */
-public class TestServer {
+public class TestServer extends TestServerBase {
     private static Server server;
 
     @BeforeClass
@@ -23,8 +25,15 @@ public class TestServer {
     }
 
     @Test
-    public void testServerStart() throws IOException {
-        server.start();
+    public void testServerStart() {
+        new Thread(() -> {
+            try {
+                server.start();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
+        waitServerStart(server);
         assertTrue("服务器启动后，状态是STARTED", server.getStatus().equals(ServerStatus.STARTED));
     }
 
