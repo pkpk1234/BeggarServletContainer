@@ -1,4 +1,4 @@
-package com.ljm.server.io.impl;
+package com.ljm.server.io.impl.socket;
 
 import com.ljm.server.io.Connector;
 import com.ljm.server.io.ConnectorException;

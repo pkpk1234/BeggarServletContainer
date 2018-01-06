@@ -3,14 +3,11 @@ package com.ljm.server.impl;
 import com.ljm.server.Server;
 import com.ljm.server.ServerStatus;
 import com.ljm.server.config.ServerConfig;
-import com.ljm.server.io.IoUtils;
-import com.ljm.server.io.impl.SocketConnector;
+import com.ljm.server.io.Connector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.util.List;
 
 /**
  * @author 李佳明 https://github.com/pkpk1234
@@ -20,22 +17,22 @@ public class SimpleServer implements Server {
     private static Logger logger = LoggerFactory.getLogger(SimpleServer.class);
     private volatile ServerStatus serverStatus = ServerStatus.STOPED;
     private final int port;
-    private SocketConnector socketConnector;
+    private final List<Connector> connectorList;
 
-    public SimpleServer(ServerConfig serverConfig) {
+    public SimpleServer(ServerConfig serverConfig, List<Connector> connectorList) {
         this.port = serverConfig.getPort();
-        socketConnector = new SocketConnector(this.port);
+        this.connectorList = connectorList;
     }
 
     @Override
-    public void start() throws IOException {
-        socketConnector.start();
+    public void start() {
+        connectorList.stream().forEach(connector -> connector.start());
         this.serverStatus = ServerStatus.STARTED;
     }
 
     @Override
     public void stop() {
-        socketConnector.stop();
+        connectorList.stream().forEach(connector -> connector.stop());
         this.serverStatus = ServerStatus.STOPED;
         logger.info("Server stop");
     }

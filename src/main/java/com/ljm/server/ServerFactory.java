@@ -2,6 +2,13 @@ package com.ljm.server;
 
 import com.ljm.server.config.ServerConfig;
 import com.ljm.server.impl.SimpleServer;
+import com.ljm.server.io.Connector;
+import com.ljm.server.io.ConnectorFactory;
+import com.ljm.server.io.impl.socket.SocketConnectorConfig;
+import com.ljm.server.io.impl.socket.SocketConnectorFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author 李佳明 https://github.com/pkpk1234
@@ -14,6 +21,10 @@ public class ServerFactory {
      * @return
      */
     public static Server getServer(ServerConfig serverConfig) {
-        return new SimpleServer(serverConfig);
+        List<Connector> connectorList = new ArrayList<>();
+        ConnectorFactory connectorFactory =
+                new SocketConnectorFactory(new SocketConnectorConfig(serverConfig.getPort()));
+        connectorList.add(connectorFactory.getConnector());
+        return new SimpleServer(serverConfig,connectorList);
     }
 }
