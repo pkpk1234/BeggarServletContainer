@@ -35,16 +35,8 @@ public class TestServerAcceptRequest extends TestServerBase {
     public void testServerAcceptRequest() {
         // 如果server没有启动，首先启动server
         if (server.getStatus().equals(ServerStatus.STOPED)) {
-            //在另外一个线程中启动server
-            new Thread(() -> {
-                try {
-                    server.start();
-                } catch (IOException e) {
-                    logger.error(e.getMessage(), e);
-                }
-            }).start();
+            startServer(server);
             waitServerStart(server);
-
             Socket socket = new Socket();
             SocketAddress endpoint = new InetSocketAddress("localhost",
                     ServerConfig.DEFAULT_PORT);

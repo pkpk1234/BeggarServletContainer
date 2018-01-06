@@ -26,13 +26,7 @@ public class TestServer extends TestServerBase {
 
     @Test
     public void testServerStart() {
-        new Thread(() -> {
-            try {
-                server.start();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }).start();
+        startServer(server);
         waitServerStart(server);
         assertTrue("服务器启动后，状态是STARTED", server.getStatus().equals(ServerStatus.STARTED));
     }
