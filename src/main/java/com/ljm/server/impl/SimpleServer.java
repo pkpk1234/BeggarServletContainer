@@ -4,6 +4,7 @@ import com.ljm.server.Server;
 import com.ljm.server.ServerStatus;
 import com.ljm.server.config.ServerConfig;
 import com.ljm.server.io.IoUtils;
+import com.ljm.server.io.impl.SocketConnector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,34 +20,22 @@ public class SimpleServer implements Server {
     private static Logger logger = LoggerFactory.getLogger(SimpleServer.class);
     private volatile ServerStatus serverStatus = ServerStatus.STOPED;
     private final int port;
-    private ServerSocket serverSocket;
+    private SocketConnector socketConnector;
 
     public SimpleServer(ServerConfig serverConfig) {
         this.port = serverConfig.getPort();
+        socketConnector = new SocketConnector(this.port);
     }
 
     @Override
     public void start() throws IOException {
-        //监听本地端口，如果监听不成功，抛出异常
-        this.serverSocket = new ServerSocket(this.port);
+        socketConnector.start();
         this.serverStatus = ServerStatus.STARTED;
-        while (true) {
-            Socket socket = null;
-            try {
-                socket = serverSocket.accept();
-                logger.info("新增连接：" + socket.getInetAddress() + ":" + socket.getPort());
-            } catch (IOException e) {
-                logger.error(e.getMessage(), e);
-            } finally {
-                IoUtils.closeQuietly(socket);
-            }
-        }
-
     }
 
     @Override
     public void stop() {
-        IoUtils.closeQuietly(this.serverSocket);
+        socketConnector.stop();
         this.serverStatus = ServerStatus.STOPED;
         logger.info("Server stop");
     }
