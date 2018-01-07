@@ -6,7 +6,7 @@ import com.ljm.server.LifeCycle;
  * @author 李佳明 https://github.com/pkpk1234
  * @date 2018-01-2018/1/6
  */
-public abstract class Connector implements LifeCycle {
+public abstract class Connector<T> implements LifeCycle {
     @Override
     public void start() {
         init();
@@ -16,4 +16,6 @@ public abstract class Connector implements LifeCycle {
     protected abstract void init() throws ConnectorException;
 
     protected abstract void acceptConnect() throws ConnectorException;
+
+    protected abstract void whenAccept(T connect) throws ConnectorException;
 }
