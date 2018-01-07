@@ -6,8 +6,9 @@ package com.ljm.server.event;
  */
 public interface EventListener<T> {
     /**
-     * 事件发生时回调
+     * 事件发生时的回调方法
      * @param event 事件对象
+     * @throws EventException 处理事件时异常都转换为该异常抛出
      */
-    void onEvent(T event);
+    void onEvent(T event) throws EventException;
 }

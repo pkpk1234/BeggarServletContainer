@@ -47,7 +47,7 @@ public class SocketConnector extends Connector<Socket> {
                 try {
                     socket = serverSocket.accept();
                     whenAccept(socket);
-                } catch (IOException e) {
+                } catch (Exception e) {
                     //单个Socket异常，不要影响整个Connector
                     LOGGER.error(e.getMessage(), e);
                 } finally {
