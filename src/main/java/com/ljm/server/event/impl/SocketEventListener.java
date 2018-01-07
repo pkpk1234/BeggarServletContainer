@@ -2,6 +2,7 @@ package com.ljm.server.event.impl;
 
 import com.ljm.server.event.EventException;
 import com.ljm.server.event.EventListener;
+import com.ljm.server.io.IoUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,23 +31,30 @@ public class SocketEventListener implements EventListener<Socket> {
     }
 
     private void echo(Socket socket) throws IOException {
-        InputStream inputstream = socket.getInputStream();
-        OutputStream outputStream = socket.getOutputStream();
-        Scanner scanner = new Scanner(inputstream);
-        PrintWriter printWriter = new PrintWriter(outputStream);
-        printWriter.append("Server connected.Welcome to echo.\n");
-        printWriter.flush();
-        while (scanner.hasNextLine()) {
-            String line = scanner.nextLine();
-            if (line.equals("stop")) {
-                printWriter.append("bye bye.\n");
-                printWriter.flush();
-                break;
-            } else {
-                printWriter.append(line);
-                printWriter.append("\n");
-                printWriter.flush();
+        InputStream inputstream = null;
+        OutputStream outputStream = null;
+        try {
+            inputstream = socket.getInputStream();
+            outputStream = socket.getOutputStream();
+            Scanner scanner = new Scanner(inputstream);
+            PrintWriter printWriter = new PrintWriter(outputStream);
+            printWriter.append("Server connected.Welcome to echo.\n");
+            printWriter.flush();
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                if (line.equals("stop")) {
+                    printWriter.append("bye bye.\n");
+                    printWriter.flush();
+                    break;
+                } else {
+                    printWriter.append(line);
+                    printWriter.append("\n");
+                    printWriter.flush();
+                }
             }
+        } finally {
+            IoUtils.closeQuietly(inputstream);
+            IoUtils.closeQuietly(outputStream);
         }
     }
 }
