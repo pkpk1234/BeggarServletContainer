@@ -21,5 +21,4 @@ public class SocketEventListener extends AbstractEventListener<Socket> {
     protected EventHandler<Socket> getEventHandler(Socket event) {
         return eventHandler;
     }
-
 }
