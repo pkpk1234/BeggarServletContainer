@@ -31,6 +31,11 @@ public class FileEventHandler extends AbstractEventHandler<Socket> {
         getFile(socket);
     }
 
+    /**
+     * 返回文件
+     *
+     * @param socket
+     */
     private void getFile(Socket socket) {
         InputStream inputstream = null;
         OutputStream outputStream = null;
@@ -49,13 +54,21 @@ public class FileEventHandler extends AbstractEventHandler<Socket> {
                     break;
                 } else {
                     Path filePath = Paths.get(this.docBase, line);
+                    //如果是目录，就打印文件列表
                     if (Files.isDirectory(filePath)) {
-                        Files.list(filePath).forEach(fileName->{
+                        printWriter.append("目录 ").append(filePath.toString())
+                                .append(" 下有文件：").append("\n");
+                        Files.list(filePath).forEach(fileName -> {
                             printWriter.append(fileName.getFileName().toString())
                                     .append("\n").flush();
                         });
+                        //如果文件可读，就打印文件内容
                     } else if (Files.isReadable(filePath)) {
+                        printWriter.append("File ").append(filePath.toString())
+                                .append(" 的内容是：").append("\n").flush();
                         Files.copy(filePath, outputStream);
+                        printWriter.append("\n");
+                        //其他情况返回文件找不到
                     } else {
                         printWriter.append("File ").append(filePath.toString())
                                 .append(" is not found.").append("\n").flush();
