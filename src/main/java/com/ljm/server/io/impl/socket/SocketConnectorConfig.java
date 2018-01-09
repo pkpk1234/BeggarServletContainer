@@ -6,12 +6,22 @@ package com.ljm.server.io.impl.socket;
  */
 public class SocketConnectorConfig {
     private final int port;
+    private final String host;
+
+    public SocketConnectorConfig(int port, String host) {
+        this.port = port;
+        this.host = host;
+    }
 
     public SocketConnectorConfig(int port) {
-        this.port = port;
+        this(port, null);
     }
 
     public int getPort() {
         return port;
+    }
+
+    public String getHost() {
+        return host;
     }
 }

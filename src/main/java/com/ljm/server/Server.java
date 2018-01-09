@@ -1,6 +1,6 @@
 package com.ljm.server;
 
-import com.ljm.server.io.AbstractConnector;
+import com.ljm.server.io.Connector;
 
 import java.io.IOException;
 import java.util.List;
@@ -21,7 +21,15 @@ public interface Server {
      */
     void stop();
 
+    /**
+     * 获取服务器启停状态
+     * @return
+     */
     ServerStatus getStatus();
 
-    List<AbstractConnector> getConnectorList();
+    /**
+     * 获取服务器管理的Connector列表
+     * @return
+     */
+    List<Connector> getConnectorList();
 }
