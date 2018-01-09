@@ -1,7 +1,7 @@
 package com.ljm.server.io.impl.socket;
 
 import com.ljm.server.event.impl.SocketEventListener;
-import com.ljm.server.io.Connector;
+import com.ljm.server.io.AbstractConnector;
 import com.ljm.server.io.ConnectorFactory;
 
 /**
@@ -18,7 +18,7 @@ public class SocketConnectorFactory implements ConnectorFactory {
     }
 
     @Override
-    public Connector getConnector() {
+    public AbstractConnector getConnector() {
         return new SocketConnector(this.socketConnectorConfig.getPort(), socketEventListener);
     }
 }

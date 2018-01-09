@@ -3,7 +3,7 @@ package com.ljm.server;
 import com.ljm.server.config.ServerConfig;
 import com.ljm.server.handler.impl.FileEventHandler;
 import com.ljm.server.impl.SimpleServer;
-import com.ljm.server.io.Connector;
+import com.ljm.server.io.AbstractConnector;
 import com.ljm.server.io.ConnectorFactory;
 import com.ljm.server.io.impl.socket.SocketConnectorConfig;
 import com.ljm.server.io.impl.socket.SocketConnectorFactory;
@@ -23,12 +23,12 @@ public class ServerFactory {
      * @return
      */
     public static Server getServer(ServerConfig serverConfig) {
-        List<Connector> connectorList = new ArrayList<>();
+        List<AbstractConnector> connectorList = new ArrayList<>();
         SocketEventListener socketEventListener =
                 new SocketEventListener(new FileEventHandler(System.getProperty("user.dir")));
         ConnectorFactory connectorFactory =
                 new SocketConnectorFactory(new SocketConnectorConfig(serverConfig.getPort()), socketEventListener);
         connectorList.add(connectorFactory.getConnector());
-        return new SimpleServer(serverConfig, connectorList);
+        return new SimpleServer(connectorList);
     }
 }

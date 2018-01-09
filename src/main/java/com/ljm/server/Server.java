@@ -1,6 +1,9 @@
 package com.ljm.server;
 
+import com.ljm.server.io.AbstractConnector;
+
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @author 李佳明 https://github.com/pkpk1234
@@ -20,5 +23,5 @@ public interface Server {
 
     ServerStatus getStatus();
 
-    int getPort();
+    List<AbstractConnector> getConnectorList();
 }

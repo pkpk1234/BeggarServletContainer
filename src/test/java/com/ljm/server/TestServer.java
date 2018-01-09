@@ -37,10 +37,4 @@ public class TestServer extends TestServerBase {
         assertTrue("服务器关闭后，状态是STOPED", server.getStatus().equals(ServerStatus.STOPED));
     }
 
-    @Test
-    public void testServerPort() {
-        int port = server.getPort();
-        assertTrue("默认端口号", ServerConfig.DEFAULT_PORT == port);
-    }
-
 }

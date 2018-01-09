@@ -1,21 +1,19 @@
 package com.ljm.server.io;
 
-import com.ljm.server.LifeCycle;
-
 /**
  * @author 李佳明 https://github.com/pkpk1234
- * @date 2018-01-2018/1/6
+ * @date 2018-01-2018/1/9
  */
-public abstract class Connector<T> implements LifeCycle {
-    @Override
-    public void start() {
-        init();
-        acceptConnect();
-    }
+public interface Connector {
+    /**
+     * 获取监听的端口
+     * @return
+     */
+    int getPort();
 
-    protected abstract void init() throws ConnectorException;
-
-    protected abstract void acceptConnect() throws ConnectorException;
-
-    protected abstract void whenAccept(T connect) throws ConnectorException;
+    /**
+     * 获取监听的IP、主机名
+     * @return
+     */
+    String getHost();
 }

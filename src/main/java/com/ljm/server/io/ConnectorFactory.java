@@ -5,5 +5,5 @@ package com.ljm.server.io;
  * @date 2018-01-2018/1/7
  */
 public interface ConnectorFactory {
-    Connector getConnector();
+    AbstractConnector getConnector();
 }

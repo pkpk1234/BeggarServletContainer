@@ -2,8 +2,7 @@ package com.ljm.server.impl;
 
 import com.ljm.server.Server;
 import com.ljm.server.ServerStatus;
-import com.ljm.server.config.ServerConfig;
-import com.ljm.server.io.Connector;
+import com.ljm.server.io.AbstractConnector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,11 +15,9 @@ import java.util.List;
 public class SimpleServer implements Server {
     private static Logger logger = LoggerFactory.getLogger(SimpleServer.class);
     private volatile ServerStatus serverStatus = ServerStatus.STOPED;
-    private final int port;
-    private final List<Connector> connectorList;
+    private final List<AbstractConnector> connectorList;
 
-    public SimpleServer(ServerConfig serverConfig, List<Connector> connectorList) {
-        this.port = serverConfig.getPort();
+    public SimpleServer(List<AbstractConnector> connectorList) {
         this.connectorList = connectorList;
     }
 
@@ -43,7 +40,7 @@ public class SimpleServer implements Server {
     }
 
     @Override
-    public int getPort() {
-        return port;
+    public List<AbstractConnector> getConnectorList() {
+        return connectorList;
     }
 }
