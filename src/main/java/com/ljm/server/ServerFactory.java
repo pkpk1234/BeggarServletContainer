@@ -1,7 +1,6 @@
 package com.ljm.server;
 
 import com.ljm.server.config.ServerConfig;
-import com.ljm.server.handler.impl.EchoEventHandler;
 import com.ljm.server.handler.impl.FileEventHandler;
 import com.ljm.server.impl.SimpleServer;
 import com.ljm.server.io.Connector;
