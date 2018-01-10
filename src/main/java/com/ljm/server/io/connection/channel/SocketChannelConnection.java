@@ -1,9 +1,9 @@
 package com.ljm.server.io.connection.channel;
 
 import com.ljm.server.io.connection.Connection;
-import com.ljm.server.io.connection.ConnectionReader;
-import com.ljm.server.io.connection.ConnectionWriter;
 
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.channels.SocketChannel;
 
 /**
@@ -39,12 +39,13 @@ public class SocketChannelConnection implements Connection {
     }
 
     @Override
-    public ConnectionReader getConnectionRead() {
+    public InputStream getInputStream() {
         return null;
     }
 
     @Override
-    public ConnectionWriter getConnectionWriter() {
+    public OutputStream getOutputStream() {
         return null;
     }
+
 }

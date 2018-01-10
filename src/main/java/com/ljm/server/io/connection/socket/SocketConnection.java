@@ -1,9 +1,11 @@
 package com.ljm.server.io.connection.socket;
 
 import com.ljm.server.io.connection.Connection;
-import com.ljm.server.io.connection.ConnectionReader;
-import com.ljm.server.io.connection.ConnectionWriter;
+import com.ljm.server.io.connector.ConnectorException;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.Socket;
 
 /**
@@ -38,12 +40,21 @@ public class SocketConnection implements Connection {
     }
 
     @Override
-    public ConnectionReader getConnectionRead() {
-        return new SocketConnectionReader(socket);
+    public InputStream getInputStream() {
+        try {
+            return socket.getInputStream();
+        } catch (IOException e) {
+            throw new ConnectorException(e);
+        }
     }
 
     @Override
-    public ConnectionWriter getConnectionWriter() {
-        return new SocketConnectionWriter(socket);
+    public OutputStream getOutputStream() {
+        try {
+            return socket.getOutputStream();
+        } catch (IOException e) {
+            throw new ConnectorException(e);
+        }
     }
+
 }

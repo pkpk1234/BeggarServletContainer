@@ -19,9 +19,7 @@ public class EchoEventHandler extends AbstractEventHandler<Connection> {
 
     @Override
     protected void doHandle(Connection connection) {
-        ConnectionReader reader = connection.getConnectionRead();
-        ConnectionWriter writer = connection.getConnectionWriter();
-        echo(reader.getInputStream(), writer.getOutputStream());
+        echo(connection.getInputStream(), connection.getOutputStream());
     }
 
     protected void echo(InputStream inputstream, OutputStream outputStream) {
