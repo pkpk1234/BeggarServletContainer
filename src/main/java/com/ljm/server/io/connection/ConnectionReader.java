@@ -8,5 +8,4 @@ import java.io.InputStream;
  */
 public interface ConnectionReader {
     InputStream getInputStream();
-
 }
