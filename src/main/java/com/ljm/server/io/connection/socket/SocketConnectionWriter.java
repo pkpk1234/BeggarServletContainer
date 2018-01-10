@@ -6,6 +6,7 @@ import com.ljm.server.io.connector.ConnectorException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.nio.channels.SocketChannel;
 
 /**
  * @author 李佳明 https://github.com/pkpk1234
@@ -25,5 +26,10 @@ public class SocketConnectionWriter implements ConnectionWriter {
         } catch (IOException e) {
             throw new ConnectorException(e);
         }
+    }
+
+    @Override
+    public SocketChannel getOutputSocketChannel() {
+        throw new ConnectorException("not support for NIO");
     }
 }

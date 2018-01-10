@@ -1,6 +1,7 @@
 package com.ljm.server.io.connection;
 
 import java.io.OutputStream;
+import java.nio.channels.SocketChannel;
 
 /**
  * @author 李佳明 https://github.com/pkpk1234
@@ -8,4 +9,5 @@ import java.io.OutputStream;
  */
 public interface ConnectionWriter {
     OutputStream getOutputStream();
+    SocketChannel getOutputSocketChannel();
 }

@@ -2,8 +2,6 @@ package com.ljm.server.io.event.handler.impl;
 
 import com.ljm.server.event.handler.AbstractEventHandler;
 import com.ljm.server.io.connection.Connection;
-import com.ljm.server.io.connection.ConnectionReader;
-import com.ljm.server.io.connection.ConnectionWriter;
 import com.ljm.server.io.utils.IoUtils;
 
 import java.io.InputStream;
