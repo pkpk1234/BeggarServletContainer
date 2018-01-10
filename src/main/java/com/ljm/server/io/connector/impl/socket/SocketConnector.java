@@ -1,9 +1,11 @@
-package com.ljm.server.io.impl.socket;
+package com.ljm.server.io.connector.impl.socket;
 
-import com.ljm.server.io.AbstractConnector;
-import com.ljm.server.io.ConnectorException;
-import com.ljm.server.event.EventListener;
-import com.ljm.server.io.IoUtils;
+import com.ljm.server.io.connection.Connection;
+import com.ljm.server.io.connection.socket.SocketConnection;
+import com.ljm.server.io.connector.AbstractConnector;
+import com.ljm.server.io.connector.ConnectorException;
+import com.ljm.server.event.listener.EventListener;
+import com.ljm.server.io.utils.IoUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +19,7 @@ import java.net.Socket;
  * @author 李佳明 https://github.com/pkpk1234
  * @date 2018-01-2018/1/6
  */
-public class SocketConnector extends AbstractConnector<Socket> {
+public class SocketConnector extends AbstractConnector {
     private static final Logger LOGGER = LoggerFactory.getLogger(SocketConnector.class);
     private static final String LOCALHOST = "localhost";
     private static final int DEFAULT_BACKLOG = 50;
@@ -26,13 +28,13 @@ public class SocketConnector extends AbstractConnector<Socket> {
     private final int backLog;
     private ServerSocket serverSocket;
     private volatile boolean started = false;
-    private final EventListener<Socket> eventListener;
+    private final EventListener<Connection> eventListener;
 
-    public SocketConnector(int port, EventListener<Socket> eventListener) {
+    public SocketConnector(int port, EventListener<Connection> eventListener) {
         this(port, LOCALHOST, DEFAULT_BACKLOG, eventListener);
     }
 
-    public SocketConnector(int port, String host, int backLog, EventListener<Socket> eventListener) {
+    public SocketConnector(int port, String host, int backLog, EventListener<Connection> eventListener) {
         this.port = port;
         this.host = StringUtils.isBlank(host) ? LOCALHOST : host;
         this.backLog = backLog;
@@ -60,7 +62,7 @@ public class SocketConnector extends AbstractConnector<Socket> {
                 Socket socket = null;
                 try {
                     socket = serverSocket.accept();
-                    whenAccept(socket);
+                    communicate(new SocketConnection(socket));
                 } catch (Exception e) {
                     //单个Socket异常，不要影响整个Connector
                     LOGGER.error(e.getMessage(), e);
@@ -72,8 +74,8 @@ public class SocketConnector extends AbstractConnector<Socket> {
     }
 
     @Override
-    protected void whenAccept(Socket socketConnect) throws ConnectorException {
-        eventListener.onEvent(socketConnect);
+    protected void communicate(Connection connection) throws ConnectorException {
+        this.eventListener.onEvent(connection);
     }
 
     @Override
@@ -84,11 +86,11 @@ public class SocketConnector extends AbstractConnector<Socket> {
 
     @Override
     public int getPort() {
-        return 0;
+        return this.port;
     }
 
     @Override
     public String getHost() {
-        return null;
+        return this.host;
     }
 }

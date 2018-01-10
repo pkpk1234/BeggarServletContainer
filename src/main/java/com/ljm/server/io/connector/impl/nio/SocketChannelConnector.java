@@ -1,9 +1,10 @@
-package com.ljm.server.io.impl.nio;
+package com.ljm.server.io.connector.impl.nio;
 
-import com.ljm.server.event.EventListener;
-import com.ljm.server.io.AbstractConnector;
-import com.ljm.server.io.ConnectorException;
-import com.ljm.server.io.IoUtils;
+import com.ljm.server.event.listener.EventListener;
+import com.ljm.server.io.connection.Connection;
+import com.ljm.server.io.connector.AbstractConnector;
+import com.ljm.server.io.connector.ConnectorException;
+import com.ljm.server.io.utils.IoUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,7 +21,7 @@ import java.util.Set;
  * @author 李佳明 https://github.com/pkpk1234
  * @date 2018-01-2018/1/9
  */
-public class SocketChannelConnector extends AbstractConnector<SelectionKey> {
+public class SocketChannelConnector extends AbstractConnector {
     private static final Logger LOGGER = LoggerFactory.getLogger(SocketChannelConnector.class);
     private static final String LOCALHOST = "localhost";
     private static final int DEFAULT_BACKLOG = 50;
@@ -97,16 +98,21 @@ public class SocketChannelConnector extends AbstractConnector<SelectionKey> {
 
     }
 
+    @Override
+    protected void communicate(Connection connection) throws ConnectorException {
+
+    }
+
     private void write(SelectionKey key) {
-        whenAccept(key);
+        callBack(key);
     }
 
     private void read(SelectionKey key) {
-        whenAccept(key);
+        callBack(key);
     }
 
-    @Override
-    protected void whenAccept(SelectionKey key) throws ConnectorException {
+    //@Override
+    protected void callBack(SelectionKey key) throws ConnectorException {
         eventListener.onEvent(key);
     }
 

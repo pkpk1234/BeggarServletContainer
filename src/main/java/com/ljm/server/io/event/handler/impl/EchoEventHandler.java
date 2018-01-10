@@ -1,29 +1,31 @@
-package com.ljm.server.handler.impl;
+package com.ljm.server.io.event.handler.impl;
 
-import com.ljm.server.handler.AbstractEventHandler;
-import com.ljm.server.handler.HandlerException;
-import com.ljm.server.io.IoUtils;
+import com.ljm.server.event.handler.AbstractEventHandler;
+import com.ljm.server.io.connection.Connection;
+import com.ljm.server.io.connection.ConnectionReader;
+import com.ljm.server.io.connection.ConnectionWriter;
+import com.ljm.server.io.utils.IoUtils;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.net.Socket;
 import java.util.Scanner;
 
 /**
  * @author 李佳明 https://github.com/pkpk1234
  * @date 2018-01-2018/1/8
  */
-public class EchoEventHandler extends AbstractEventHandler<Socket> {
+public class EchoEventHandler extends AbstractEventHandler<Connection> {
 
     @Override
-    protected void doHandle(Socket socket) {
-        InputStream inputstream = null;
-        OutputStream outputStream = null;
+    protected void doHandle(Connection connection) {
+        ConnectionReader reader = connection.getConnectionRead();
+        ConnectionWriter writer = connection.getConnectionWriter();
+        echo(reader.getInputStream(), writer.getOutputStream());
+    }
+
+    protected void echo(InputStream inputstream, OutputStream outputStream) {
         try {
-            inputstream = socket.getInputStream();
-            outputStream = socket.getOutputStream();
             Scanner scanner = new Scanner(inputstream);
             PrintWriter printWriter = new PrintWriter(outputStream);
             printWriter.append("Server connected.Welcome to echo.\n");
@@ -40,8 +42,6 @@ public class EchoEventHandler extends AbstractEventHandler<Socket> {
                     printWriter.flush();
                 }
             }
-        } catch (IOException e) {
-            throw new HandlerException(e);
         } finally {
             IoUtils.closeQuietly(inputstream);
             IoUtils.closeQuietly(outputStream);

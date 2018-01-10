@@ -1,4 +1,6 @@
-package com.ljm.server.io;
+package com.ljm.server.io.connector;
+
+import com.ljm.server.io.connector.AbstractConnector;
 
 /**
  * @author 李佳明 https://github.com/pkpk1234

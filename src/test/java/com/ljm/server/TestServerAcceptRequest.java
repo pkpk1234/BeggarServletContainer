@@ -1,7 +1,7 @@
 package com.ljm.server;
 
 import com.ljm.server.config.ServerConfig;
-import com.ljm.server.io.IoUtils;
+import com.ljm.server.io.utils.IoUtils;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;

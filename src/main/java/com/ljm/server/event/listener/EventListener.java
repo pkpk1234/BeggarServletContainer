@@ -1,4 +1,6 @@
-package com.ljm.server.event;
+package com.ljm.server.event.listener;
+
+import com.ljm.server.event.EventException;
 
 /**
  * @author 李佳明 https://github.com/pkpk1234

@@ -1,19 +1,22 @@
 package com.ljm.server;
 
 import com.ljm.server.config.ServerConfig;
-import com.ljm.server.event.impl.NIOEventListener;
-import com.ljm.server.handler.impl.FileEventHandler;
-import com.ljm.server.handler.impl.NIOEchoEventHandler;
+import com.ljm.server.io.connection.Connection;
+import com.ljm.server.event.listener.EventListener;
+import com.ljm.server.io.event.handler.impl.EchoEventHandler;
+import com.ljm.server.io.event.listener.impl.NIOEventListener;
+import com.ljm.server.io.event.handler.impl.FileEventHandler;
+import com.ljm.server.io.event.handler.impl.NIOEchoEventHandler;
 import com.ljm.server.impl.SimpleServer;
-import com.ljm.server.io.AbstractConnector;
-import com.ljm.server.io.Connector;
-import com.ljm.server.io.ConnectorFactory;
-import com.ljm.server.io.impl.nio.SocketChannelConnector;
-import com.ljm.server.io.impl.socket.SocketConnectorConfig;
-import com.ljm.server.io.impl.socket.SocketConnectorFactory;
-import com.ljm.server.event.impl.SocketEventListener;
+import com.ljm.server.io.connector.Connector;
+import com.ljm.server.io.connector.ConnectorFactory;
+import com.ljm.server.io.connector.impl.nio.SocketChannelConnector;
+import com.ljm.server.io.connector.impl.socket.SocketConnectorConfig;
+import com.ljm.server.io.connector.impl.socket.SocketConnectorFactory;
+import com.ljm.server.io.event.listener.impl.ConnectionEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -28,16 +31,25 @@ public class ServerFactory {
      */
     public static Server getServer(ServerConfig serverConfig) {
         List<Connector> connectorList = new ArrayList<>();
-        SocketEventListener socketEventListener =
-                new SocketEventListener(new FileEventHandler(System.getProperty("user.dir")));
+        EventListener<Connection> socketEventListener =
+                new ConnectionEventListener(new EchoEventHandler());
         ConnectorFactory connectorFactory =
-                new SocketConnectorFactory(new SocketConnectorConfig(serverConfig.getPort()), socketEventListener);
+                new SocketConnectorFactory(new SocketConnectorConfig(serverConfig.getPort()),
+                        socketEventListener);
 
-        NIOEventListener nioEventListener = new NIOEventListener(new NIOEchoEventHandler());
-        SocketChannelConnector socketChannelConnector = new SocketChannelConnector(18081,nioEventListener);
+        EventListener<Connection> socketEventListener2 =
+                new ConnectionEventListener(new FileEventHandler(System.getProperty("user.dir")));
+        ConnectorFactory connectorFactory2 =
+                new SocketConnectorFactory(new SocketConnectorConfig(18082),
+                        socketEventListener2);
 
-        connectorList.add(connectorFactory.getConnector());
-        connectorList.add(socketChannelConnector);
+        //NIOEventListener nioEventListener = new NIOEventListener(new NIOEchoEventHandler());
+        //SocketChannelConnector socketChannelConnector = new SocketChannelConnector(18081,nioEventListener);
+
+        connectorList.addAll(Arrays.asList(connectorFactory.getConnector(),
+                connectorFactory2.getConnector()));
+
+        //connectorList.add(socketChannelConnector);
         return new SimpleServer(connectorList);
     }
 }

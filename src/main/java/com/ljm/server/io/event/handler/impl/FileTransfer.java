@@ -1,47 +1,29 @@
-package com.ljm.server.handler.impl;
+package com.ljm.server.io.event.handler.impl;
 
-import com.ljm.server.handler.AbstractEventHandler;
-import com.ljm.server.handler.HandlerException;
-import com.ljm.server.io.IoUtils;
+import com.ljm.server.event.handler.HandlerException;
+import com.ljm.server.io.utils.IoUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
-/**
- * @author 李佳明 https://github.com/pkpk1234
- * @date 2018-01-2018/1/8
- */
-public class FileEventHandler extends AbstractEventHandler<Socket> {
-
-    private final String docBase;
-
-    public FileEventHandler(String docBase) {
-        this.docBase = docBase;
-    }
-
-    @Override
-    protected void doHandle(Socket socket) {
-        getFile(socket);
+public class FileTransfer {
+    public FileTransfer() {
     }
 
     /**
      * 返回文件
      *
-     * @param socket
+     * @param inputstream
+     * @param outputStream
      */
-    private void getFile(Socket socket) {
-        InputStream inputstream = null;
-        OutputStream outputStream = null;
+    void getFile(String docBase, InputStream inputstream, OutputStream outputStream) {
         try {
-            inputstream = socket.getInputStream();
-            outputStream = socket.getOutputStream();
             Scanner scanner = new Scanner(inputstream, "UTF-8");
             PrintWriter printWriter = new PrintWriter(outputStream);
             printWriter.append("Server connected.Welcome to File Server.\n");
@@ -53,7 +35,7 @@ public class FileEventHandler extends AbstractEventHandler<Socket> {
                     printWriter.flush();
                     break;
                 } else {
-                    Path filePath = Paths.get(this.docBase, line);
+                    Path filePath = Paths.get(docBase, line);
                     //如果是目录，就打印文件列表
                     if (Files.isDirectory(filePath)) {
                         printWriter.append("目录 ").append(filePath.toString())

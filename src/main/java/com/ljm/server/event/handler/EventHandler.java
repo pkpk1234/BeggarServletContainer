@@ -1,4 +1,4 @@
-package com.ljm.server.handler;
+package com.ljm.server.event.handler;
 
 /**
  * @author 李佳明 https://github.com/pkpk1234

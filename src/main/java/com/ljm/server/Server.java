@@ -1,6 +1,6 @@
 package com.ljm.server;
 
-import com.ljm.server.io.Connector;
+import com.ljm.server.io.connector.Connector;
 
 import java.io.IOException;
 import java.util.List;
