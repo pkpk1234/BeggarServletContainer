@@ -19,61 +19,25 @@ public class SocketConnection implements Connection {
         this.socket = socket;
     }
 
-   /* @Override
-    public boolean isOpen() {
-        return false;
+    @Override
+    public void write(byte[] bytes) throws IOException {
+        this.write(bytes, 0, bytes.length);
     }
 
     @Override
-    public boolean isWritable() {
-        return false;
-    }
+    public void write(byte[] bytes, int offset, int length) throws IOException {
 
-    @Override
-    public boolean isReadable() {
-        return false;
-    }
-
-    @Override
-    public void close() {
+        this.socket.getOutputStream().write(bytes, offset, length);
 
     }
 
     @Override
-    public InputStream getInputStream() {
-        try {
-            return socket.getInputStream();
-        } catch (IOException e) {
-            throw new ConnectorException(e);
-        }
+    public int read(byte[] bytes) throws IOException {
+        return this.read(bytes, 0, bytes.length);
     }
 
     @Override
-    public OutputStream getOutputStream() {
-        try {
-            return socket.getOutputStream();
-        } catch (IOException e) {
-            throw new ConnectorException(e);
-        }
-    }*/
-
-    @Override
-    public int write(byte[] bytes) {
-        return 0;
-    }
-
-    @Override
-    public int write(byte[] bytes, int start, int end) {
-        return 0;
-    }
-
-    @Override
-    public int read(byte[] bytes) {
-        return 0;
-    }
-
-    @Override
-    public int read(byte[] bytes, int start, int end) {
-        return 0;
+    public int read(byte[] bytes, int offset, int length) throws IOException {
+        return this.socket.getInputStream().read(bytes, offset, length);
     }
 }
