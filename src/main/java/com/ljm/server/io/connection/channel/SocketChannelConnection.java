@@ -2,6 +2,7 @@ package com.ljm.server.io.connection.channel;
 
 import com.ljm.server.io.connection.Connection;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.channels.SocketChannel;
@@ -20,13 +21,13 @@ public class SocketChannelConnection implements Connection {
 
 
     @Override
-    public int write(byte[] bytes) {
-        return 0;
+    public void write(byte[] bytes) throws IOException {
+        
     }
 
     @Override
-    public int write(byte[] bytes, int start, int end) {
-        return 0;
+    public void write(byte[] bytes, int offset, int length) throws IOException {
+
     }
 
     @Override
