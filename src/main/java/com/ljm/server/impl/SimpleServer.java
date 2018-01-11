@@ -2,8 +2,7 @@ package com.ljm.server.impl;
 
 import com.ljm.server.Server;
 import com.ljm.server.ServerStatus;
-import com.ljm.server.io.AbstractConnector;
-import com.ljm.server.io.Connector;
+import com.ljm.server.io.connector.Connector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
