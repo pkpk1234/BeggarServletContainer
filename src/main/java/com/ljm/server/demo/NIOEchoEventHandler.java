@@ -1,7 +1,8 @@
-package com.ljm.server.io.event.handler.impl;
+package com.ljm.server.demo;
 
 import com.ljm.server.event.handler.AbstractEventHandler;
 import com.ljm.server.event.handler.HandlerException;
+import com.ljm.server.io.connection.Connection;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -12,8 +13,8 @@ import java.nio.channels.SocketChannel;
  * @author 李佳明 https://github.com/pkpk1234
  * @date 2018-01-2018/1/10
  */
-public class NIOEchoEventHandler extends AbstractEventHandler<SelectionKey> {
-    @Override
+public class NIOEchoEventHandler extends AbstractEventHandler<Connection>{
+    //@Override
     protected void doHandle(SelectionKey key) {
         try {
             if (key.isReadable()) {
@@ -30,5 +31,10 @@ public class NIOEchoEventHandler extends AbstractEventHandler<SelectionKey> {
         } catch (IOException e) {
             throw new HandlerException(e);
         }
+    }
+
+    @Override
+    protected void doHandle(Connection obj) {
+
     }
 }
