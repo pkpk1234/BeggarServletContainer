@@ -1,6 +1,12 @@
 package com.ljm.server;
 
 import com.ljm.server.config.ServerConfig;
+import com.ljm.server.demo.EchoEventHandler;
+import com.ljm.server.event.listener.EventListener;
+import com.ljm.server.io.connection.Connection;
+import com.ljm.server.io.connector.impl.socket.SocketConnector;
+import com.ljm.server.io.connector.impl.socket.SocketConnectorFactory;
+import com.ljm.server.io.event.listener.impl.ConnectionEventListener;
 import com.ljm.server.io.utils.IoUtils;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -27,7 +33,10 @@ public class TestServerAcceptRequest extends TestServerBase {
 
     @BeforeClass
     public static void init() {
-        ServerConfig serverConfig = new ServerConfig();
+        EventListener<Connection> socketEventListener =
+                new ConnectionEventListener(new EchoEventHandler());
+        SocketConnector connector = SocketConnectorFactory.build(ServerConfig.DEFAULT_PORT, socketEventListener);
+        ServerConfig serverConfig = ServerConfig.builder().addConnector(connector).build();
         server = ServerFactory.getServer(serverConfig);
     }
 

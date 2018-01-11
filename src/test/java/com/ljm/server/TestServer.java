@@ -1,15 +1,10 @@
 package com.ljm.server;
 
-import static org.junit.Assert.assertTrue;
-
+import com.ljm.server.config.ServerConfig;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.ljm.server.config.ServerConfig;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author 李佳明 https://github.com/pkpk1234
@@ -20,7 +15,8 @@ public class TestServer extends TestServerBase {
 
     @BeforeClass
     public static void init() {
-        ServerConfig serverConfig = new ServerConfig();
+
+        ServerConfig serverConfig = ServerConfig.builder().build();
         server = ServerFactory.getServer(serverConfig);
     }
 
