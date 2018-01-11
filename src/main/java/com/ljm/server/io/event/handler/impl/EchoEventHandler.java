@@ -17,7 +17,7 @@ public class EchoEventHandler extends AbstractEventHandler<Connection> {
 
     @Override
     protected void doHandle(Connection connection) {
-        echo(connection.getInputStream(), connection.getOutputStream());
+        /*echo(connection.getInputStream(), connection.getOutputStream());*/
     }
 
     protected void echo(InputStream inputstream, OutputStream outputStream) {

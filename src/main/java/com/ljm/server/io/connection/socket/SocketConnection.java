@@ -19,7 +19,7 @@ public class SocketConnection implements Connection {
         this.socket = socket;
     }
 
-    @Override
+   /* @Override
     public boolean isOpen() {
         return false;
     }
@@ -55,6 +55,25 @@ public class SocketConnection implements Connection {
         } catch (IOException e) {
             throw new ConnectorException(e);
         }
+    }*/
+
+    @Override
+    public int write(byte[] bytes) {
+        return 0;
     }
 
+    @Override
+    public int write(byte[] bytes, int start, int end) {
+        return 0;
+    }
+
+    @Override
+    public int read(byte[] bytes) {
+        return 0;
+    }
+
+    @Override
+    public int read(byte[] bytes, int start, int end) {
+        return 0;
+    }
 }

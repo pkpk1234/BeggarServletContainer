@@ -1,18 +1,15 @@
 package com.ljm.server;
 
 import com.ljm.server.config.ServerConfig;
-import com.ljm.server.io.connection.Connection;
 import com.ljm.server.event.listener.EventListener;
-import com.ljm.server.io.event.handler.impl.EchoEventHandler;
-import com.ljm.server.io.event.listener.impl.NIOEventListener;
-import com.ljm.server.io.event.handler.impl.FileEventHandler;
-import com.ljm.server.io.event.handler.impl.NIOEchoEventHandler;
 import com.ljm.server.impl.SimpleServer;
+import com.ljm.server.io.connection.Connection;
 import com.ljm.server.io.connector.Connector;
 import com.ljm.server.io.connector.ConnectorFactory;
-import com.ljm.server.io.connector.impl.nio.SocketChannelConnector;
 import com.ljm.server.io.connector.impl.socket.SocketConnectorConfig;
 import com.ljm.server.io.connector.impl.socket.SocketConnectorFactory;
+import com.ljm.server.io.event.handler.impl.EchoEventHandler;
+import com.ljm.server.io.event.handler.impl.FileEventHandler;
 import com.ljm.server.io.event.listener.impl.ConnectionEventListener;
 
 import java.util.ArrayList;

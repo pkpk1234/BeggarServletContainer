@@ -18,34 +18,24 @@ public class SocketChannelConnection implements Connection {
         this.socketChannel = socketChannel;
     }
 
+
     @Override
-    public boolean isOpen() {
-        return false;
+    public int write(byte[] bytes) {
+        return 0;
     }
 
     @Override
-    public boolean isWritable() {
-        return false;
+    public int write(byte[] bytes, int start, int end) {
+        return 0;
     }
 
     @Override
-    public boolean isReadable() {
-        return false;
+    public int read(byte[] bytes) {
+        return 0;
     }
 
     @Override
-    public void close() {
-
+    public int read(byte[] bytes, int start, int end) {
+        return 0;
     }
-
-    @Override
-    public InputStream getInputStream() {
-        return null;
-    }
-
-    @Override
-    public OutputStream getOutputStream() {
-        return null;
-    }
-
 }

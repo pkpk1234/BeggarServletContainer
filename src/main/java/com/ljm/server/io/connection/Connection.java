@@ -8,11 +8,8 @@ import java.io.OutputStream;
  * @date 2018-01-2018/1/10
  */
 public interface Connection {
-    boolean isOpen();
-    boolean isWritable();
-    boolean isReadable();
-    void close();
-    InputStream getInputStream();
-    OutputStream getOutputStream();
-
+    int write(byte[] bytes);
+    int write(byte[] bytes,int start,int end);
+    int read(byte[] bytes);
+    int read(byte[] bytes,int start,int end);
 }

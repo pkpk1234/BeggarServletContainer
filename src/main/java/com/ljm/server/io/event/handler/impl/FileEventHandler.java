@@ -22,8 +22,8 @@ public class FileEventHandler extends AbstractEventHandler<Connection> {
     @Override
     protected void doHandle(Connection connection) {
 
-        fileTransfer.getFile(this.docBase, connection.getInputStream(),
-                connection.getOutputStream());
+       /* fileTransfer.getFile(this.docBase, connection.getInputStream(),
+                connection.getOutputStream());*/
     }
 
     /**
