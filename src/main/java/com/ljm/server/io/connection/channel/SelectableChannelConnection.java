@@ -33,9 +33,7 @@ public class SelectableChannelConnection implements ChannelConnection {
             SocketChannel socketChannel = (SocketChannel) selectionKey.channel();
             ByteBuffer output = ByteBuffer.wrap(bytes, 0, bytes.length);
             output.flip();
-            while (output.hasRemaining()) {
-                socketChannel.write(output);
-            }
+            ChannelHelper.doWrite(output, socketChannel);
         }
     }
 
