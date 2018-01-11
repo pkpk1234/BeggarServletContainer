@@ -6,7 +6,7 @@ import com.ljm.server.io.connector.Connector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author 李佳明 https://github.com/pkpk1234
@@ -15,21 +15,21 @@ import java.util.List;
 public class SimpleServer implements Server {
     private static Logger logger = LoggerFactory.getLogger(SimpleServer.class);
     private volatile ServerStatus serverStatus = ServerStatus.STOPED;
-    private final List<Connector> connectorList;
+    private final Set<Connector> connectors;
 
-    public SimpleServer(List<Connector> connectorList) {
-        this.connectorList = connectorList;
+    public SimpleServer(Set<Connector> connectorList) {
+        this.connectors = connectorList;
     }
 
     @Override
     public void start() {
-        connectorList.stream().forEach(connector -> connector.start());
+        connectors.stream().forEach(connector -> connector.start());
         this.serverStatus = ServerStatus.STARTED;
     }
 
     @Override
     public void stop() {
-        connectorList.stream().forEach(connector -> connector.stop());
+        connectors.stream().forEach(connector -> connector.stop());
         this.serverStatus = ServerStatus.STOPED;
         logger.info("Server stop");
     }
@@ -40,7 +40,7 @@ public class SimpleServer implements Server {
     }
 
     @Override
-    public List<Connector> getConnectorList() {
-        return connectorList;
+    public Set<Connector> getConnectors() {
+        return connectors;
     }
 }

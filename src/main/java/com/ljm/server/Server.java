@@ -3,7 +3,7 @@ package com.ljm.server;
 import com.ljm.server.io.connector.Connector;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author 李佳明 https://github.com/pkpk1234
@@ -31,5 +31,5 @@ public interface Server {
      * 获取服务器管理的Connector列表
      * @return
      */
-    List<Connector> getConnectorList();
+    Set<Connector> getConnectors();
 }

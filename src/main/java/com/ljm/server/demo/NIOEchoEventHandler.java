@@ -22,7 +22,6 @@ public class NIOEchoEventHandler extends AbstractEventHandler<SelectionKey> {
     private static final Logger LOGGER = LoggerFactory.getLogger(NIOEchoEventHandler.class);
     private static final Charset CHARSET = Charset.forName("utf-8");
     private static final String LINE_SPLITTER = System.getProperty("line.separator");
-    private boolean init = false;
 
     @Override
     protected void doHandle(SelectionKey key) {
