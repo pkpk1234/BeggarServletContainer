@@ -21,11 +21,13 @@ public class NIOEchoEventHandler extends AbstractEventHandler<SelectionKey> {
     private static final Logger LOGGER = LoggerFactory.getLogger(NIOEchoEventHandler.class);
     private static final Charset CHARSET = Charset.forName("utf-8");
     private static final String LINE_SPLITTER = System.getProperty("line.separator");
+    private boolean init = false;
 
     @Override
     protected void doHandle(SelectionKey key) {
         try {
             if (key.isWritable()) {
+
                 ByteBuffer buffer = (ByteBuffer) key.attachment();
                 SocketChannel socketChannel = (SocketChannel) key.channel();
                 buffer.flip();
@@ -45,7 +47,6 @@ public class NIOEchoEventHandler extends AbstractEventHandler<SelectionKey> {
                     key.cancel();
                     socketChannel.close();
                 }
-
             } else if (key.isReadable()) {
                 ByteBuffer buffer = (ByteBuffer) key.attachment();
                 SocketChannel socketChannel = (SocketChannel) key.channel();
