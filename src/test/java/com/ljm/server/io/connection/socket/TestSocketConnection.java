@@ -12,17 +12,14 @@ import java.io.IOException;
 import java.net.Socket;
 
 public class TestSocketConnection {
-    private static Socket socket;
 
-    @BeforeClass
-    public static void init() throws IOException {
-        socket = mock(Socket.class);
-        when(socket.getInputStream()).thenReturn(new ByteArrayInputStream("Hello world".getBytes()));
-        when(socket.getOutputStream()).thenReturn(new ByteArrayOutputStream(64));
-    }
 
     @Test
     public void testRead() throws IOException {
+        Socket socket = mock(Socket.class);
+        when(socket.getInputStream()).thenReturn(new ByteArrayInputStream("Hello world".getBytes()));
+        when(socket.getOutputStream()).thenReturn(new ByteArrayOutputStream(64));
+
         SocketConnection socketConnection = new SocketConnection(socket);
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream(64);
         byte[] bytes = new byte[64];
@@ -31,5 +28,17 @@ public class TestSocketConnection {
             outputStream.write(bytes, 0, readLength);
         }
         assertEquals("Hello world", outputStream.toString("UTF-8"));
+    }
+
+    @Test
+    public void testWrite() throws IOException {
+        Socket socket = mock(Socket.class);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(64);
+        when(socket.getOutputStream()).thenReturn(byteArrayOutputStream);
+
+        SocketConnection socketConnection = new SocketConnection(socket);
+        String input = "Hello world";
+        socketConnection.write(input.getBytes());
+        assertEquals(input, byteArrayOutputStream.toString("UTF-8"));
     }
 }
