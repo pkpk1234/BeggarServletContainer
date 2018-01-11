@@ -1,15 +1,15 @@
 package com.ljm.server.io.connection.socket;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
-
-import static org.mockito.Mockito.*;
-import static org.junit.Assert.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class TestSocketConnection {
 
