@@ -53,6 +53,7 @@ public class SocketChannelConnector extends AbstractChannelConnector {
             this.serverSocketChannel.configureBlocking(false);
             this.serverSocketChannel.bind(socketAddress, backLog);
             this.started = true;
+            LOGGER.info("NioServer started");
         } catch (IOException e) {
             throw new ConnectorException(e);
         }
@@ -71,18 +72,18 @@ public class SocketChannelConnector extends AbstractChannelConnector {
                     Iterator iterator = selectedKeys.iterator();
                     while (iterator.hasNext()) {
                         key = (SelectionKey) iterator.next();
+                        iterator.remove();
                         if (key.isAcceptable()) {
                             ServerSocketChannel ssc = (ServerSocketChannel) key.channel();
                             SocketChannel socketChannel = ssc.accept();
                             socketChannel.configureBlocking(false);
                             ByteBuffer buffer = ByteBuffer.allocate(1024);
                             socketChannel.register(selector, SelectionKey.OP_READ | SelectionKey.OP_WRITE, buffer);
-                            iterator.remove();
+
                             LOGGER.info("NIO Connector accept Connect from {}",
                                     socketChannel.getRemoteAddress());
                         } else if (key.isReadable() || key.isWritable()) {
                             communicate(key);
-                            iterator.remove();
                         }
                     }
                 }
