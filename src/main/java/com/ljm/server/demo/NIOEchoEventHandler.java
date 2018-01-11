@@ -3,6 +3,7 @@ package com.ljm.server.demo;
 import com.ljm.server.event.handler.AbstractEventHandler;
 import com.ljm.server.event.handler.HandlerException;
 import com.ljm.server.io.connection.channel.ChannelHelper;
+import com.ljm.server.io.utils.IoUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,8 +36,9 @@ public class NIOEchoEventHandler extends AbstractEventHandler<SelectionKey> {
                 if (data.indexOf(LINE_SPLITTER) == -1) {
                     return;
                 }
-                String outputData = data.substring(0, data.indexOf("\n") + 1);
-                System.out.print(outputData);
+                String outputData = data.substring(0,
+                        data.indexOf(LINE_SPLITTER) + LINE_SPLITTER.length());
+
                 ByteBuffer outputBuffer = fromString("echo:" + outputData);
                 ChannelHelper.doWrite(outputBuffer, socketChannel);
 
@@ -45,7 +47,7 @@ public class NIOEchoEventHandler extends AbstractEventHandler<SelectionKey> {
                 buffer.compact();
                 if (outputData.equals("stop" + LINE_SPLITTER)) {
                     key.cancel();
-                    socketChannel.close();
+                    IoUtils.closeQuietly(socketChannel);
                 }
             } else if (key.isReadable()) {
                 ByteBuffer buffer = (ByteBuffer) key.attachment();

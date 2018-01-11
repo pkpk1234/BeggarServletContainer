@@ -67,30 +67,36 @@ public class SocketChannelConnector extends AbstractChannelConnector {
                 Selector selector = Selector.open();
                 SelectionKey key = serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
                 while (true) {
-                    selector.select();
-                    Set<SelectionKey> selectedKeys = selector.selectedKeys();
-                    Iterator iterator = selectedKeys.iterator();
-                    while (iterator.hasNext()) {
-                        key = (SelectionKey) iterator.next();
-                        iterator.remove();
-                        if (key.isAcceptable()) {
-                            ServerSocketChannel ssc = (ServerSocketChannel) key.channel();
-                            SocketChannel socketChannel = ssc.accept();
-                            socketChannel.configureBlocking(false);
-                            ByteBuffer buffer = ByteBuffer.allocate(1024);
-                            socketChannel.register(selector, SelectionKey.OP_READ | SelectionKey.OP_WRITE, buffer);
-
-                            LOGGER.info("NIO Connector accept Connect from {}",
-                                    socketChannel.getRemoteAddress());
-                        } else if (key.isReadable() || key.isWritable()) {
-                            communicate(key);
+                    try {
+                        selector.select();
+                        Set<SelectionKey> selectedKeys = selector.selectedKeys();
+                        Iterator iterator = selectedKeys.iterator();
+                        while (iterator.hasNext()) {
+                            key = (SelectionKey) iterator.next();
+                            iterator.remove();
+                            if (key.isAcceptable()) {
+                                ServerSocketChannel ssc = (ServerSocketChannel) key.channel();
+                                SocketChannel socketChannel = ssc.accept();
+                                socketChannel.configureBlocking(false);
+                                ByteBuffer buffer = ByteBuffer.allocate(1024);
+                                socketChannel.register(selector, SelectionKey.OP_READ
+                                        | SelectionKey.OP_WRITE, buffer);
+                                LOGGER.info("NIO Connector accept Connect from {}",
+                                        socketChannel.getRemoteAddress());
+                            } else if (key.isReadable() || key.isWritable()) {
+                                communicate(key);
+                            }
+                        }
+                    } catch (IOException e) {
+                        LOGGER.error("nio error", e);
+                        if (key != null) {
+                            key.cancel();
+                            IoUtils.closeQuietly(key.channel());
                         }
                     }
                 }
-            } catch (ClosedChannelException e) {
-                throw new ConnectorException(e);
             } catch (IOException e) {
-                e.printStackTrace();
+                throw new ConnectorException(e);
             }
         }).start();
 
