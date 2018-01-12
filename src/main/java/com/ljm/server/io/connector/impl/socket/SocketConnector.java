@@ -58,7 +58,7 @@ public class SocketConnector extends AbstractConnector {
     @Override
     protected void acceptConnect() throws ConnectorException {
         new Thread(() -> {
-            while (true && started) {
+            while (started) {
                 Socket socket = null;
                 try {
                     socket = serverSocket.accept();

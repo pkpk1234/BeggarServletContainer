@@ -12,7 +12,7 @@ import java.io.IOException;
  */
 public class IoUtils {
 
-    private static Logger logger = LoggerFactory.getLogger(IoUtils.class);
+    private static final Logger logger = LoggerFactory.getLogger(IoUtils.class);
 
     /**
      * 安静地关闭，不抛出异常

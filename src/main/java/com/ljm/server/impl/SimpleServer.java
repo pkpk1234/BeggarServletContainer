@@ -1,5 +1,6 @@
 package com.ljm.server.impl;
 
+import com.ljm.server.LifeCycle;
 import com.ljm.server.Server;
 import com.ljm.server.ServerStatus;
 import com.ljm.server.io.connector.Connector;
@@ -13,7 +14,7 @@ import java.util.Set;
  * @date 2018-01-2018/1/4
  */
 public class SimpleServer implements Server {
-    private static Logger logger = LoggerFactory.getLogger(SimpleServer.class);
+    private static final Logger logger = LoggerFactory.getLogger(SimpleServer.class);
     private volatile ServerStatus serverStatus = ServerStatus.STOPED;
     private final Set<Connector> connectors;
 
@@ -23,13 +24,13 @@ public class SimpleServer implements Server {
 
     @Override
     public void start() {
-        connectors.stream().forEach(connector -> connector.start());
+        connectors.forEach(LifeCycle::start);
         this.serverStatus = ServerStatus.STARTED;
     }
 
     @Override
     public void stop() {
-        connectors.stream().forEach(connector -> connector.stop());
+        connectors.forEach(LifeCycle::stop);
         this.serverStatus = ServerStatus.STOPED;
         logger.info("Server stop");
     }

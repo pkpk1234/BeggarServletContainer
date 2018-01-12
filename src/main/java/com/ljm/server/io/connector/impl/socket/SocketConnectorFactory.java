@@ -2,7 +2,6 @@ package com.ljm.server.io.connector.impl.socket;
 
 import com.ljm.server.event.listener.EventListener;
 import com.ljm.server.io.connection.Connection;
-import com.ljm.server.io.connector.ConnectorFactory;
 
 /**
  * @author 李佳明 https://github.com/pkpk1234

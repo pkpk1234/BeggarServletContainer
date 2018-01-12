@@ -40,10 +40,8 @@ public class FileTransfer {
                     if (Files.isDirectory(filePath)) {
                         printWriter.append("目录 ").append(filePath.toString())
                                 .append(" 下有文件：").append("\n");
-                        Files.list(filePath).forEach(fileName -> {
-                            printWriter.append(fileName.getFileName().toString())
-                                    .append("\n").flush();
-                        });
+                        Files.list(filePath).forEach(fileName -> printWriter.append(fileName.getFileName().toString())
+                                .append("\n").flush());
                         //如果文件可读，就打印文件内容
                     } else if (Files.isReadable(filePath)) {
                         printWriter.append("File ").append(filePath.toString())

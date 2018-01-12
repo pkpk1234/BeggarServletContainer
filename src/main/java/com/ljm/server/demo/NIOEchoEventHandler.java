@@ -32,7 +32,7 @@ public class NIOEchoEventHandler extends AbstractEventHandler<SelectionKey> {
                 SocketChannel socketChannel = (SocketChannel) key.channel();
                 buffer.flip();
                 String data = toString(buffer);
-                if (data.indexOf(LINE_SPLITTER) == -1) {
+                if (!data.contains(LINE_SPLITTER)) {
                     return;
                 }
                 String outputData = data.substring(0,

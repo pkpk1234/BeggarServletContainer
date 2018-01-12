@@ -2,7 +2,6 @@ package com.ljm.server.io.connector.impl.nio;
 
 import com.ljm.server.event.listener.EventListener;
 import com.ljm.server.io.connector.AbstractChannelConnector;
-import com.ljm.server.io.connector.AbstractConnector;
 import com.ljm.server.io.connector.ConnectorException;
 import com.ljm.server.io.utils.IoUtils;
 import org.slf4j.Logger;

@@ -38,7 +38,7 @@ public class SelectableChannelConnection implements ChannelConnection {
     }
 
     @Override
-    public int read(byte[] bytes) throws IOException {
+    public int read(byte[] bytes) {
         throw new ConnectorException("not support BIO");
     }
 

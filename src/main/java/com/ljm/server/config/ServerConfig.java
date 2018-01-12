@@ -11,7 +11,7 @@ import java.util.Set;
  */
 public class ServerConfig {
     public static final int DEFAULT_PORT = 18080;
-    private Set<Connector> connectors;
+    private final Set<Connector> connectors;
 
     private ServerConfig(Builder builder) {
         connectors = builder.connectors;

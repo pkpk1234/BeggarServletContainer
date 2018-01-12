@@ -1,11 +1,8 @@
 package com.ljm.server.io.connection.socket;
 
 import com.ljm.server.io.connection.Connection;
-import com.ljm.server.io.connector.ConnectorException;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.Socket;
 
 /**
