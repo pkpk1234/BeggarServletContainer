@@ -1,8 +1,8 @@
 package com.ljm.server.io.event.listener.impl;
 
-import com.ljm.server.io.connection.Connection;
-import com.ljm.server.event.listener.AbstractEventListener;
 import com.ljm.server.event.handler.EventHandler;
+import com.ljm.server.event.listener.AbstractEventListener;
+import com.ljm.server.io.connection.Connection;
 
 /**
  * @author 李佳明 https://github.com/pkpk1234

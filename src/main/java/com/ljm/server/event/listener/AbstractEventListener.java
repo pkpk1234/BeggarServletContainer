@@ -2,7 +2,6 @@ package com.ljm.server.event.listener;
 
 import com.ljm.server.event.EventException;
 import com.ljm.server.event.handler.EventHandler;
-import com.ljm.server.event.listener.EventListener;
 
 /**
  * @author 李佳明 https://github.com/pkpk1234

@@ -1,10 +1,10 @@
 package com.ljm.server.io.connector.impl.socket;
 
+import com.ljm.server.event.listener.EventListener;
 import com.ljm.server.io.connection.Connection;
 import com.ljm.server.io.connection.socket.SocketConnection;
 import com.ljm.server.io.connector.AbstractConnector;
 import com.ljm.server.io.connector.ConnectorException;
-import com.ljm.server.event.listener.EventListener;
 import com.ljm.server.io.utils.IoUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
