@@ -8,13 +8,13 @@ import java.util.Optional;
  * <p>
  * HTTP请求
  */
-public class HttpRequest implements HttpMessage {
+public class HttpRequestMessage implements HttpMessage {
     private final RequestLine requestLine;
     private final IMessageHeaders messageHeaders;
-    private final HttpBody<?> httpBody;
+    private final Optional<HttpBody<?>> httpBody;
 
-    public HttpRequest(RequestLine requestLine,
-                       IMessageHeaders messageHeaders, HttpBody<?> httpBody) {
+    public HttpRequestMessage(RequestLine requestLine,
+                              IMessageHeaders messageHeaders, Optional<HttpBody<?>> httpBody) {
         this.requestLine = requestLine;
         this.messageHeaders = messageHeaders;
         this.httpBody = httpBody;
@@ -31,8 +31,8 @@ public class HttpRequest implements HttpMessage {
     }
 
     @Override
-    public Optional<HttpBody> getHttpBody() {
-        return Optional.ofNullable(this.httpBody);
+    public Optional<HttpBody<?>> getHttpBody() {
+        return this.httpBody;
     }
 
     public RequestLine getRequestLine() {

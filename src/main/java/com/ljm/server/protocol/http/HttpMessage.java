@@ -20,5 +20,5 @@ import java.util.Optional;
 public interface HttpMessage {
     StartLine getStartLine();
     IMessageHeaders getMessageHeaders();
-    Optional<HttpBody> getHttpBody();
+    Optional<HttpBody<?>> getHttpBody();
 }

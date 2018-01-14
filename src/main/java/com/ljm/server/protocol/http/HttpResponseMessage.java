@@ -7,13 +7,13 @@ import java.util.Optional;
  * @author 李佳明 https://github.com/pkpk1234
  * @date 2018-01-2018/1/12
  */
-public class HttpResponse implements HttpMessage {
+public class HttpResponseMessage implements HttpMessage {
     private final ResponseLine responseLine;
     private final IMessageHeaders messageHeaders;
-    private final HttpBody<?> httpBody;
+    private final Optional<HttpBody<?>> httpBody;
 
-    public HttpResponse(ResponseLine responseLine,
-                        IMessageHeaders messageHeaders, HttpBody httpBody) {
+    public HttpResponseMessage(ResponseLine responseLine,
+                               IMessageHeaders messageHeaders, Optional<HttpBody<?>> httpBody) {
         this.responseLine = responseLine;
         this.messageHeaders = messageHeaders;
         this.httpBody = httpBody;
@@ -30,8 +30,8 @@ public class HttpResponse implements HttpMessage {
     }
 
     @Override
-    public Optional<HttpBody> getHttpBody() {
-        return Optional.ofNullable(this.httpBody);
+    public Optional<HttpBody<?>> getHttpBody() {
+        return this.httpBody;
     }
 
     public ResponseLine getResponseLine() {
