@@ -35,11 +35,11 @@ public class TestDefaultRequestLineParser {
     public void testQuery() {
         DefaultRequestLineParser defaultRequestLineParser
                 = new DefaultRequestLineParser();
-        RequestLine result = defaultRequestLineParser.parse("GET /test?a=123;a1=1&b=456 HTTP/1.1\r\n");
+        RequestLine result = defaultRequestLineParser.parse("GET /test?a=123&a1=1&b=456 HTTP/1.1\r\n");
         String method = result.getMethod();
         assertEquals("GET", method);
         final URI requestURI = result.getRequestURI();
-        assertEquals(URI.create("/test?a=123;a1=1&b=456"), requestURI);
+        assertEquals(URI.create("/test?a=123&a1=1&b=456"), requestURI);
         LOGGER.info(requestURI.getQuery());
         assertEquals("HTTP/1.1", result.getHttpVersion());
     }

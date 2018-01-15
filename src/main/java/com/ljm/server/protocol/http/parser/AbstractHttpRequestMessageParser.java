@@ -13,9 +13,10 @@ public abstract class AbstractHttpRequestMessageParser implements HttpRequestMes
     @Override
     public HttpMessage parse(InputStream inputStream) {
         RequestLine requestLine = parseRequestLine();
+        HttpRequestParameters httpRequestParameters = parseHttpRequestParameters();
         IMessageHeaders messageHeaders = parseRequestHeaders();
         Optional<HttpBody<?>> httpBody = parseRequestBody();
-        HttpRequestMessage httpRequestMessage = new HttpRequestMessage(requestLine, messageHeaders, httpBody);
+        HttpRequestMessage httpRequestMessage = new HttpRequestMessage(requestLine, messageHeaders, httpBody, httpRequestParameters);
         return httpRequestMessage;
     }
 
@@ -24,4 +25,7 @@ public abstract class AbstractHttpRequestMessageParser implements HttpRequestMes
     protected abstract IMessageHeaders parseRequestHeaders();
 
     protected abstract Optional<HttpBody<?>> parseRequestBody();
+
+    protected abstract HttpRequestParameters parseHttpRequestParameters();
+
 }

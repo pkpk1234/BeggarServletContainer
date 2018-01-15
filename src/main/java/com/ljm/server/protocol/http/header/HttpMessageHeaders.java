@@ -1,8 +1,11 @@
 package com.ljm.server.protocol.http.header;
 
-import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.LinkedListMultimap;
 import com.ljm.server.protocol.http.HttpHeader;
 import com.ljm.server.protocol.http.IMessageHeaders;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author 李佳明 https://github.com/pkpk1234
@@ -10,19 +13,19 @@ import com.ljm.server.protocol.http.IMessageHeaders;
  */
 public class HttpMessageHeaders implements IMessageHeaders {
 
-    private final ArrayListMultimap<String, HttpHeader> headersMultiMap;
+    private final LinkedListMultimap<String, HttpHeader> headersMultiMap;
 
     public HttpMessageHeaders() {
-        this.headersMultiMap = ArrayListMultimap.create();
+        this.headersMultiMap = LinkedListMultimap.create();
     }
 
     @Override
-    public Iterable<HttpHeader> getHeader(String headerName) {
+    public List<HttpHeader> getHeader(String headerName) {
         return this.headersMultiMap.get(headerName);
     }
 
     @Override
-    public Iterable<HttpHeader> getHeaders() {
+    public List<HttpHeader> getHeaders() {
         return this.headersMultiMap.values();
     }
 
@@ -48,7 +51,7 @@ public class HttpMessageHeaders implements IMessageHeaders {
     }
 
     @Override
-    public Iterable<String> getHeaderNames() {
+    public Set<String> getHeaderNames() {
         return this.headersMultiMap.keySet();
     }
 }

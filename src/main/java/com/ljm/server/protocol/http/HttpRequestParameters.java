@@ -1,6 +1,9 @@
 package com.ljm.server.protocol.http;
 
-import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.LinkedListMultimap;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author 李佳明 https://github.com/pkpk1234
@@ -8,39 +11,38 @@ import com.google.common.collect.ArrayListMultimap;
  */
 public class HttpRequestParameters {
 
-    private final ArrayListMultimap<String, HttpRequestParameter> prametersMultiMap;
+    private final LinkedListMultimap<String, HttpRequestParameter> prametersMultiMap;
 
-    public HttpRequestParameters(ArrayListMultimap<String, HttpRequestParameter>
-                                         prametersMultiMap) {
-        this.prametersMultiMap = prametersMultiMap;
+    public HttpRequestParameters() {
+        this.prametersMultiMap = LinkedListMultimap.create();
     }
 
 
-    Iterable<HttpRequestParameter> getPrameter(String name) {
+    public List<HttpRequestParameter> getPrameter(String name) {
         return this.prametersMultiMap.get(name);
     }
 
-    Iterable<HttpRequestParameter> getRequestParameters() {
+    public List<HttpRequestParameter> getRequestParameters() {
         return this.prametersMultiMap.values();
     }
 
-    void addRequestParameter(HttpRequestParameter httpRequestParameter) {
+    public void addRequestParameter(HttpRequestParameter httpRequestParameter) {
         this.prametersMultiMap.put(httpRequestParameter.getName(), httpRequestParameter);
     }
 
-    void removeRequestParameter(HttpRequestParameter httpRequestParameter) {
+    public void removeRequestParameter(HttpRequestParameter httpRequestParameter) {
         this.prametersMultiMap.remove(httpRequestParameter.getName(), httpRequestParameter);
     }
 
-    void removeRequestParameters(String httpRequestParameter) {
+    public void removeRequestParameters(String httpRequestParameter) {
         this.prametersMultiMap.removeAll(httpRequestParameter);
     }
 
-    boolean hasRequestParameter(String httpRequestParameter) {
+    public boolean hasRequestParameter(String httpRequestParameter) {
         return this.prametersMultiMap.containsKey(httpRequestParameter);
     }
 
-    Iterable<String> getRequestParameterNames() {
+    public Set<String> getRequestParameterNames() {
         return this.prametersMultiMap.keySet();
     }
 }

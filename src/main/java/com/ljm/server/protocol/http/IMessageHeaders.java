@@ -1,14 +1,17 @@
 package com.ljm.server.protocol.http;
 
+import java.util.List;
+import java.util.Set;
+
 /**
  * @author 李佳明 https://github.com/pkpk1234
  * @date 2018-01-2018/1/13
  */
 public interface IMessageHeaders {
 
-    Iterable<HttpHeader> getHeader(String headerName);
+    List<HttpHeader> getHeader(String headerName);
 
-    Iterable<HttpHeader> getHeaders();
+    List<HttpHeader> getHeaders();
 
     void addHeader(HttpHeader httpHeader);
 
@@ -18,5 +21,5 @@ public interface IMessageHeaders {
 
     boolean hasHeader(String headerName);
 
-    Iterable<String> getHeaderNames();
+    Set<String> getHeaderNames();
 }

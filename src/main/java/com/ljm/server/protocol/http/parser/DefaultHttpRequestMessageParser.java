@@ -1,6 +1,7 @@
 package com.ljm.server.protocol.http.parser;
 
 import com.ljm.server.protocol.http.HttpBody;
+import com.ljm.server.protocol.http.HttpRequestParameters;
 import com.ljm.server.protocol.http.IMessageHeaders;
 import com.ljm.server.protocol.http.RequestLine;
 
@@ -18,6 +19,11 @@ public class DefaultHttpRequestMessageParser extends AbstractHttpRequestMessageP
     }
 
     @Override
+    protected HttpRequestParameters parseHttpRequestParameters() {
+        return null;
+    }
+
+    @Override
     protected IMessageHeaders parseRequestHeaders() {
         return null;
     }
@@ -26,4 +32,6 @@ public class DefaultHttpRequestMessageParser extends AbstractHttpRequestMessageP
     protected Optional<HttpBody<?>> parseRequestBody() {
         return Optional.empty();
     }
+
+
 }
