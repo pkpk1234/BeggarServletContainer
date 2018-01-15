@@ -21,7 +21,7 @@ public class TestDefaultHttpQueryParameterParser {
         DefaultHttpRequestParameterParser httpRequestParameterParser
                 = new DefaultHttpRequestParameterParser();
         HttpQueryParameters result = httpRequestParameterParser.parse(queryStr);
-        List<HttpQueryParameter> parameters = result.getPrameter("a");
+        List<HttpQueryParameter> parameters = result.getQueryParameter("a");
         assertNotNull(parameters);
         assertEquals(2, parameters.size());
         assertEquals("123", parameters.get(0).getValue());
