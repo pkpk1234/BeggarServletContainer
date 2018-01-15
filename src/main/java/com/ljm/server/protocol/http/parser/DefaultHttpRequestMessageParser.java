@@ -19,7 +19,7 @@ public class DefaultHttpRequestMessageParser extends AbstractHttpRequestMessageP
     }
 
     @Override
-    protected HttpQueryParameters parseHttpRequestParameters() {
+    protected HttpQueryParameters parseHttpQueryParameters() {
         return null;
     }
 
