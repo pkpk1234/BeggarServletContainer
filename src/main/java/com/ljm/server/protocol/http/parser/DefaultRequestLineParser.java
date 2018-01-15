@@ -26,7 +26,6 @@ public class DefaultRequestLineParser implements RequestLineParser {
             URI uri = URI.create(parts[1]);
             String httpVersion = parts[2];
             return new RequestLine(method, uri, httpVersion);
-
         }
         throw new ParserException("startline format illegal");
     }
