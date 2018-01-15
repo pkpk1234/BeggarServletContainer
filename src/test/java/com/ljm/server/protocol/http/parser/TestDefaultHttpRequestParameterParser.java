@@ -4,10 +4,10 @@ import com.ljm.server.protocol.http.HttpRequestParameter;
 import com.ljm.server.protocol.http.HttpRequestParameters;
 import org.junit.Test;
 
-import java.util.Iterator;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * @author 李佳明 https://github.com/pkpk1234
