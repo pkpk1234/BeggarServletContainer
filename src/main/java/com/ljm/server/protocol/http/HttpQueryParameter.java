@@ -4,11 +4,11 @@ package com.ljm.server.protocol.http;
  * @author 李佳明 https://github.com/pkpk1234
  * @date 2018-01-2018/1/15
  */
-public class HttpRequestParameter {
+public class HttpQueryParameter {
     private final String name;
     private final String value;
 
-    public HttpRequestParameter(String name, String value) {
+    public HttpQueryParameter(String name, String value) {
         this.name = name;
         this.value = value;
     }
@@ -23,7 +23,7 @@ public class HttpRequestParameter {
 
     @Override
     public String toString() {
-        return "HttpRequestParameter{" +
+        return "HttpQueryParameter{" +
                 "name='" + name + '\'' +
                 ", value='" + value + '\'' +
                 '}';

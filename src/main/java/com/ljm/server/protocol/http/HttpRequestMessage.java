@@ -12,10 +12,10 @@ public class HttpRequestMessage implements HttpMessage {
     private final RequestLine requestLine;
     private final IMessageHeaders messageHeaders;
     private final Optional<HttpBody<?>> httpBody;
-    private final HttpRequestParameters requestParameters;
+    private final HttpQueryParameters requestParameters;
 
     public HttpRequestMessage(RequestLine requestLine, IMessageHeaders messageHeaders, Optional<HttpBody<?>> httpBody,
-                              HttpRequestParameters requestParameters) {
+                              HttpQueryParameters requestParameters) {
         this.requestLine = requestLine;
         this.messageHeaders = messageHeaders;
         this.httpBody = httpBody;
@@ -41,7 +41,7 @@ public class HttpRequestMessage implements HttpMessage {
         return requestLine;
     }
 
-    public HttpRequestParameters getRequestParameters() {
+    public HttpQueryParameters getRequestParameters() {
         return requestParameters;
     }
 }
