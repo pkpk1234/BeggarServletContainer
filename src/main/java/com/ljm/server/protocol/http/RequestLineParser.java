@@ -5,5 +5,5 @@ package com.ljm.server.protocol.http;
  * @date 2018-01-2018/1/14
  */
 public interface RequestLineParser {
-    RequestLine parse();
+    RequestLine parse(String startLine);
 }
