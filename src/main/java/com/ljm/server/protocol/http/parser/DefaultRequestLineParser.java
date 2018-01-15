@@ -12,8 +12,8 @@ import java.net.URI;
  * Method SP Request-URI SP HTTP-Version CRLF
  */
 public class DefaultRequestLineParser implements RequestLineParser {
-    private static String SPLITTER = "\\s+";
-    private static String CRLF = "\r\n";
+    private static final String SPLITTER = "\\s+";
+    private static final String CRLF = "\r\n";
 
     @Override
     public RequestLine parse(String startLine) {

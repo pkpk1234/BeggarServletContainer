@@ -1,6 +1,5 @@
 package com.ljm.server.protocol.http.header;
 
-import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.LinkedListMultimap;
 import com.ljm.server.protocol.http.HttpHeader;
 import com.ljm.server.protocol.http.IMessageHeaders;
