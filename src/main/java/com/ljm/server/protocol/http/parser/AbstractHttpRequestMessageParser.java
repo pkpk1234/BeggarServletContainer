@@ -12,20 +12,20 @@ import java.util.Optional;
 public abstract class AbstractHttpRequestMessageParser implements HttpRequestMessageParser {
     @Override
     public HttpMessage parse(InputStream inputStream) {
-        RequestLine requestLine = parseRequestLine();
-        HttpQueryParameters httpQueryParameters = parseHttpQueryParameters();
-        IMessageHeaders messageHeaders = parseRequestHeaders();
-        Optional<HttpBody<?>> httpBody = parseRequestBody();
+        RequestLine requestLine = parseRequestLine(inputStream);
+        HttpQueryParameters httpQueryParameters = parseHttpQueryParameters(inputStream);
+        IMessageHeaders messageHeaders = parseRequestHeaders(inputStream);
+        Optional<HttpBody<?>> httpBody = parseRequestBody(inputStream);
         HttpRequestMessage httpRequestMessage = new HttpRequestMessage(requestLine, messageHeaders, httpBody, httpQueryParameters);
         return httpRequestMessage;
     }
 
-    protected abstract RequestLine parseRequestLine();
+    protected abstract RequestLine parseRequestLine(InputStream inputStream);
 
-    protected abstract IMessageHeaders parseRequestHeaders();
+    protected abstract IMessageHeaders parseRequestHeaders(InputStream inputStream);
 
-    protected abstract Optional<HttpBody<?>> parseRequestBody();
+    protected abstract Optional<HttpBody<?>> parseRequestBody(InputStream inputStream);
 
-    protected abstract HttpQueryParameters parseHttpQueryParameters();
+    protected abstract HttpQueryParameters parseHttpQueryParameters(InputStream inputStream);
 
 }
