@@ -11,7 +11,9 @@ public interface IMessageHeaders {
 
     List<HttpHeader> getHeader(String headerName);
 
-    List<HttpHeader> getHeaders();
+    HttpHeader getFirstHeader(String headerName);
+
+    List<HttpHeader> getAllHeaders();
 
     void addHeader(HttpHeader httpHeader);
 

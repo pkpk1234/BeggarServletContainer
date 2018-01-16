@@ -10,6 +10,12 @@ import java.util.Optional;
  * @date 2018-01-2018/1/14
  */
 public abstract class AbstractHttpRequestMessageParser implements HttpRequestMessageParser {
+    /**
+     * 定义parse流程
+     *
+     * @param inputStream
+     * @return
+     */
     @Override
     public HttpMessage parse(InputStream inputStream) {
         RequestLine requestLine = parseRequestLine(inputStream);

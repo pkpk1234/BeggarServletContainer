@@ -1,5 +1,6 @@
 package com.ljm.server.protocol.http.parser;
 
+import com.ljm.server.protocol.HttpBodyParser;
 import com.ljm.server.protocol.http.*;
 
 import java.io.InputStream;
@@ -12,23 +13,36 @@ import java.util.Scanner;
  */
 public class DefaultHttpRequestMessageParser extends AbstractHttpRequestMessageParser {
     private final RequestLineParser requestLineParser;
+    private final HttpHeaderParser httpHeaderParser;
+    private final HttpBodyParser<?> httpBodyParser;
+    private final HttpQueryParameterParser httpQueryParameterParser;
 
-    public DefaultHttpRequestMessageParser(RequestLineParser requestLineParser) {
+    public DefaultHttpRequestMessageParser(RequestLineParser requestLineParser,
+                                           HttpHeaderParser httpHeaderParser,
+                                           HttpBodyParser<?> httpBodyParser,
+                                           HttpQueryParameterParser httpQueryParameterParser) {
         this.requestLineParser = requestLineParser;
+        this.httpHeaderParser = httpHeaderParser;
+        this.httpBodyParser = httpBodyParser;
+        this.httpQueryParameterParser = httpQueryParameterParser;
     }
 
     @Override
     protected RequestLine parseRequestLine(InputStream inputStream) {
-        Scanner scanner = new Scanner(inputStream);
+        return getRequestLine(inputStream);
+    }
+
+    private RequestLine getRequestLine(InputStream inputStream) {
+        Scanner scanner = new Scanner(inputStream, "utf-8");
         String startLine = scanner.nextLine();
         return this.requestLineParser.parse(startLine);
     }
 
     @Override
     protected IMessageHeaders parseRequestHeaders(InputStream inputStream) {
-        return null;
+        return httpHeaderParser.parser(inputStream);
     }
-
+    //TODO: body的解析
     @Override
     protected Optional<HttpBody<?>> parseRequestBody(InputStream inputStream) {
         return Optional.empty();
@@ -36,6 +50,7 @@ public class DefaultHttpRequestMessageParser extends AbstractHttpRequestMessageP
 
     @Override
     protected HttpQueryParameters parseHttpQueryParameters(InputStream inputStream) {
-        return null;
+        RequestLine requestLine = getRequestLine(inputStream);
+        return this.httpQueryParameterParser.parse(requestLine.getRequestURI().getQuery());
     }
 }
