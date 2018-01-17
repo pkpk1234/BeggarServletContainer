@@ -9,5 +9,5 @@ import java.io.InputStream;
  * @date 2018-01-2018/1/14
  */
 public interface HttpHeaderParser {
-    HttpMessageHeaders parser(InputStream inputStream);
+    HttpMessageHeaders parser(String httpText);
 }

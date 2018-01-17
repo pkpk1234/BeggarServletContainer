@@ -28,8 +28,9 @@ public class DefaultHttpRequestMessageParser extends AbstractHttpRequestMessageP
     }
 
     @Override
-    protected RequestLine parseRequestLine(InputStream inputStream) {
-        return getRequestLine(inputStream);
+    protected RequestLine parseRequestLine(String httpText) {
+        return this.requestLineParser.parse(httpText.split("\r\n")[0]);
+        //return getRequestLine(inputStream);
     }
 
     private RequestLine getRequestLine(InputStream inputStream) {
@@ -39,9 +40,10 @@ public class DefaultHttpRequestMessageParser extends AbstractHttpRequestMessageP
     }
 
     @Override
-    protected IMessageHeaders parseRequestHeaders(InputStream inputStream) {
-        return httpHeaderParser.parser(inputStream);
+    protected IMessageHeaders parseRequestHeaders(String httpText) {
+        return httpHeaderParser.parser(httpText);
     }
+
     //TODO: body的解析
     @Override
     protected Optional<HttpBody<?>> parseRequestBody(InputStream inputStream) {
@@ -49,8 +51,7 @@ public class DefaultHttpRequestMessageParser extends AbstractHttpRequestMessageP
     }
 
     @Override
-    protected HttpQueryParameters parseHttpQueryParameters(InputStream inputStream) {
-        RequestLine requestLine = getRequestLine(inputStream);
+    protected HttpQueryParameters parseHttpQueryParameters(RequestLine requestLine) {
         return this.httpQueryParameterParser.parse(requestLine.getRequestURI().getQuery());
     }
 }

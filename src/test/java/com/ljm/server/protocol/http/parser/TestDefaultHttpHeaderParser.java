@@ -32,18 +32,10 @@ public class TestDefaultHttpHeaderParser {
     public void test() throws UnsupportedEncodingException {
         DefaultHttpHeaderParser defaultHttpHeaderParser
                 = new DefaultHttpHeaderParser();
-        ByteArrayInputStream byteArrayInputStream
-                = new ByteArrayInputStream(HTTP_MESSAGE.getBytes("utf-8"));
-        HttpMessageHeaders result = defaultHttpHeaderParser.parser(byteArrayInputStream);
+
+        HttpMessageHeaders result = defaultHttpHeaderParser.parser(HTTP_MESSAGE);
         assertEquals("www.wrox.com", result.getFirstHeader("Host").getValue());
         assertEquals("Keep-Alive", result.getFirstHeader("Connection").getValue());
 
-        ByteOutputStream byteOutputStream = new ByteOutputStream(64);
-        byte[] bytes = new byte[64];
-        int readCount = -1;
-        while ((readCount = byteArrayInputStream.read(bytes, 0, bytes.length)) != -1) {
-            byteOutputStream.write(bytes, 0, readCount);
-        }
-        LOGGER.info(byteOutputStream.toString());
     }
 }

@@ -6,9 +6,6 @@ import com.ljm.server.protocol.http.header.HttpMessageHeaders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.InputStream;
-import java.util.Scanner;
-
 /**
  * @author 李佳明 https://github.com/pkpk1234
  * @date 2018-01-2018/1/16
@@ -19,9 +16,20 @@ public class DefaultHttpHeaderParser implements HttpHeaderParser {
     private static final String LF = "\n";
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultHttpHeaderParser.class);
     @Override
-    public HttpMessageHeaders parser(InputStream inputStream) {
+    public HttpMessageHeaders parser(String httpText) {
         HttpMessageHeaders httpMessageHeaders = new HttpMessageHeaders();
-        Scanner scanner = new Scanner(inputStream, "utf-8");
+        String[] lines = httpText.split(CR+LF);
+        for(int i =1;i<lines.length;i++) {
+            String keyValue = lines[i];
+            if (keyValue.equals("")) {
+                break;
+            }
+            String[] temp = keyValue.split(SPLITTER);
+            if (temp.length == 2) {
+                httpMessageHeaders.addHeader(new HttpHeader(temp[0], temp[1].trim()));
+            }
+        }
+        /*Scanner scanner = new Scanner(inputStream, "utf-8");
         //跳过第一行
         scanner.nextLine();
         while (scanner.hasNextLine()) {
@@ -35,7 +43,7 @@ public class DefaultHttpHeaderParser implements HttpHeaderParser {
             if (temp.length == 2) {
                 httpMessageHeaders.addHeader(new HttpHeader(temp[0], temp[1].trim()));
             }
-        }
+        }*/
         return httpMessageHeaders;
     }
 }
