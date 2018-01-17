@@ -1,7 +1,9 @@
 package com.ljm.server.protocol.http.parser;
 
 import com.ljm.server.protocol.http.*;
+import org.apache.commons.io.IOUtils;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Optional;
@@ -11,15 +13,15 @@ import java.util.Optional;
  * @date 2018-01-2018/1/14
  */
 public abstract class AbstractHttpRequestMessageParser implements HttpRequestMessageParser {
+
     /**
      * 定义parse流程
      *
-     * @param inputStream
      * @return
      */
     @Override
     public HttpMessage parse(InputStream inputStream) throws IOException {
-
+        String httpRequestString = IOUtils.toString(inputStream, "utf-8");
         RequestLine requestLine = parseRequestLine(inputStream);
 
         HttpQueryParameters httpQueryParameters = parseHttpQueryParameters(inputStream);
