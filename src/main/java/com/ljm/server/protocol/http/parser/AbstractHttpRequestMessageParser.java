@@ -2,6 +2,7 @@ package com.ljm.server.protocol.http.parser;
 
 import com.ljm.server.protocol.http.*;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Optional;
 
@@ -17,10 +18,14 @@ public abstract class AbstractHttpRequestMessageParser implements HttpRequestMes
      * @return
      */
     @Override
-    public HttpMessage parse(InputStream inputStream) {
+    public HttpMessage parse(InputStream inputStream) throws IOException {
+
         RequestLine requestLine = parseRequestLine(inputStream);
+
         HttpQueryParameters httpQueryParameters = parseHttpQueryParameters(inputStream);
+
         IMessageHeaders messageHeaders = parseRequestHeaders(inputStream);
+
         Optional<HttpBody<?>> httpBody = parseRequestBody(inputStream);
         HttpRequestMessage httpRequestMessage = new HttpRequestMessage(requestLine, messageHeaders, httpBody, httpQueryParameters);
         return httpRequestMessage;

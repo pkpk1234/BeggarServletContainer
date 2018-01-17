@@ -1,18 +1,22 @@
 package com.ljm.server.protocol.http.parser;
 
 import com.ljm.server.protocol.http.header.HttpMessageHeaders;
+import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author 李佳明 https://github.com/pkpk1234
  * @date 2018-01-2018/1/16
  */
 public class TestDefaultHttpHeaderParser {
+    private static final Logger LOGGER = LoggerFactory.getLogger(TestDefaultHttpHeaderParser.class);
     private static final String HTTP_MESSAGE =
             "POST / HTTP1.1\r\n" +
                     "Host:www.wrox.com\r\n" +
@@ -33,5 +37,13 @@ public class TestDefaultHttpHeaderParser {
         HttpMessageHeaders result = defaultHttpHeaderParser.parser(byteArrayInputStream);
         assertEquals("www.wrox.com", result.getFirstHeader("Host").getValue());
         assertEquals("Keep-Alive", result.getFirstHeader("Connection").getValue());
+
+        ByteOutputStream byteOutputStream = new ByteOutputStream(64);
+        byte[] bytes = new byte[64];
+        int readCount = -1;
+        while ((readCount = byteArrayInputStream.read(bytes, 0, bytes.length)) != -1) {
+            byteOutputStream.write(bytes, 0, readCount);
+        }
+        LOGGER.info(byteOutputStream.toString());
     }
 }

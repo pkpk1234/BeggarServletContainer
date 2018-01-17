@@ -1,5 +1,6 @@
 package com.ljm.server.protocol.http;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -7,5 +8,5 @@ import java.io.InputStream;
  * @date 2018-01-2018/1/14
  */
 public interface HttpRequestMessageParser {
-    HttpMessage parse(InputStream inputStream);
+    HttpMessage parse(InputStream inputStream) throws IOException;
 }
