@@ -8,10 +8,8 @@ import java.io.InputStream;
 import java.util.Scanner;
 
 /**
- * @author l00388716
- * Date: 2018/1/17
- * Time: 10:13
- * Description:
+ * @author 李佳明 https://github.com/pkpk1234
+ * @date 2018-01-2018/1/14
  */
 public class StringHttpBodyParser implements HttpBodyParser<String> {
     private static final String CRLF = "\r\n";
