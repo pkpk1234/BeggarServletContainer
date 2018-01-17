@@ -22,21 +22,19 @@ public abstract class AbstractHttpRequestMessageParser implements HttpRequestMes
     public HttpMessage parse(InputStream inputStream) throws IOException {
         String httpRequestString = IOUtils.toString(inputStream, "utf-8");
         RequestLine requestLine = parseRequestLine(httpRequestString);
-
         HttpQueryParameters httpQueryParameters = parseHttpQueryParameters(requestLine);
-
         IMessageHeaders messageHeaders = parseRequestHeaders(httpRequestString);
+        Optional<HttpBody<?>> httpBody = parseRequestBody(httpRequestString, messageHeaders);
 
-        Optional<HttpBody<?>> httpBody = parseRequestBody(inputStream);
         HttpRequestMessage httpRequestMessage = new HttpRequestMessage(requestLine, messageHeaders, httpBody, httpQueryParameters);
         return httpRequestMessage;
     }
 
-    protected abstract RequestLine parseRequestLine(String inputStream);
+    protected abstract RequestLine parseRequestLine(String httpText);
 
-    protected abstract IMessageHeaders parseRequestHeaders(String inputStream);
+    protected abstract IMessageHeaders parseRequestHeaders(String httpText);
 
-    protected abstract Optional<HttpBody<?>> parseRequestBody(InputStream inputStream);
+    protected abstract Optional<HttpBody<?>> parseRequestBody(String httpText, IMessageHeaders messageHeaders);
 
     protected abstract HttpQueryParameters parseHttpQueryParameters(RequestLine requestLine);
 

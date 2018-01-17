@@ -46,7 +46,7 @@ public class DefaultHttpRequestMessageParser extends AbstractHttpRequestMessageP
 
     //TODO: body的解析
     @Override
-    protected Optional<HttpBody<?>> parseRequestBody(InputStream inputStream) {
+    protected Optional<HttpBody<?>> parseRequestBody(String httpText, IMessageHeaders messageHeaders) {
         return Optional.empty();
     }
 
