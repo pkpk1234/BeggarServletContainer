@@ -2,10 +2,11 @@ package com.ljm.server.protocol.http.parser;
 
 
 public abstract class AbstractParser {
-    protected AbstractParserContext abstractParserContext;
+    protected static final String KV_SPLITTER = "=";
+    protected HttpParserContext httpParserContext;
     protected final String CRLF = "\r\n";
 
-    public AbstractParser(AbstractParserContext abstractParserContext) {
-        this.abstractParserContext = abstractParserContext;
+    public AbstractParser(HttpParserContext httpParserContext) {
+        this.httpParserContext = httpParserContext;
     }
 }

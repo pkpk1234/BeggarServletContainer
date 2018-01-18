@@ -1,8 +1,11 @@
 package com.ljm.server.protocol.http.parser;
 
+import com.ljm.server.protocol.http.header.HttpMessageHeaders;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static org.junit.Assert.*;
 
 import java.io.UnsupportedEncodingException;
 import java.util.regex.Matcher;
@@ -25,15 +28,26 @@ public class TestDefaultHttpHeaderParser {
                     "name=Professional%20Ajax&publisher=Wiley\r\n";
 
     @Test
-    public void test() throws UnsupportedEncodingException {
+    public void testRegex() {
         String regex = "(?m)^\r\n";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(HTTP_MESSAGE);
         if (matcher.find()) {
             int end = matcher.end();
-            LOGGER.info(""+ end);
-            LOGGER.info("rest {} ----",HTTP_MESSAGE.substring(0,end));
+            LOGGER.info("" + end);
+            LOGGER.info("rest {} ----", HTTP_MESSAGE.substring(0, end));
         }
 
+    }
+
+    @Test
+    public void test() throws UnsupportedEncodingException {
+        HttpParserContext context = new HttpParserContext();
+        DefaultHttpHeaderParser httpHeaderParser = new DefaultHttpHeaderParser(context);
+        context.setHttpMessageBytes(HTTP_MESSAGE.getBytes("utf-8"));
+        HttpMessageHeaders httpHeaders = httpHeaderParser.parse();
+        assertTrue(httpHeaders.hasHeader("Host"));
+        assertEquals("40", httpHeaders.getFirstHeader("Content-Length").getValue());
+        LOGGER.info("" + context.getBytesLengthBeforeBody());
     }
 }

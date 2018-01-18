@@ -16,25 +16,36 @@ import java.util.regex.Pattern;
 public class DefaultHttpHeaderParser extends AbstractParser implements HttpHeaderParser {
     private static final String SPLITTER = ":";
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultHttpHeaderParser.class);
-    private static final Pattern BLANK_LINE = Pattern.compile("(?m)^\n");
+    private static final Pattern BLANK_LINE = Pattern.compile("(?m)^\r\n");
 
-    public DefaultHttpHeaderParser(AbstractParserContext abstractParserContext) {
-        super(abstractParserContext);
+    public DefaultHttpHeaderParser(HttpParserContext httpParserContext) {
+        super(httpParserContext);
     }
 
     @Override
-    public HttpMessageHeaders parser() throws UnsupportedEncodingException {
-        byte[] bytes = super.abstractParserContext.getHttpMessageBytes();
-        String httpText = new String(bytes, "utf-8");
+    public HttpMessageHeaders parse() throws UnsupportedEncodingException {
+        String httpText = getHttpTextFromContext();
+        httpText = getStringBeforeBody(httpText);
+        HttpMessageHeaders httpMessageHeaders = doParseHttpMessageHeaders(httpText);
+        return httpMessageHeaders;
+    }
 
+    private String getHttpTextFromContext() throws UnsupportedEncodingException {
+        byte[] bytes = super.httpParserContext.getHttpMessageBytes();
+        return new String(bytes, "utf-8");
+    }
+
+    private String getStringBeforeBody(String httpText) throws UnsupportedEncodingException {
         Matcher matcher = BLANK_LINE.matcher(httpText);
         if (matcher.find()) {
             int idx = matcher.end();
-            super.abstractParserContext.setHasBody(true);
-            httpText = httpText.substring(0, idx);
-            super.abstractParserContext.setBytesBeforeBody(httpText.getBytes("utf-8").length);
+            setHasBody();
+            httpText = setBytesBeforeBody(httpText, idx);
         }
+        return httpText;
+    }
 
+    private HttpMessageHeaders doParseHttpMessageHeaders(String httpText) {
         HttpMessageHeaders httpMessageHeaders = new HttpMessageHeaders();
         String[] lines = httpText.split(CRLF);
         //跳过第一行
@@ -49,5 +60,15 @@ public class DefaultHttpHeaderParser extends AbstractParser implements HttpHeade
             }
         }
         return httpMessageHeaders;
+    }
+
+    private String setBytesBeforeBody(String httpText, int idx) throws UnsupportedEncodingException {
+        httpText = httpText.substring(0, idx);
+        super.httpParserContext.setBytesLengthBeforeBody(httpText.getBytes("utf-8").length);
+        return httpText;
+    }
+
+    private void setHasBody() {
+        super.httpParserContext.setHasBody(true);
     }
 }

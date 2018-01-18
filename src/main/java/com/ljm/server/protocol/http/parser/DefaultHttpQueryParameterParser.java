@@ -10,10 +10,9 @@ import com.ljm.server.protocol.http.HttpQueryParameters;
 public class DefaultHttpQueryParameterParser extends AbstractParser implements HttpQueryParameterParser {
     private final HttpQueryParameters httpQueryParameters;
     private static final String SPLITTER = "&";
-    private static final String KV_SPLITTER = "=";
 
-    public DefaultHttpQueryParameterParser(AbstractParserContext abstractParserContext) {
-        super(abstractParserContext);
+    public DefaultHttpQueryParameterParser(HttpParserContext httpParserContext) {
+        super(httpParserContext);
         this.httpQueryParameters = new HttpQueryParameters();
     }
 

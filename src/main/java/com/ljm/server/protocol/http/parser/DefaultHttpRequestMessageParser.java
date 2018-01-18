@@ -29,7 +29,7 @@ public class DefaultHttpRequestMessageParser  {
 
     @Override
     protected IMessageHeaders parseRequestHeaders(String httpText) {
-        return httpHeaderParser.parser(httpText);
+        return httpHeaderParser.parse(httpText);
     }
 
     //TODO: body的解析

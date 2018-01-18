@@ -12,10 +12,9 @@ import java.net.URI;
  */
 public class DefaultRequestLineParser extends AbstractParser implements RequestLineParser {
     private static final String SPLITTER = "\\s+";
-    private static final String CRLF = "\r\n";
 
-    public DefaultRequestLineParser(AbstractParserContext abstractParserContext) {
-        super(abstractParserContext);
+    public DefaultRequestLineParser(HttpParserContext httpParserContext) {
+        super(httpParserContext);
     }
 
     @Override
@@ -27,7 +26,7 @@ public class DefaultRequestLineParser extends AbstractParser implements RequestL
         if (parts.length == 3) {
             String method = parts[0];
             URI uri = URI.create(parts[1]);
-            super.abstractParserContext.setRequestQueryString(uri.getQuery());
+            super.httpParserContext.setRequestQueryString(uri.getQuery());
             String httpVersion = parts[2];
             return new RequestLine(method, uri, httpVersion);
         }

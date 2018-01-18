@@ -19,8 +19,8 @@ import java.util.Optional;
  */
 public abstract class AbstractHttpRequestMessageParser extends AbstractParser implements HttpRequestMessageParser {
 
-    public AbstractHttpRequestMessageParser(AbstractParserContext abstractParserContext) {
-        super(abstractParserContext);
+    public AbstractHttpRequestMessageParser(HttpParserContext httpParserContext) {
+        super(httpParserContext);
     }
 
     /**
@@ -30,9 +30,8 @@ public abstract class AbstractHttpRequestMessageParser extends AbstractParser im
      */
     @Override
     public HttpMessage parse(InputStream inputStream) throws IOException {
-        byte[] bytes = IOUtils.toByteArray(new InputStreamReader(inputStream), "utf-8");
-        super.abstractParserContext.setHttpMessageBytes(bytes);
-
+        //设置上下文
+        getAndSetBytesToContext(inputStream);
         RequestLine requestLine = parseRequestLine();
         HttpQueryParameters httpQueryParameters = parseHttpQueryParameters();
         IMessageHeaders messageHeaders = parseRequestHeaders();
@@ -40,6 +39,11 @@ public abstract class AbstractHttpRequestMessageParser extends AbstractParser im
 
         HttpRequestMessage httpRequestMessage = new HttpRequestMessage(requestLine, messageHeaders, httpBody, httpQueryParameters);
         return httpRequestMessage;
+    }
+    
+    private void getAndSetBytesToContext(InputStream inputStream) throws IOException {
+        byte[] bytes = IOUtils.toByteArray(new InputStreamReader(inputStream), "utf-8");
+        super.httpParserContext.setHttpMessageBytes(bytes);
     }
 
     protected abstract RequestLine parseRequestLine();
