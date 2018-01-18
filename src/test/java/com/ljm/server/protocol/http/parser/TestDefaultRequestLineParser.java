@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
  * @date 2018-01-2018/1/14
  */
 public class TestDefaultRequestLineParser {
-    private static final Logger
+    /*private static final Logger
             LOGGER = LoggerFactory.getLogger(TestDefaultRequestLineParser.class);
 
     @Test
@@ -42,5 +42,5 @@ public class TestDefaultRequestLineParser {
         assertEquals(URI.create("/test?a=123&a1=1&b=456"), requestURI);
         LOGGER.info(requestURI.getQuery());
         assertEquals("HTTP/1.1", result.getHttpVersion());
-    }
+    }*/
 }

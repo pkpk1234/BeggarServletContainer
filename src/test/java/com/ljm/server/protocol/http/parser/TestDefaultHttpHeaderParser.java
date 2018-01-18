@@ -1,15 +1,12 @@
 package com.ljm.server.protocol.http.parser;
 
-import com.ljm.server.protocol.http.header.HttpMessageHeaders;
-import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;
-
-import static org.junit.Assert.assertEquals;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author 李佳明 https://github.com/pkpk1234
@@ -25,17 +22,18 @@ public class TestDefaultHttpHeaderParser {
                     "Content-Length:40\r\n" +
                     "Connection: Keep-Alive\r\n" +
                     "\r\n" +
-                    "name=Professional%20Ajax&publisher=Wiley\r\n" +
-                    "\r\n";
+                    "name=Professional%20Ajax&publisher=Wiley\r\n";
 
     @Test
     public void test() throws UnsupportedEncodingException {
-        DefaultHttpHeaderParser defaultHttpHeaderParser
-                = new DefaultHttpHeaderParser();
-
-        HttpMessageHeaders result = defaultHttpHeaderParser.parser(HTTP_MESSAGE);
-        assertEquals("www.wrox.com", result.getFirstHeader("Host").getValue());
-        assertEquals("Keep-Alive", result.getFirstHeader("Connection").getValue());
+        String regex = "(?m)^\r\n";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(HTTP_MESSAGE);
+        if (matcher.find()) {
+            int end = matcher.end();
+            LOGGER.info(""+ end);
+            LOGGER.info("rest {} ----",HTTP_MESSAGE.substring(0,end));
+        }
 
     }
 }

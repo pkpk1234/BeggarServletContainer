@@ -7,12 +7,13 @@ import com.ljm.server.protocol.http.HttpQueryParameters;
  * @author 李佳明 https://github.com/pkpk1234
  * @date 2018-01-2018/1/15
  */
-public class DefaultHttpQueryParameterParser implements HttpQueryParameterParser {
+public class DefaultHttpQueryParameterParser extends AbstractColleague implements HttpQueryParameterParser {
     private final HttpQueryParameters httpQueryParameters;
     private static final String SPLITTER = "&";
     private static final String KV_SPLITTER = "=";
 
-    public DefaultHttpQueryParameterParser() {
+    public DefaultHttpQueryParameterParser(AbstractParserContext abstractParserContext) {
+        super(abstractParserContext);
         this.httpQueryParameters = new HttpQueryParameters();
     }
 

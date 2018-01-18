@@ -13,23 +13,9 @@ import java.util.Scanner;
  * @author 李佳明 https://github.com/pkpk1234
  * @date 2018-01-2018/1/14
  */
-public class DefaultHttpRequestMessageParser extends AbstractHttpRequestMessageParser {
-    private final RequestLineParser requestLineParser;
-    private final HttpHeaderParser httpHeaderParser;
-    private final HttpBodyParser<?> httpBodyParser;
-    private final HttpQueryParameterParser httpQueryParameterParser;
+public class DefaultHttpRequestMessageParser  {
 
-    public DefaultHttpRequestMessageParser(RequestLineParser requestLineParser,
-                                           HttpHeaderParser httpHeaderParser,
-                                           HttpBodyParser<?> httpBodyParser,
-                                           HttpQueryParameterParser httpQueryParameterParser) {
-        this.requestLineParser = requestLineParser;
-        this.httpHeaderParser = httpHeaderParser;
-        this.httpBodyParser = httpBodyParser;
-        this.httpQueryParameterParser = httpQueryParameterParser;
-    }
-
-    @Override
+    /*@Override
     protected RequestLine parseRequestLine(String httpText) {
         return this.requestLineParser.parse(httpText.split("\r\n")[0]);
         //return getRequestLine(inputStream);
@@ -55,5 +41,5 @@ public class DefaultHttpRequestMessageParser extends AbstractHttpRequestMessageP
     @Override
     protected HttpQueryParameters parseHttpQueryParameters(RequestLine requestLine) {
         return this.httpQueryParameterParser.parse(requestLine.getRequestURI().getQuery());
-    }
+    }*/
 }
