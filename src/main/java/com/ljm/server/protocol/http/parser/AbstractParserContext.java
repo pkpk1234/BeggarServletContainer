@@ -24,4 +24,10 @@ public class AbstractParserContext {
 
     public void setRequestQueryString(String query) {
     }
+
+    public void setHasBody(boolean b) {
+    }
+
+    public void setBytesBeforeBody(int length) {
+    }
 }

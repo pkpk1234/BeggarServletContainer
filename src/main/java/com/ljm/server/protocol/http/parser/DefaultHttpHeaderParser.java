@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.UnsupportedEncodingException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author 李佳明 https://github.com/pkpk1234
@@ -13,9 +15,8 @@ import java.io.UnsupportedEncodingException;
  */
 public class DefaultHttpHeaderParser extends AbstractColleague implements HttpHeaderParser {
     private static final String SPLITTER = ":";
-    private static final String CR = "\r";
-    private static final String LF = "\n";
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultHttpHeaderParser.class);
+    private static final Pattern BLANK_LINE = Pattern.compile("(?m)^\n");
 
     public DefaultHttpHeaderParser(AbstractParserContext abstractParserContext) {
         super(abstractParserContext);
@@ -24,12 +25,20 @@ public class DefaultHttpHeaderParser extends AbstractColleague implements HttpHe
     @Override
     public HttpMessageHeaders parser() throws UnsupportedEncodingException {
         byte[] bytes = super.abstractParserContext.getHttpBytes();
-        String httpText = new String(bytes,"utf-8");
-       // String textBeforeBody =
+        String httpText = new String(bytes, "utf-8");
+
+        Matcher matcher = BLANK_LINE.matcher(httpText);
+        if (matcher.find()) {
+            int idx = matcher.end();
+            super.abstractParserContext.setHasBody(true);
+            httpText = httpText.substring(0, idx);
+            super.abstractParserContext.setBytesBeforeBody(httpText.getBytes("utf-8").length);
+        }
+
         HttpMessageHeaders httpMessageHeaders = new HttpMessageHeaders();
-        String[] lines = httpText.split(CR+LF);
+        String[] lines = httpText.split(CRLF);
         //跳过第一行
-        for(int i =1;i<lines.length;i++) {
+        for (int i = 1; i < lines.length; i++) {
             String keyValue = lines[i];
             if (keyValue.equals("")) {
                 break;
