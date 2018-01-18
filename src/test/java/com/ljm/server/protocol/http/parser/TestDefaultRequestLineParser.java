@@ -4,7 +4,7 @@ import com.ljm.server.protocol.http.RequestLine;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import static org.mockito.Mockito.*;
 import java.net.URI;
 
 import static org.junit.Assert.*;
@@ -19,7 +19,8 @@ public class TestDefaultRequestLineParser {
 
     @Test
     public void test() {
-        AbstractParserContext parserContext;
+        AbstractParserContext parserContext = new DefaultHttpParserContext();
+
         DefaultRequestLineParser defaultRequestLineParser
                 = new DefaultRequestLineParser(parserContext);
         RequestLine result = defaultRequestLineParser.parse("GET /hello.txt HTTP/1.1\r\n");

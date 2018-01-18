@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
  * @author 李佳明 https://github.com/pkpk1234
  * @date 2018-01-2018/1/16
  */
-public class DefaultHttpHeaderParser extends AbstractColleague implements HttpHeaderParser {
+public class DefaultHttpHeaderParser extends AbstractParser implements HttpHeaderParser {
     private static final String SPLITTER = ":";
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultHttpHeaderParser.class);
     private static final Pattern BLANK_LINE = Pattern.compile("(?m)^\n");
@@ -24,7 +24,7 @@ public class DefaultHttpHeaderParser extends AbstractColleague implements HttpHe
 
     @Override
     public HttpMessageHeaders parser() throws UnsupportedEncodingException {
-        byte[] bytes = super.abstractParserContext.getHttpBytes();
+        byte[] bytes = super.abstractParserContext.getHttpMessageBytes();
         String httpText = new String(bytes, "utf-8");
 
         Matcher matcher = BLANK_LINE.matcher(httpText);

@@ -2,11 +2,12 @@ package com.ljm.server.protocol.http.parser;
 
 import com.ljm.server.protocol.HttpBodyParser;
 
-public class AbstractParserContext {
+public abstract class AbstractParserContext {
     protected final RequestLineParser requestLineParser;
     protected final HttpHeaderParser httpHeaderParser;
     protected final HttpBodyParser<?> httpBodyParser;
     protected final HttpQueryParameterParser httpQueryParameterParser;
+
 
     public AbstractParserContext(RequestLineParser requestLineParser, HttpHeaderParser httpHeaderParser, HttpBodyParser<?> httpBodyParser, HttpQueryParameterParser httpQueryParameterParser) {
         this.requestLineParser = requestLineParser;
@@ -15,19 +16,13 @@ public class AbstractParserContext {
         this.httpQueryParameterParser = httpQueryParameterParser;
     }
 
-    public byte[] getHttpBytes() {
-        return null;
-    }
+    public abstract byte[] getHttpMessageBytes();
 
-    public void setHttpBytes(byte[] bytes) {
-    }
+    public abstract void setHttpMessageBytes(byte[] bytes);
 
-    public void setRequestQueryString(String query) {
-    }
+    public abstract void setRequestQueryString(String queryString);
 
-    public void setHasBody(boolean b) {
-    }
+    public abstract void setHasBody(boolean hasBody);
 
-    public void setBytesBeforeBody(int length) {
-    }
+    public abstract void setBytesBeforeBody(int bytesBeforeBody);
 }

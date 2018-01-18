@@ -10,7 +10,7 @@ import java.net.URI;
  * <p>
  * Method SP Request-URI SP HTTP-Version CRLF
  */
-public class DefaultRequestLineParser extends AbstractColleague implements RequestLineParser {
+public class DefaultRequestLineParser extends AbstractParser implements RequestLineParser {
     private static final String SPLITTER = "\\s+";
     private static final String CRLF = "\r\n";
 

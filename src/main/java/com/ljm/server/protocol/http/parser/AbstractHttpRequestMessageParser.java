@@ -1,6 +1,5 @@
 package com.ljm.server.protocol.http.parser;
 
-import com.ljm.server.protocol.HttpBodyParser;
 import com.ljm.server.protocol.http.HttpMessage;
 import com.ljm.server.protocol.http.HttpQueryParameters;
 import com.ljm.server.protocol.http.HttpRequestMessage;
@@ -18,10 +17,10 @@ import java.util.Optional;
  * @author 李佳明 https://github.com/pkpk1234
  * @date 2018-01-2018/1/14
  */
-public abstract class AbstractHttpRequestMessageParser extends AbstractParserContext implements HttpRequestMessageParser {
+public abstract class AbstractHttpRequestMessageParser extends AbstractParser implements HttpRequestMessageParser {
 
-    public AbstractHttpRequestMessageParser(RequestLineParser requestLineParser, HttpHeaderParser httpHeaderParser, HttpBodyParser<?> httpBodyParser, HttpQueryParameterParser httpQueryParameterParser) {
-        super(requestLineParser, httpHeaderParser, httpBodyParser, httpQueryParameterParser);
+    public AbstractHttpRequestMessageParser(AbstractParserContext abstractParserContext) {
+        super(abstractParserContext);
     }
 
     /**
@@ -32,7 +31,8 @@ public abstract class AbstractHttpRequestMessageParser extends AbstractParserCon
     @Override
     public HttpMessage parse(InputStream inputStream) throws IOException {
         byte[] bytes = IOUtils.toByteArray(new InputStreamReader(inputStream), "utf-8");
-        super.setHttpBytes(bytes);
+        super.abstractParserContext.setHttpMessageBytes(bytes);
+
         RequestLine requestLine = parseRequestLine();
         HttpQueryParameters httpQueryParameters = parseHttpQueryParameters();
         IMessageHeaders messageHeaders = parseRequestHeaders();
