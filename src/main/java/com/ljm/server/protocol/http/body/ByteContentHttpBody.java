@@ -1,7 +1,5 @@
 package com.ljm.server.protocol.http.body;
 
-import com.ljm.server.protocol.http.HttpBody;
-
 import java.io.InputStream;
 
 /**

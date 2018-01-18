@@ -1,6 +1,9 @@
 package com.ljm.server.protocol.http;
 
 
+import com.ljm.server.protocol.http.body.HttpBody;
+import com.ljm.server.protocol.http.header.IMessageHeaders;
+
 import java.util.Optional;
 
 /**

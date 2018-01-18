@@ -1,7 +1,6 @@
 package com.ljm.server.protocol.http.parser;
 
 import com.ljm.server.protocol.http.HttpQueryParameter;
-import com.ljm.server.protocol.http.HttpQueryParameterParser;
 import com.ljm.server.protocol.http.HttpQueryParameters;
 
 /**

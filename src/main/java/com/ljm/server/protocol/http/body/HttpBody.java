@@ -1,4 +1,4 @@
-package com.ljm.server.protocol.http;
+package com.ljm.server.protocol.http.body;
 
 /**
  * @author 李佳明 https://github.com/pkpk1234

@@ -1,4 +1,6 @@
-package com.ljm.server.protocol.http;
+package com.ljm.server.protocol.http.parser;
+
+import com.ljm.server.protocol.http.RequestLine;
 
 /**
  * @author 李佳明 https://github.com/pkpk1234

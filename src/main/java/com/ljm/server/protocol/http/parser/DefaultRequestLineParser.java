@@ -1,7 +1,6 @@
 package com.ljm.server.protocol.http.parser;
 
 import com.ljm.server.protocol.http.RequestLine;
-import com.ljm.server.protocol.http.RequestLineParser;
 
 import java.net.URI;
 

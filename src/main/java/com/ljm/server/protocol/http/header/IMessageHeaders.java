@@ -1,4 +1,6 @@
-package com.ljm.server.protocol.http;
+package com.ljm.server.protocol.http.header;
+
+import com.ljm.server.protocol.http.header.HttpHeader;
 
 import java.util.List;
 import java.util.Set;

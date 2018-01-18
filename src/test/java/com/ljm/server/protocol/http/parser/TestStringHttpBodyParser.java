@@ -1,6 +1,6 @@
 package com.ljm.server.protocol.http.parser;
 
-import com.ljm.server.protocol.http.HttpBody;
+import com.ljm.server.protocol.http.body.HttpBody;
 import org.junit.Test;
 import static org.junit.Assert.*;
 

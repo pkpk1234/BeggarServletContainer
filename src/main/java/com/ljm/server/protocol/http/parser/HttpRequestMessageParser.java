@@ -1,4 +1,6 @@
-package com.ljm.server.protocol.http;
+package com.ljm.server.protocol.http.parser;
+
+import com.ljm.server.protocol.http.HttpMessage;
 
 import java.io.IOException;
 import java.io.InputStream;

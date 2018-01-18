@@ -1,7 +1,7 @@
 package com.ljm.server.protocol.http.parser;
 
 import com.ljm.server.protocol.HttpBodyParser;
-import com.ljm.server.protocol.http.HttpBody;
+import com.ljm.server.protocol.http.body.HttpBody;
 import com.ljm.server.protocol.http.body.StringContentHttpBody;
 
 import java.io.BufferedInputStream;

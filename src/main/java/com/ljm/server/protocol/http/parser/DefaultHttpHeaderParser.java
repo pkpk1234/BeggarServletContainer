@@ -1,7 +1,6 @@
 package com.ljm.server.protocol.http.parser;
 
-import com.ljm.server.protocol.http.HttpHeader;
-import com.ljm.server.protocol.http.HttpHeaderParser;
+import com.ljm.server.protocol.http.header.HttpHeader;
 import com.ljm.server.protocol.http.header.HttpMessageHeaders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
