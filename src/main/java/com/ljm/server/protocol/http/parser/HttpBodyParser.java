@@ -3,7 +3,6 @@ package com.ljm.server.protocol.http.parser;
 import com.ljm.server.protocol.http.body.HttpBody;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * @author 李佳明 https://github.com/pkpk1234

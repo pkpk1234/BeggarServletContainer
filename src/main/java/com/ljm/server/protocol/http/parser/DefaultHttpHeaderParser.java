@@ -18,10 +18,6 @@ public class DefaultHttpHeaderParser extends AbstractParser implements HttpHeade
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultHttpHeaderParser.class);
     private static final Pattern BLANK_LINE = Pattern.compile("(?m)^\r\n");
 
-    public DefaultHttpHeaderParser(HttpParserContext httpParserContext) {
-        super(httpParserContext);
-    }
-
     @Override
     public HttpMessageHeaders parse() throws UnsupportedEncodingException {
         String httpText = getHttpTextFromContext();
@@ -31,7 +27,7 @@ public class DefaultHttpHeaderParser extends AbstractParser implements HttpHeade
     }
 
     private String getHttpTextFromContext() throws UnsupportedEncodingException {
-        byte[] bytes = super.httpParserContext.getHttpMessageBytes();
+        byte[] bytes = HttpParserContext.getHttpMessageBytes();
         return new String(bytes, "utf-8");
     }
 
@@ -64,11 +60,11 @@ public class DefaultHttpHeaderParser extends AbstractParser implements HttpHeade
 
     private String setBytesBeforeBody(String httpText, int idx) throws UnsupportedEncodingException {
         httpText = httpText.substring(0, idx);
-        super.httpParserContext.setBytesLengthBeforeBody(httpText.getBytes("utf-8").length);
+        HttpParserContext.setBytesLengthBeforeBody(httpText.getBytes("utf-8").length);
         return httpText;
     }
 
     private void setHasBody() {
-        super.httpParserContext.setHasBody(true);
+        HttpParserContext.setHasBody(true);
     }
 }

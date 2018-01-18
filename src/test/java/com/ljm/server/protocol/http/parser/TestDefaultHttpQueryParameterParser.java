@@ -19,7 +19,7 @@ public class TestDefaultHttpQueryParameterParser {
     public void test() {
         String queryStr = "a=123&a1=1&b=456&a=321";
         DefaultHttpQueryParameterParser httpRequestParameterParser
-                = new DefaultHttpQueryParameterParser(new HttpParserContext());
+                = new DefaultHttpQueryParameterParser();
         HttpQueryParameters result = httpRequestParameterParser.parse(queryStr);
         List<HttpQueryParameter> parameters = result.getQueryParameter("a");
         assertNotNull(parameters);

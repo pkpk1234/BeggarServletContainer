@@ -13,10 +13,6 @@ import java.net.URI;
 public class DefaultRequestLineParser extends AbstractParser implements RequestLineParser {
     private static final String SPLITTER = "\\s+";
 
-    public DefaultRequestLineParser(HttpParserContext httpParserContext) {
-        super(httpParserContext);
-    }
-
     @Override
     public RequestLine parse(String startLine) {
         //去掉末尾的CRLF和空格，转化为Method SP Request-URI SP HTTP-Version
@@ -26,7 +22,7 @@ public class DefaultRequestLineParser extends AbstractParser implements RequestL
         if (parts.length == 3) {
             String method = parts[0];
             URI uri = URI.create(parts[1]);
-            super.httpParserContext.setRequestQueryString(uri.getQuery());
+            HttpParserContext.setRequestQueryString(uri.getQuery());
             String httpVersion = parts[2];
             return new RequestLine(method, uri, httpVersion);
         }

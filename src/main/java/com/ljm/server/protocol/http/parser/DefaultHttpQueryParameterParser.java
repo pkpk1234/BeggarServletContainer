@@ -11,8 +11,7 @@ public class DefaultHttpQueryParameterParser extends AbstractParser implements H
     private final HttpQueryParameters httpQueryParameters;
     private static final String SPLITTER = "&";
 
-    public DefaultHttpQueryParameterParser(HttpParserContext httpParserContext) {
-        super(httpParserContext);
+    public DefaultHttpQueryParameterParser() {
         this.httpQueryParameters = new HttpQueryParameters();
     }
 

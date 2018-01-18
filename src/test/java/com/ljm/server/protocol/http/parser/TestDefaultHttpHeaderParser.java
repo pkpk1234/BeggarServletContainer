@@ -5,11 +5,12 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static org.junit.Assert.*;
-
 import java.io.UnsupportedEncodingException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author 李佳明 https://github.com/pkpk1234
@@ -43,7 +44,7 @@ public class TestDefaultHttpHeaderParser {
     @Test
     public void test() throws UnsupportedEncodingException {
         HttpParserContext context = new HttpParserContext();
-        DefaultHttpHeaderParser httpHeaderParser = new DefaultHttpHeaderParser(context);
+        DefaultHttpHeaderParser httpHeaderParser = new DefaultHttpHeaderParser();
         context.setHttpMessageBytes(HTTP_MESSAGE.getBytes("utf-8"));
         HttpMessageHeaders httpHeaders = httpHeaderParser.parse();
         assertTrue(httpHeaders.hasHeader("Host"));

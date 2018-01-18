@@ -19,10 +19,6 @@ import java.util.Optional;
  */
 public abstract class AbstractHttpRequestMessageParser extends AbstractParser implements HttpRequestMessageParser {
 
-    public AbstractHttpRequestMessageParser(HttpParserContext httpParserContext) {
-        super(httpParserContext);
-    }
-
     /**
      * 定义parse流程
      *
@@ -47,12 +43,13 @@ public abstract class AbstractHttpRequestMessageParser extends AbstractParser im
 
     /**
      * 读取请求发送的数据，并保存为byte数组设置到解析上下文中
+     *
      * @param inputStream
      * @throws IOException
      */
     private void getAndSetBytesToContext(InputStream inputStream) throws IOException {
         byte[] bytes = IOUtils.toByteArray(new InputStreamReader(inputStream), "utf-8");
-        super.httpParserContext.setHttpMessageBytes(bytes);
+        HttpParserContext.setHttpMessageBytes(bytes);
     }
 
     /**

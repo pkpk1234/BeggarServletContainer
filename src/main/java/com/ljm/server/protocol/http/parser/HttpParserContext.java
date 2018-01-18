@@ -2,44 +2,45 @@ package com.ljm.server.protocol.http.parser;
 
 /**
  * HTTP Message解析上下文
+ *
  * @author 李佳明 https://github.com/pkpk1234
  */
 public class HttpParserContext {
 
-    protected byte[] httpMessageBytes;
-    protected String requestQueryString;
-    protected boolean hasBody;
-    protected int bytesLengthBeforeBody;
-    
-    public byte[] getHttpMessageBytes() {
-        return httpMessageBytes;
+    private static final ThreadLocal<byte[]> HTTP_MESSAGE_BYTES = new ThreadLocal<>();
+    private static final ThreadLocal<String> REQUEST_QUERY_STRING = new ThreadLocal<>();
+    private static final ThreadLocal<Boolean> HAS_BODY = new ThreadLocal<>();
+    private static final ThreadLocal<Integer> BYTES_LENGTH_BEFORE_BODY = new ThreadLocal<>();
+
+    public static byte[] getHttpMessageBytes() {
+        return HTTP_MESSAGE_BYTES.get();
     }
 
-    public void setHttpMessageBytes(byte[] httpMessageBytes) {
-        this.httpMessageBytes = httpMessageBytes;
+    public static void setHttpMessageBytes(byte[] iHttpMessageBytes) {
+        HTTP_MESSAGE_BYTES.set(iHttpMessageBytes);
     }
 
-    public String getRequestQueryString() {
-        return requestQueryString;
+    public static String getRequestQueryString() {
+        return REQUEST_QUERY_STRING.get();
     }
 
-    public void setRequestQueryString(String requestQueryString) {
-        this.requestQueryString = requestQueryString;
+    public static void setRequestQueryString(String iRequestQueryString) {
+        REQUEST_QUERY_STRING.set(iRequestQueryString);
     }
 
-    public boolean getHasBody() {
-        return hasBody;
+    public static boolean getHasBody() {
+        return HAS_BODY.get();
     }
 
-    public void setHasBody(boolean hasBody) {
-        this.hasBody = hasBody;
+    public static void setHasBody(boolean iHasBody) {
+        HAS_BODY.set(iHasBody);
     }
 
-    public int getBytesLengthBeforeBody() {
-        return bytesLengthBeforeBody;
+    public static int getBytesLengthBeforeBody() {
+        return BYTES_LENGTH_BEFORE_BODY.get();
     }
 
-    public void setBytesLengthBeforeBody(int bytesLengthBeforeBody) {
-        this.bytesLengthBeforeBody = bytesLengthBeforeBody;
+    public static void setBytesLengthBeforeBody(int iBytesLengthBeforeBody) {
+        BYTES_LENGTH_BEFORE_BODY.set(iBytesLengthBeforeBody);
     }
 }
