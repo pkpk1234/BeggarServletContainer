@@ -40,18 +40,38 @@ public abstract class AbstractHttpRequestMessageParser extends AbstractParser im
         HttpRequestMessage httpRequestMessage = new HttpRequestMessage(requestLine, messageHeaders, httpBody, httpQueryParameters);
         return httpRequestMessage;
     }
-    
+
     private void getAndSetBytesToContext(InputStream inputStream) throws IOException {
         byte[] bytes = IOUtils.toByteArray(new InputStreamReader(inputStream), "utf-8");
         super.httpParserContext.setHttpMessageBytes(bytes);
     }
 
+    /**
+     * 解析并构建RequestLine
+     *
+     * @return
+     */
     protected abstract RequestLine parseRequestLine();
 
+    /**
+     * 解析并构建HTTP请求Headers集合
+     *
+     * @return
+     */
     protected abstract IMessageHeaders parseRequestHeaders();
 
+    /**
+     * 解析并构建HTTP 请求Body
+     *
+     * @return
+     */
     protected abstract Optional<HttpBody<?>> parseRequestBody();
 
+    /**
+     * 解析并构建QueryParameter集合
+     *
+     * @return
+     */
     protected abstract HttpQueryParameters parseHttpQueryParameters();
 
 }

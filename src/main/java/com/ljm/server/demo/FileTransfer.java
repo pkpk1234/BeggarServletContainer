@@ -12,6 +12,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
+/**
+ * @author 李佳明 https://github.com/pkpk1234
+ */
 public class FileTransfer {
     public FileTransfer() {
     }
@@ -30,7 +33,7 @@ public class FileTransfer {
             printWriter.flush();
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
-                if (line.equals("stop")) {
+                if ("stop".equals(line)) {
                     printWriter.append("bye bye.\n");
                     printWriter.flush();
                     break;

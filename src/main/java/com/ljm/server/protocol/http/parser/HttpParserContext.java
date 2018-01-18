@@ -1,12 +1,16 @@
 package com.ljm.server.protocol.http.parser;
 
+/**
+ * HTTP Message解析上下文
+ * @author 李佳明 https://github.com/pkpk1234
+ */
 public class HttpParserContext {
 
     protected byte[] httpMessageBytes;
     protected String requestQueryString;
     protected boolean hasBody;
     protected int bytesLengthBeforeBody;
-
+    
     public byte[] getHttpMessageBytes() {
         return httpMessageBytes;
     }

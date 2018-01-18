@@ -51,7 +51,7 @@ public class DefaultHttpHeaderParser extends AbstractParser implements HttpHeade
         //跳过第一行
         for (int i = 1; i < lines.length; i++) {
             String keyValue = lines[i];
-            if (keyValue.equals("")) {
+            if ("".equals(keyValue)) {
                 break;
             }
             String[] temp = keyValue.split(SPLITTER);

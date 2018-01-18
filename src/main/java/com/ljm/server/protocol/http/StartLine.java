@@ -5,5 +5,10 @@ package com.ljm.server.protocol.http;
  * @date 2018-01-2018/1/13
  */
 public interface StartLine {
+    /**
+     * 获取HTTP 版本号
+     *
+     * @return
+     */
     String getHttpVersion();
 }

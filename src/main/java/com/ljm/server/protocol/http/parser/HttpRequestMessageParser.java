@@ -10,5 +10,12 @@ import java.io.InputStream;
  * @date 2018-01-2018/1/14
  */
 public interface HttpRequestMessageParser {
+    /**
+     * 解析输入流中的内容，并构建Http Message对象
+     *
+     * @param inputStream
+     * @return
+     * @throws IOException
+     */
     HttpMessage parse(InputStream inputStream) throws IOException;
 }

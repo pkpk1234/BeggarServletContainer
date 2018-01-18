@@ -5,6 +5,9 @@ import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.util.Objects;
 
+/**
+ * @author 李佳明 https://github.com/pkpk1234
+ */
 public class ChannelHelper {
     public static void doWrite(final ByteBuffer buffer, final SocketChannel channel) throws IOException {
         if (Objects.isNull(buffer) || Objects.isNull(channel)) {

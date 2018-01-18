@@ -11,19 +11,54 @@ import java.util.Set;
  */
 public interface IMessageHeaders {
 
-    List<HttpHeader> getHeader(String headerName);
+    /**
+     * 获取名字为headerName的HttpHeader列表
+     * @param headerName
+     * @return
+     */
+    List<HttpHeader> getHeaders(String headerName);
 
+    /**
+     * 获取第一个名字为headerName的HttpHeader
+     * @param headerName
+     * @return
+     */
     HttpHeader getFirstHeader(String headerName);
 
+    /**
+     * 获取所有的HttpHeader
+     * @return
+     */
     List<HttpHeader> getAllHeaders();
 
+    /**
+     * 添加HttpHeader到集合中
+     * @param httpHeader
+     */
     void addHeader(HttpHeader httpHeader);
 
+    /**
+     * 从集合中移除HttpHeader
+     * @param httpHeader
+     */
     void removeHeader(HttpHeader httpHeader);
 
+    /**
+     * 从集合中移除名字为headerName的所有HttpHeader
+     * @param headerName
+     */
     void removeHeaders(String headerName);
 
+    /**
+     * 判断集合中是否包含名字为headerName的HttpHeader
+     * @param headerName
+     * @return
+     */
     boolean hasHeader(String headerName);
 
+    /**
+     * 返回所有HttpHeader的名字，并去重
+     * @return
+     */
     Set<String> getHeaderNames();
 }

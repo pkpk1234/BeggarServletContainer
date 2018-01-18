@@ -5,7 +5,9 @@ import com.ljm.server.event.listener.AbstractEventListener;
 
 import java.nio.channels.SelectionKey;
 
-
+/**
+ * @author 李佳明 https://github.com/pkpk1234
+ */
 public class SelectableChannleEventListener extends AbstractEventListener<SelectionKey> {
     private final EventHandler<SelectionKey> eventHandler;
 

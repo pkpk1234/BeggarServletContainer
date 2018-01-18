@@ -5,8 +5,13 @@ package com.ljm.server;
  * @date 2018-01-2018/1/6
  */
 public interface LifeCycle {
-
+    /**
+     * 启动生命周期
+     */
     void start();
 
+    /**
+     * 停止生命周期
+     */
     void stop();
 }

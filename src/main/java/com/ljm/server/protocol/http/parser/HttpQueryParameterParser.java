@@ -7,5 +7,11 @@ import com.ljm.server.protocol.http.HttpQueryParameters;
  * @date 2018-01-2018/1/15
  */
 public interface HttpQueryParameterParser {
+    /**
+     * 解析QueryString，返回HttpQueryParameter集合
+     *
+     * @param queryString
+     * @return
+     */
     HttpQueryParameters parse(String queryString);
 }

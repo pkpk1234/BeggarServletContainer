@@ -18,7 +18,7 @@ public class HttpMessageHeaders implements IMessageHeaders {
     }
 
     @Override
-    public List<HttpHeader> getHeader(String headerName) {
+    public List<HttpHeader> getHeaders(String headerName) {
         return this.headersMultiMap.get(headerName);
     }
 

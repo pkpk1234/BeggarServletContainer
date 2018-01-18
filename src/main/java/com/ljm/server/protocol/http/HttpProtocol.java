@@ -14,8 +14,8 @@ public class HttpProtocol implements Protocol {
         this.version = version;
     }
 
-    public static final HttpProtocol version11 = new HttpProtocol("1.1");
-    public static final HttpProtocol version20 = new HttpProtocol("2.0");
+    public static final HttpProtocol VERSION11 = new HttpProtocol("1.1");
+    public static final HttpProtocol VERSION20 = new HttpProtocol("2.0");
 
     @Override
     public String getName() {

@@ -13,6 +13,7 @@ import java.util.Set;
 public interface Server {
     /**
      * 启动服务器
+     * @throws IOException
      */
     void start() throws IOException;
 

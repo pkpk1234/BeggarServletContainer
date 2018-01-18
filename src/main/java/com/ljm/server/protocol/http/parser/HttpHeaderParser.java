@@ -10,5 +10,11 @@ import java.io.UnsupportedEncodingException;
  * @date 2018-01-2018/1/14
  */
 public interface HttpHeaderParser {
+    /**
+     * 解析并返回HttpMessageHeader集合
+     *
+     * @return
+     * @throws UnsupportedEncodingException
+     */
     HttpMessageHeaders parse() throws UnsupportedEncodingException;
 }
