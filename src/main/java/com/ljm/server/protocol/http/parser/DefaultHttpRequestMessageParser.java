@@ -30,7 +30,9 @@ public class DefaultHttpRequestMessageParser extends AbstractHttpRequestMessageP
 
     @Override
     protected RequestLine parseRequestLine() {
-        return this.httpRequestLineParser.parse();
+        RequestLine requestLine = this.httpRequestLineParser.parse();
+        HttpParserContext.setHttpMethod(requestLine.getMethod());
+        return requestLine;
     }
 
     @Override
@@ -43,15 +45,18 @@ public class DefaultHttpRequestMessageParser extends AbstractHttpRequestMessageP
         HttpMessageHeaders httpMessageHeaders = this.httpHeaderParser.parse();
         if (httpMessageHeaders.hasHeader(CONTENT_TYPE)) {
             HttpParserContext.setContentType(httpMessageHeaders.getFirstHeader(CONTENT_TYPE).getValue());
-        } else if(HttpParserContext.getHasBody()) {
-            //报文中有Body，但没设置类型
-            
         }
         return httpMessageHeaders;
     }
 
     @Override
     protected Optional<HttpBody<?>> parseRequestBody() {
+        if (("POST".equals(HttpParserContext.getHttpMethod())
+                || "PUT".equals(HttpParserContext.getHttpMethod()))
+                && HttpParserContext.getHasBody()) {
+        
+
+        }
         return Optional.empty();
     }
 
