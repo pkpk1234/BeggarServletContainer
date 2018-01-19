@@ -11,6 +11,7 @@ import org.apache.commons.io.IOUtils;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.Optional;
 
 /**
@@ -57,14 +58,14 @@ public abstract class AbstractHttpRequestMessageParser extends AbstractParser im
      *
      * @return
      */
-    protected abstract RequestLine parseRequestLine();
+    protected abstract RequestLine parseRequestLine() throws UnsupportedEncodingException;
 
     /**
      * 解析并构建HTTP请求Headers集合
      *
      * @return
      */
-    protected abstract IMessageHeaders parseRequestHeaders();
+    protected abstract IMessageHeaders parseRequestHeaders() throws UnsupportedEncodingException;
 
     /**
      * 解析并构建HTTP 请求Body

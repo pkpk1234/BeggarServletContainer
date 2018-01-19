@@ -13,7 +13,6 @@ public interface HttpHeaderParser {
      * 解析并返回HttpMessageHeader集合
      *
      * @return
-     * @throws UnsupportedEncodingException
      */
-    HttpMessageHeaders parse() throws UnsupportedEncodingException;
+    HttpMessageHeaders parse();
 }

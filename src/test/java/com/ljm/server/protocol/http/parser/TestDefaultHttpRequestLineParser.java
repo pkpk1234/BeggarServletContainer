@@ -13,16 +13,16 @@ import static org.junit.Assert.assertEquals;
  * @author 李佳明 https://github.com/pkpk1234
  * @date 2018-01-2018/1/14
  */
-public class TestDefaultRequestLineParser {
+public class TestDefaultHttpRequestLineParser {
     private static final Logger
-            LOGGER = LoggerFactory.getLogger(TestDefaultRequestLineParser.class);
+            LOGGER = LoggerFactory.getLogger(TestDefaultHttpRequestLineParser.class);
 
     @Test
     public void test() {
         HttpParserContext parserContext = new HttpParserContext();
 
-        DefaultRequestLineParser defaultRequestLineParser
-                = new DefaultRequestLineParser();
+        DefaultHttpRequestLineParser defaultRequestLineParser
+                = new DefaultHttpRequestLineParser();
 
         RequestLine result = defaultRequestLineParser.parse("GET /hello.txt HTTP/1.1\r\n");
         String method = result.getMethod();
@@ -37,8 +37,8 @@ public class TestDefaultRequestLineParser {
 
     @Test
     public void testQuery() {
-        DefaultRequestLineParser defaultRequestLineParser
-                = new DefaultRequestLineParser();
+        DefaultHttpRequestLineParser defaultRequestLineParser
+                = new DefaultHttpRequestLineParser();
         RequestLine result = defaultRequestLineParser.parse("GET /test?a=123&a1=1&b=456 HTTP/1.1\r\n");
         String method = result.getMethod();
         assertEquals("GET", method);

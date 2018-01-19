@@ -19,18 +19,33 @@ public class DefaultHttpHeaderParser extends AbstractParser implements HttpHeade
     private static final Pattern BLANK_LINE = Pattern.compile("(?m)^\r\n");
 
     @Override
-    public HttpMessageHeaders parse() throws UnsupportedEncodingException {
-        String httpText = getHttpTextFromContext();
-        httpText = getStringBeforeBody(httpText);
-        HttpMessageHeaders httpMessageHeaders = doParseHttpMessageHeaders(httpText);
-        return httpMessageHeaders;
+    public HttpMessageHeaders parse() {
+        try {
+            String httpText = getHttpTextFromContext();
+            httpText = getStringBeforeBody(httpText);
+            HttpMessageHeaders httpMessageHeaders = doParseHttpMessageHeaders(httpText);
+            return httpMessageHeaders;
+        } catch (UnsupportedEncodingException e) {
+            throw new ParserException("Unsupported Encoding", e);
+        }
     }
 
+    /**
+     * 从上下文获取bytes并转换为String
+     * @return
+     * @throws UnsupportedEncodingException
+     */
     private String getHttpTextFromContext() throws UnsupportedEncodingException {
         byte[] bytes = HttpParserContext.getHttpMessageBytes();
         return new String(bytes, "utf-8");
     }
 
+    /**
+     * 获取Body之前的部分，并设置是否包含Body标注和Body之前字节码到上下文中
+     * @param httpText
+     * @return
+     * @throws UnsupportedEncodingException
+     */
     private String getStringBeforeBody(String httpText) throws UnsupportedEncodingException {
         Matcher matcher = BLANK_LINE.matcher(httpText);
         if (matcher.find()) {
@@ -41,6 +56,11 @@ public class DefaultHttpHeaderParser extends AbstractParser implements HttpHeade
         return httpText;
     }
 
+    /**
+     * 解析Body之前的文本构建HttpHeader，并保存到HttpMessageHeaders中
+     * @param httpText
+     * @return
+     */
     private HttpMessageHeaders doParseHttpMessageHeaders(String httpText) {
         HttpMessageHeaders httpMessageHeaders = new HttpMessageHeaders();
         String[] lines = httpText.split(CRLF);
@@ -58,12 +78,22 @@ public class DefaultHttpHeaderParser extends AbstractParser implements HttpHeade
         return httpMessageHeaders;
     }
 
+    /**
+     * 设置body之前的字节数到上下文中
+     * @param httpText
+     * @param idx
+     * @return
+     * @throws UnsupportedEncodingException
+     */
     private String setBytesBeforeBody(String httpText, int idx) throws UnsupportedEncodingException {
         httpText = httpText.substring(0, idx);
         HttpParserContext.setBytesLengthBeforeBody(httpText.getBytes("utf-8").length);
         return httpText;
     }
 
+    /**
+     * 设置报文是否包含Body到上下文中
+     */
     private void setHasBody() {
         HttpParserContext.setHasBody(true);
     }

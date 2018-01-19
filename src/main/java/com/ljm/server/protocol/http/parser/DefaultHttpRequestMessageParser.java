@@ -1,36 +1,59 @@
 package com.ljm.server.protocol.http.parser;
 
+import com.ljm.server.protocol.http.HttpQueryParameters;
+import com.ljm.server.protocol.http.RequestLine;
+import com.ljm.server.protocol.http.body.HttpBody;
+import com.ljm.server.protocol.http.header.HttpMessageHeaders;
+import com.ljm.server.protocol.http.header.IMessageHeaders;
+
+import java.util.Optional;
+
 /**
  * @author 李佳明 https://github.com/pkpk1234
  * @date 2018-01-2018/1/14
  */
-public class DefaultHttpRequestMessageParser  {
+public class DefaultHttpRequestMessageParser extends AbstractHttpRequestMessageParser {
+    private final HttpRequestLineParser httpRequestLineParser;
+    private final HttpQueryParameterParser httpQueryParameterParser;
+    private final HttpHeaderParser httpHeaderParser;
+    private final HttpBodyParserFactory httpBodyParserFactory;
 
-    /*@Override
-    protected RequestLine parseRequestLine(String httpText) {
-        return this.requestLineParser.parse(httpText.split("\r\n")[0]);
-        //return getRequestLine(inputStream);
-    }
-
-    private RequestLine getRequestLine(InputStream inputStream) {
-        Scanner scanner = new Scanner(inputStream, "utf-8");
-        String startLine = scanner.nextLine();
-        return this.requestLineParser.parse(startLine);
+    public DefaultHttpRequestMessageParser(HttpRequestLineParser httpRequestLineParser,
+                                           HttpQueryParameterParser httpQueryParameterParser,
+                                           HttpHeaderParser httpHeaderParser,
+                                           HttpBodyParserFactory httpBodyParserFactory) {
+        this.httpRequestLineParser = httpRequestLineParser;
+        this.httpQueryParameterParser = httpQueryParameterParser;
+        this.httpHeaderParser = httpHeaderParser;
+        this.httpBodyParserFactory = httpBodyParserFactory;
     }
 
     @Override
-    protected IMessageHeaders parseRequestHeaders(String httpText) {
-        return httpHeaderParser.parse(httpText);
+    protected RequestLine parseRequestLine() {
+        return this.httpRequestLineParser.parse();
     }
 
-    //TODO: body的解析
     @Override
-    protected Optional<HttpBody<?>> parseRequestBody(String httpText, IMessageHeaders messageHeaders) {
+    protected HttpQueryParameters parseHttpQueryParameters() {
+        return this.httpQueryParameterParser.parse();
+    }
+
+    @Override
+    protected IMessageHeaders parseRequestHeaders() {
+        HttpMessageHeaders httpMessageHeaders = this.httpHeaderParser.parse();
+        if (httpMessageHeaders.hasHeader(CONTENT_TYPE)) {
+            HttpParserContext.setContentType(httpMessageHeaders.getFirstHeader(CONTENT_TYPE).getValue());
+        } else if(HttpParserContext.getHasBody()) {
+            //报文中有Body，但没设置类型
+            
+        }
+        return httpMessageHeaders;
+    }
+
+    @Override
+    protected Optional<HttpBody<?>> parseRequestBody() {
         return Optional.empty();
     }
 
-    @Override
-    protected HttpQueryParameters parseHttpQueryParameters(RequestLine requestLine) {
-        return this.httpQueryParameterParser.parse(requestLine.getRequestURI().getQuery());
-    }*/
+
 }

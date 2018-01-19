@@ -11,6 +11,7 @@ public class HttpParserContext {
     private static final ThreadLocal<String> REQUEST_QUERY_STRING = new ThreadLocal<>();
     private static final ThreadLocal<Boolean> HAS_BODY = new ThreadLocal<>();
     private static final ThreadLocal<Integer> BYTES_LENGTH_BEFORE_BODY = new ThreadLocal<>();
+    private static final ThreadLocal<String> CONTENT_TYPE = new ThreadLocal<>();
 
     public static byte[] getHttpMessageBytes() {
         return HTTP_MESSAGE_BYTES.get();
@@ -42,5 +43,21 @@ public class HttpParserContext {
 
     public static void setBytesLengthBeforeBody(int iBytesLengthBeforeBody) {
         BYTES_LENGTH_BEFORE_BODY.set(iBytesLengthBeforeBody);
+    }
+
+    public static String getContentType() {
+        return CONTENT_TYPE.get();
+    }
+
+    public static void setContentType(String contentType) {
+        CONTENT_TYPE.set(contentType);
+    }
+
+    public static void removeAll() {
+        HTTP_MESSAGE_BYTES.remove();
+        REQUEST_QUERY_STRING.remove();
+        HAS_BODY.remove();
+        BYTES_LENGTH_BEFORE_BODY.remove();
+        CONTENT_TYPE.remove();
     }
 }

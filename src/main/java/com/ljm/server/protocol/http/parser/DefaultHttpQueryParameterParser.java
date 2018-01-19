@@ -16,7 +16,8 @@ public class DefaultHttpQueryParameterParser extends AbstractParser implements H
     }
 
     @Override
-    public HttpQueryParameters parse(String queryString) {
+    public HttpQueryParameters parse() {
+        String queryString = HttpParserContext.getRequestQueryString();
         if (queryString.contains(SPLITTER)) {
             String[] keyValues = queryString.split(SPLITTER);
             for (String keyValue : keyValues) {
