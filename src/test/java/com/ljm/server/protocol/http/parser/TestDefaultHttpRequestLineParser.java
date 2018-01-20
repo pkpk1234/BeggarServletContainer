@@ -20,11 +20,11 @@ public class TestDefaultHttpRequestLineParser {
     @Test
     public void test() {
         HttpParserContext parserContext = new HttpParserContext();
-
+        parserContext.setHttpMessageBytes("GET /hello.txt HTTP/1.1\r\n".getBytes());
         DefaultHttpRequestLineParser defaultRequestLineParser
                 = new DefaultHttpRequestLineParser();
 
-        RequestLine result = defaultRequestLineParser.parse("GET /hello.txt HTTP/1.1\r\n");
+        RequestLine result = defaultRequestLineParser.parse();
         String method = result.getMethod();
         assertEquals("GET", method);
         final URI requestURI = result.getRequestURI();
@@ -37,9 +37,12 @@ public class TestDefaultHttpRequestLineParser {
 
     @Test
     public void testQuery() {
+        HttpParserContext parserContext = new HttpParserContext();
+        parserContext.setHttpMessageBytes("GET /test?a=123&a1=1&b=456 HTTP/1.1\r\n".getBytes());
+
         DefaultHttpRequestLineParser defaultRequestLineParser
                 = new DefaultHttpRequestLineParser();
-        RequestLine result = defaultRequestLineParser.parse("GET /test?a=123&a1=1&b=456 HTTP/1.1\r\n");
+        RequestLine result = defaultRequestLineParser.parse();
         String method = result.getMethod();
         assertEquals("GET", method);
         final URI requestURI = result.getRequestURI();
