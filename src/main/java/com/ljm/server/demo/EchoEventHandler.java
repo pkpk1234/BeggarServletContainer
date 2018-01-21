@@ -4,6 +4,7 @@ import com.ljm.server.event.handler.AbstractEventHandler;
 import com.ljm.server.io.connection.Connection;
 import com.ljm.server.io.utils.IoUtils;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -17,7 +18,11 @@ public class EchoEventHandler extends AbstractEventHandler<Connection> {
 
     @Override
     protected void doHandle(Connection connection) {
-        /*echo(connection.getInputStream(), connection.getOutputStream());*/
+        try {
+            echo(connection.getInputStream(), connection.getOutputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     protected void echo(InputStream inputstream, OutputStream outputStream) {

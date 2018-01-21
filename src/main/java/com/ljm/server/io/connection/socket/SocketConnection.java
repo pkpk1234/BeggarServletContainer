@@ -46,7 +46,7 @@ public class SocketConnection implements Connection {
 	}
 
 	@Override
-	public OutputStream getOutPutStream() throws IOException {
+	public OutputStream getOutputStream() throws IOException {
 		return this.socket.getOutputStream();
 	}
 }

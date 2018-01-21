@@ -3,6 +3,7 @@ package com.ljm.server.demo;
 import com.ljm.server.event.handler.AbstractEventHandler;
 import com.ljm.server.io.connection.Connection;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -12,28 +13,34 @@ import java.io.OutputStream;
  */
 public class FileEventHandler extends AbstractEventHandler<Connection> {
 
-    private final String docBase;
-    private final FileTransfer fileTransfer = new FileTransfer();
+	private final String docBase;
+	private final FileTransfer fileTransfer = new FileTransfer();
 
-    public FileEventHandler(String docBase) {
-        this.docBase = docBase;
-    }
+	public FileEventHandler(String docBase) {
+		this.docBase = docBase;
+	}
 
-    @Override
-    protected void doHandle(Connection connection) {
+	@Override
+	protected void doHandle(Connection connection) {
 
-       /* fileTransfer.getFile(this.docBase, connection.getInputStream(),
-                connection.getOutputStream());*/
-    }
+		try {
+			getFile(this.docBase, connection.getInputStream(),
+					connection.getOutputStream());
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
-    /**
-     * 返回文件
-     *
-     * @param inputstream
-     * @param outputStream
-     */
-    private void getFile(String docBase, InputStream inputstream, OutputStream outputStream) {
-        fileTransfer.getFile(docBase, inputstream, outputStream);
-    }
+	/**
+	 * 返回文件
+	 *
+	 * @param inputstream
+	 * @param outputStream
+	 */
+	private void getFile(String docBase, InputStream inputstream,
+			OutputStream outputStream) {
+		fileTransfer.getFile(docBase, inputstream, outputStream);
+	}
 
 }

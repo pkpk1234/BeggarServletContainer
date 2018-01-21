@@ -55,7 +55,7 @@ public class SelectableChannelConnection implements ChannelConnection {
     }
 
     @Override
-    public OutputStream getOutPutStream() {
+    public OutputStream getOutputStream() {
         return null;
     }
 

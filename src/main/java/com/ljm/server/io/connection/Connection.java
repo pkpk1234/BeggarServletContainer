@@ -49,5 +49,5 @@ public interface Connection {
 
     InputStream getInputStream() throws IOException;
 
-    OutputStream getOutPutStream() throws IOException;
+    OutputStream getOutputStream() throws IOException;
 }
