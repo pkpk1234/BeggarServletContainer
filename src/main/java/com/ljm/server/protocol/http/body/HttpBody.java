@@ -6,13 +6,6 @@ package com.ljm.server.protocol.http.body;
  */
 public interface HttpBody<T> {
     /**
-     * 获取HttpBody的Content Type
-     *
-     * @return
-     */
-    String getContentType();
-
-    /**
      * 获取HttpBody内容
      *
      * @return

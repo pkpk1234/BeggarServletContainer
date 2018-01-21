@@ -11,20 +11,9 @@ import java.io.IOException;
 public interface HttpBodyParser<T> {
     /**
      * 解析并构建HttpBody对象
-     * @param bodyBytes
-     * @param contentType
+     *
      * @return
-     * @throws IOException
      */
-    HttpBody<T> parse(byte[] bodyBytes, String contentType) throws IOException;
+    HttpBody<T> parse();
 
-    /**
-     * 解析并构建HttpBody对象
-     * @param bodyBytes
-     * @param contentType
-     * @param encoding
-     * @return
-     * @throws IOException
-     */
-    HttpBody<T> parse(byte[] bodyBytes, String contentType, String encoding) throws IOException;
 }

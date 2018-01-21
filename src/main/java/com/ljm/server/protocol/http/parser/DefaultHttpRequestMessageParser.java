@@ -2,10 +2,12 @@ package com.ljm.server.protocol.http.parser;
 
 import com.ljm.server.protocol.http.HttpQueryParameters;
 import com.ljm.server.protocol.http.RequestLine;
+import com.ljm.server.protocol.http.body.ByteContentHttpBody;
 import com.ljm.server.protocol.http.body.HttpBody;
 import com.ljm.server.protocol.http.header.HttpMessageHeaders;
 import com.ljm.server.protocol.http.header.IMessageHeaders;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 /**
@@ -16,16 +18,16 @@ public class DefaultHttpRequestMessageParser extends AbstractHttpRequestMessageP
     private final HttpRequestLineParser httpRequestLineParser;
     private final HttpQueryParameterParser httpQueryParameterParser;
     private final HttpHeaderParser httpHeaderParser;
-    private final HttpBodyParserFactory httpBodyParserFactory;
+    private final HttpBodyParser<byte[]> httpBodyParser;
 
     public DefaultHttpRequestMessageParser(HttpRequestLineParser httpRequestLineParser,
                                            HttpQueryParameterParser httpQueryParameterParser,
                                            HttpHeaderParser httpHeaderParser,
-                                           HttpBodyParserFactory httpBodyParserFactory) {
+                                           HttpBodyParser<byte[]> httpBodyParser) {
         this.httpRequestLineParser = httpRequestLineParser;
         this.httpQueryParameterParser = httpQueryParameterParser;
         this.httpHeaderParser = httpHeaderParser;
-        this.httpBodyParserFactory = httpBodyParserFactory;
+        this.httpBodyParser = httpBodyParser;
     }
 
     @Override
@@ -51,13 +53,17 @@ public class DefaultHttpRequestMessageParser extends AbstractHttpRequestMessageP
 
     @Override
     protected Optional<HttpBody<?>> parseRequestBody() {
-        if (("POST".equals(HttpParserContext.getHttpMethod())
-                || "PUT".equals(HttpParserContext.getHttpMethod()))
-                && HttpParserContext.getHasBody()) {
-        
-
+        if (isHasBodyMethod()) {
+            HttpBody<byte[]> byteContentHttpBody = this.httpBodyParser.parse();
+            return Optional.ofNullable(byteContentHttpBody);
         }
         return Optional.empty();
+    }
+
+    private boolean isHasBodyMethod() {
+        return ("POST".equals(HttpParserContext.getHttpMethod())
+                || "PUT".equals(HttpParserContext.getHttpMethod()))
+                && HttpParserContext.getHasBody();
     }
 
 

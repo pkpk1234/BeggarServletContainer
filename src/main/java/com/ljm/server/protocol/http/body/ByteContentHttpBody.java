@@ -1,28 +1,19 @@
 package com.ljm.server.protocol.http.body;
 
-import java.io.InputStream;
-
 /**
  * @author 李佳明 https://github.com/pkpk1234
  * @date 2018-01-2018/1/13
  */
-public class ByteContentHttpBody implements HttpBody<InputStream> {
+public class ByteContentHttpBody implements HttpBody<byte[]> {
 
-    public ByteContentHttpBody(String contentType, InputStream inputStream) {
-        this.contentType = contentType;
-        this.inputStream = inputStream;
-    }
+    private final byte[] bytes;
 
-    private final String contentType;
-    private final InputStream inputStream;
-
-    @Override
-    public String getContentType() {
-        return contentType;
+    public ByteContentHttpBody(byte[] bytes) {
+        this.bytes = bytes;
     }
 
     @Override
-    public InputStream getBodyContent() {
-        return inputStream;
+    public byte[] getBodyContent() {
+        return this.bytes;
     }
 }
