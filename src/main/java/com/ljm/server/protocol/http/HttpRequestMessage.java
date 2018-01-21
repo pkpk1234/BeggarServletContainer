@@ -15,14 +15,14 @@ public class HttpRequestMessage implements HttpMessage {
     private final RequestLine requestLine;
     private final IMessageHeaders messageHeaders;
     private final Optional<HttpBody<?>> httpBody;
-    private final HttpQueryParameters requestParameters;
+    private final HttpQueryParameters httpQueryParameters;
 
     public HttpRequestMessage(RequestLine requestLine, IMessageHeaders messageHeaders, Optional<HttpBody<?>> httpBody,
-                              HttpQueryParameters requestParameters) {
+                              HttpQueryParameters httpQueryParameters) {
         this.requestLine = requestLine;
         this.messageHeaders = messageHeaders;
         this.httpBody = httpBody;
-        this.requestParameters = requestParameters;
+        this.httpQueryParameters = httpQueryParameters;
     }
 
     @Override
@@ -44,7 +44,7 @@ public class HttpRequestMessage implements HttpMessage {
         return requestLine;
     }
 
-    public HttpQueryParameters getRequestParameters() {
-        return requestParameters;
+    public HttpQueryParameters getHttpQueryParameters() {
+        return httpQueryParameters;
     }
 }

@@ -29,7 +29,7 @@ public class HttpQueryParameters {
         return null;
     }
 
-    public List<HttpQueryParameter> getQueryParameters() {
+    public List<HttpQueryParameter> getAllQueryParameters() {
         return this.prametersMultiMap.values();
     }
 

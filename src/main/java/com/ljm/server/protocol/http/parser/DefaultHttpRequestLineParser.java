@@ -19,7 +19,8 @@ public class DefaultHttpRequestLineParser extends AbstractParser implements Http
         try {
             byte[] bytes = HttpParserContext.getHttpMessageBytes();
             String httpString = new String(bytes, "utf-8");
-            String startLine = httpString.split(CRLF, 1)[0];
+            //按CRLF将字符串拆分为长度为2的数组，取第一个值即为startLine
+            String startLine = httpString.split(CRLF, 2)[0];
             //去掉末尾的CRLF和空格，转化为Method SP Request-URI SP HTTP-Version
             String str = startLine.replaceAll(CRLF, "").trim();
             String[] parts = str.split(SPLITTER);

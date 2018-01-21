@@ -34,6 +34,7 @@ public class DefaultHttpRequestMessageParser extends AbstractHttpRequestMessageP
     protected RequestLine parseRequestLine() {
         RequestLine requestLine = this.httpRequestLineParser.parse();
         HttpParserContext.setHttpMethod(requestLine.getMethod());
+        HttpParserContext.setRequestQueryString(requestLine.getRequestURI().getQuery());
         return requestLine;
     }
 
