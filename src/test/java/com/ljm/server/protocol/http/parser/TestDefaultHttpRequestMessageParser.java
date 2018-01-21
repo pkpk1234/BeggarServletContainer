@@ -4,12 +4,15 @@ import com.ljm.server.protocol.http.HttpMessage;
 import com.ljm.server.protocol.http.HttpQueryParameters;
 import com.ljm.server.protocol.http.HttpRequestMessage;
 import com.ljm.server.protocol.http.RequestLine;
+import com.ljm.server.protocol.http.body.HttpBody;
+import com.ljm.server.protocol.http.header.IMessageHeaders;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.Optional;
 
 /**
  * @author 李佳明 https://github.com/pkpk1234
@@ -24,7 +27,7 @@ public class TestDefaultHttpRequestMessageParser {
                     "Content-Length:40\r\n" +
                     "Connection: Keep-Alive\r\n" +
                     "\r\n";
-    private static final String BODY = "name=Professional%20Ajax&publisher=Wiley\r\n";
+    private static final String BODY = "name=Professional%20Ajax&publisher=Wiley";
     private static final String HTTP_MESSAGE = MESSAGE_NO_Body + BODY;
 
     @Test
@@ -43,5 +46,15 @@ public class TestDefaultHttpRequestMessageParser {
         assertEquals("POST", requestLine.getMethod());
         HttpQueryParameters queryParameters = requestMessage.getHttpQueryParameters();
         queryParameters.hasRequestParameter("123");
+
+        IMessageHeaders httpHeaders = requestMessage.getMessageHeaders();
+        assertEquals(5, httpHeaders.getAllHeaders().size());
+        assertEquals("Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727; .NET CLR 3.0.04506.648; .NET CLR 3.5.21022)"
+                , httpHeaders.getFirstHeader("User-Agent").getValue());
+
+        Optional<HttpBody<?>> opBody = requestMessage.getHttpBody();
+        assertTrue(opBody.isPresent());
+        byte[] bodyBytes = (byte[]) opBody.get().getBodyContent();
+        assertArrayEquals(BODY.getBytes(), bodyBytes);
     }
 }
