@@ -5,6 +5,8 @@ import com.ljm.server.io.connector.ConnectorException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
@@ -45,6 +47,16 @@ public class SelectableChannelConnection implements ChannelConnection {
     @Override
     public int read(byte[] bytes, int start, int end) {
         throw new ConnectorException("not support BIO");
+    }
+
+    @Override
+    public InputStream getInputStream() {
+        return null;
+    }
+
+    @Override
+    public OutputStream getOutPutStream() {
+        return null;
     }
 
     @Override

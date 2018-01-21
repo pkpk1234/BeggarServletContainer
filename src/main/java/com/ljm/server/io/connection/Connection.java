@@ -1,6 +1,8 @@
 package com.ljm.server.io.connection;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * @author 李佳明 https://github.com/pkpk1234
@@ -44,4 +46,8 @@ public interface Connection {
      * @throws IOException
      */
     int read(byte[] bytes, int offset, int length) throws IOException;
+
+    InputStream getInputStream() throws IOException;
+
+    OutputStream getOutPutStream() throws IOException;
 }
