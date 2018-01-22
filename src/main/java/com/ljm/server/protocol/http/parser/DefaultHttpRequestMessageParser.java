@@ -2,12 +2,10 @@ package com.ljm.server.protocol.http.parser;
 
 import com.ljm.server.protocol.http.HttpQueryParameters;
 import com.ljm.server.protocol.http.RequestLine;
-import com.ljm.server.protocol.http.body.ByteContentHttpBody;
 import com.ljm.server.protocol.http.body.HttpBody;
 import com.ljm.server.protocol.http.header.HttpMessageHeaders;
 import com.ljm.server.protocol.http.header.IMessageHeaders;
 
-import java.util.Arrays;
 import java.util.Optional;
 
 /**

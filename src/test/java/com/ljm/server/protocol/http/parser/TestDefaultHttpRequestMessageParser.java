@@ -8,11 +8,11 @@ import com.ljm.server.protocol.http.body.HttpBody;
 import com.ljm.server.protocol.http.header.IMessageHeaders;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Optional;
+
+import static org.junit.Assert.*;
 
 /**
  * @author 李佳明 https://github.com/pkpk1234

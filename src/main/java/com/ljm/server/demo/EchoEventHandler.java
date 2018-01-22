@@ -1,6 +1,7 @@
 package com.ljm.server.demo;
 
 import com.ljm.server.event.handler.AbstractEventHandler;
+import com.ljm.server.event.handler.HandlerException;
 import com.ljm.server.io.connection.Connection;
 import com.ljm.server.io.utils.IoUtils;
 
@@ -21,7 +22,7 @@ public class EchoEventHandler extends AbstractEventHandler<Connection> {
         try {
             echo(connection.getInputStream(), connection.getOutputStream());
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new HandlerException(e);
         }
     }
 
