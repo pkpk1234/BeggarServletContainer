@@ -7,7 +7,9 @@ import com.ljm.server.protocol.http.header.HttpMessageHeaders;
 import com.ljm.server.protocol.http.header.IMessageHeaders;
 import com.ljm.server.protocol.http.response.HttpResponseMessageBuilder;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * @author 李佳明 https://github.com/pkpk1234

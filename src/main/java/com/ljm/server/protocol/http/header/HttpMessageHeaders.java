@@ -17,6 +17,14 @@ public class HttpMessageHeaders implements IMessageHeaders {
 		this.headersMultiMap = LinkedListMultimap.create();
 	}
 
+	private HttpMessageHeaders(Builder builder) {
+		headersMultiMap = builder.headersMultiMap;
+	}
+
+	public static Builder newBuilder() {
+		return new Builder();
+	}
+
 	@Override
 	public List<HttpHeader> getHeaders(String headerName) {
 		return this.headersMultiMap.get(headerName);
@@ -67,11 +75,26 @@ public class HttpMessageHeaders implements IMessageHeaders {
 	public String asString() {
 		StringBuffer stringBuffer = new StringBuffer();
 		for (HttpHeader header : this.headersMultiMap.values()) {
-			stringBuffer.append(header.getName())
-                        .append(":")
-                        .append(header.getValue())
-					    .append("\r\n");
+			stringBuffer.append(header.getName()).append(":").append(header.getValue())
+					.append("\r\n");
 		}
 		return stringBuffer.toString();
+	}
+
+	public static final class Builder {
+		private final LinkedListMultimap<String, HttpHeader> headersMultiMap;
+
+		private Builder() {
+			this.headersMultiMap = LinkedListMultimap.create();
+		}
+
+		public Builder addHeader(String name, String value) {
+			this.headersMultiMap.put(name, new HttpHeader(name, value));
+			return this;
+		}
+
+		public HttpMessageHeaders build() {
+			return new HttpMessageHeaders(this);
+		}
 	}
 }

@@ -5,10 +5,10 @@ import com.ljm.server.protocol.http.HttpResponseMessage;
 import com.ljm.server.protocol.http.ResponseLine;
 import com.ljm.server.protocol.http.body.HttpBody;
 import com.ljm.server.protocol.http.header.IMessageHeaders;
+import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.util.Optional;
 
 /**
@@ -28,7 +28,7 @@ public class HttpResponseMessageWriter {
 		Optional<HttpBody> opHttpBody = httpResponseMessage.getHttpBody();
 		if (opHttpBody.isPresent()) {
 			outputStream.write("\r\n".getBytes("utf-8"));
-			outputStream.write(opHttpBody.get().getContent());
+			IOUtils.copy(opHttpBody.get().getInputStream(), outputStream);
 		}
 		outputStream.flush();
 	}

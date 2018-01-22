@@ -1,9 +1,12 @@
 package com.ljm.server.protocol.http.handler;
 
 import com.ljm.server.event.handler.AbstractEventHandler;
+import com.ljm.server.event.handler.HandlerException;
 import com.ljm.server.io.connection.Connection;
 import com.ljm.server.protocol.http.HttpRequestMessage;
 import com.ljm.server.protocol.http.HttpResponseMessage;
+
+import java.io.IOException;
 
 /**
  * @author 李佳明 https://github.com/pkpk1234
@@ -14,7 +17,11 @@ public abstract class AbstractHttpEventHandler extends AbstractEventHandler<Conn
     protected void doHandle(Connection connection) {
         HttpRequestMessage requestMessage = doParserRequestMessage(connection);
         HttpResponseMessage responseMessage = doGenerateResponseMessage(requestMessage);
-        doTransferToClient(responseMessage);
+        try {
+            doTransferToClient(responseMessage, connection);
+        } catch (IOException e) {
+            throw new HandlerException(e);
+        }
     }
 
     /**
@@ -31,12 +38,14 @@ public abstract class AbstractHttpEventHandler extends AbstractEventHandler<Conn
      * @param httpRequestMessage
      * @return
      */
-    protected abstract HttpResponseMessage doGenerateResponseMessage(HttpRequestMessage httpRequestMessage);
+    protected abstract HttpResponseMessage doGenerateResponseMessage(
+            HttpRequestMessage httpRequestMessage);
 
     /**
      * 写入HttpResponseMessage到客户端
      *
      * @param responseMessage
      */
-    protected abstract void doTransferToClient(HttpResponseMessage responseMessage);
+    protected abstract void doTransferToClient(HttpResponseMessage responseMessage,
+                                               Connection connection) throws IOException;
 }
