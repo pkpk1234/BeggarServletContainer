@@ -59,4 +59,6 @@ public interface IMessageHeaders {
      * @return
      */
     Set<String> getHeaderNames();
+
+    String asString();
 }
