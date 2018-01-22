@@ -1,6 +1,5 @@
 package com.ljm.server.protocol.http.parser;
 
-import com.ljm.server.protocol.http.HttpMessage;
 import com.ljm.server.protocol.http.HttpQueryParameters;
 import com.ljm.server.protocol.http.HttpRequestMessage;
 import com.ljm.server.protocol.http.RequestLine;
@@ -26,7 +25,7 @@ public abstract class AbstractHttpRequestMessageParser extends AbstractParser im
      * @return
      */
     @Override
-    public HttpMessage parse(InputStream inputStream) throws IOException {
+    public HttpRequestMessage parse(InputStream inputStream) throws IOException {
         //1.设置上下文
         getAndSetBytesToContext(inputStream);
         //2.解析构造RequestLine
