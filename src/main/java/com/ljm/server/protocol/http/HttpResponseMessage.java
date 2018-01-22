@@ -13,10 +13,10 @@ import java.util.Optional;
 public class HttpResponseMessage implements HttpMessage {
     private final ResponseLine responseLine;
     private final IMessageHeaders messageHeaders;
-    private final Optional<HttpBody<?>> httpBody;
+    private final Optional<HttpBody> httpBody;
 
     public HttpResponseMessage(ResponseLine responseLine,
-                               IMessageHeaders messageHeaders, Optional<HttpBody<?>> httpBody) {
+                               IMessageHeaders messageHeaders, Optional<HttpBody> httpBody) {
         this.responseLine = responseLine;
         this.messageHeaders = messageHeaders;
         this.httpBody = httpBody;
@@ -33,7 +33,7 @@ public class HttpResponseMessage implements HttpMessage {
     }
 
     @Override
-    public Optional<HttpBody<?>> getHttpBody() {
+    public Optional<HttpBody> getHttpBody() {
         return this.httpBody;
     }
 

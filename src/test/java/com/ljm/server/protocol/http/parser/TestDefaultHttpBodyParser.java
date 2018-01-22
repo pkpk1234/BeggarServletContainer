@@ -27,7 +27,7 @@ public class TestDefaultHttpBodyParser {
         HttpParserContext.setBytesLengthBeforeBody(MESSAGE_BEFORE_BODY.getBytes().length);
         DefaultHttpBodyParser httpBodyParser
                 = new DefaultHttpBodyParser();
-        HttpBody<byte[]> bodyBytes = httpBodyParser.parse();
-        assertArrayEquals(BODY.getBytes(), bodyBytes.getBodyContent());
+        HttpBody bodyBytes = httpBodyParser.parse();
+        assertArrayEquals(BODY.getBytes(), bodyBytes.getContent());
     }
 }

@@ -14,10 +14,10 @@ import java.util.Optional;
 public class HttpRequestMessage implements HttpMessage {
     private final RequestLine requestLine;
     private final IMessageHeaders messageHeaders;
-    private final Optional<HttpBody<?>> httpBody;
+    private final Optional<HttpBody> httpBody;
     private final HttpQueryParameters httpQueryParameters;
 
-    public HttpRequestMessage(RequestLine requestLine, IMessageHeaders messageHeaders, Optional<HttpBody<?>> httpBody,
+    public HttpRequestMessage(RequestLine requestLine, IMessageHeaders messageHeaders, Optional<HttpBody> httpBody,
                               HttpQueryParameters httpQueryParameters) {
         this.requestLine = requestLine;
         this.messageHeaders = messageHeaders;
@@ -36,7 +36,7 @@ public class HttpRequestMessage implements HttpMessage {
     }
 
     @Override
-    public Optional<HttpBody<?>> getHttpBody() {
+    public Optional<HttpBody> getHttpBody() {
         return this.httpBody;
     }
 

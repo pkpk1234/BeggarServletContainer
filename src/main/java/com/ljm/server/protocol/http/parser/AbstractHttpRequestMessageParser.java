@@ -36,7 +36,7 @@ public abstract class AbstractHttpRequestMessageParser extends AbstractParser im
         //4.解析构造HTTP请求头，并设置是否有body，如果有则body段之前byte长度到上下文中
         IMessageHeaders messageHeaders = parseRequestHeaders();
         //5.解析构造HTTP Body，如果有个的话
-        Optional<HttpBody<?>> httpBody = parseRequestBody();
+        Optional<HttpBody> httpBody = parseRequestBody();
 
         HttpRequestMessage httpRequestMessage = new HttpRequestMessage(requestLine, messageHeaders, httpBody, httpQueryParameters);
         return httpRequestMessage;
@@ -72,7 +72,7 @@ public abstract class AbstractHttpRequestMessageParser extends AbstractParser im
      *
      * @return
      */
-    protected abstract Optional<HttpBody<?>> parseRequestBody();
+    protected abstract Optional<HttpBody> parseRequestBody();
 
     /**
      * 解析并构建QueryParameter集合

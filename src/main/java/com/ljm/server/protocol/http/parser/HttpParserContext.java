@@ -9,10 +9,21 @@ public class HttpParserContext {
 
     private static final ThreadLocal<byte[]> HTTP_MESSAGE_BYTES = new ThreadLocal<>();
     private static final ThreadLocal<String> REQUEST_QUERY_STRING = new ThreadLocal<>();
-    private static final ThreadLocal<Boolean> HAS_BODY = new ThreadLocal<>();
+    private static final ThreadLocal<Boolean> HAS_BODY = new ThreadLocal<Boolean>() {
+        @Override
+        protected Boolean initialValue() {
+            return Boolean.FALSE;
+        }
+    };
     private static final ThreadLocal<Integer> BYTES_LENGTH_BEFORE_BODY = new ThreadLocal<>();
     private static final ThreadLocal<String> CONTENT_TYPE = new ThreadLocal<>();
     private static final ThreadLocal<String> HTTP_METHOD = new ThreadLocal<>();
+    private static final ThreadLocal<String> ENCODING = new ThreadLocal<String>() {
+        @Override
+        protected String initialValue() {
+            return "utf-8";
+        }
+    };
 
     public static byte[] getHttpMessageBytes() {
         return HTTP_MESSAGE_BYTES.get();
@@ -62,6 +73,14 @@ public class HttpParserContext {
         HTTP_METHOD.set(method);
     }
 
+    public static String getENCODING() {
+        return ENCODING.get();
+    }
+
+    public static void setEncoding(String encoding) {
+        ENCODING.set(encoding);
+    }
+
     public static void removeAll() {
         HTTP_MESSAGE_BYTES.remove();
         REQUEST_QUERY_STRING.remove();
@@ -69,5 +88,6 @@ public class HttpParserContext {
         BYTES_LENGTH_BEFORE_BODY.remove();
         CONTENT_TYPE.remove();
         HTTP_METHOD.remove();
+        ENCODING.remove();
     }
 }

@@ -16,12 +16,12 @@ public class DefaultHttpRequestMessageParser extends AbstractHttpRequestMessageP
     private final HttpRequestLineParser httpRequestLineParser;
     private final HttpQueryParameterParser httpQueryParameterParser;
     private final HttpHeaderParser httpHeaderParser;
-    private final HttpBodyParser<byte[]> httpBodyParser;
+    private final HttpBodyParser httpBodyParser;
 
     public DefaultHttpRequestMessageParser(HttpRequestLineParser httpRequestLineParser,
                                            HttpQueryParameterParser httpQueryParameterParser,
                                            HttpHeaderParser httpHeaderParser,
-                                           HttpBodyParser<byte[]> httpBodyParser) {
+                                           HttpBodyParser httpBodyParser) {
         this.httpRequestLineParser = httpRequestLineParser;
         this.httpQueryParameterParser = httpQueryParameterParser;
         this.httpHeaderParser = httpHeaderParser;
@@ -51,10 +51,10 @@ public class DefaultHttpRequestMessageParser extends AbstractHttpRequestMessageP
     }
 
     @Override
-    protected Optional<HttpBody<?>> parseRequestBody() {
+    protected Optional<HttpBody> parseRequestBody() {
         if (isHasBodyMethod()) {
-            HttpBody<byte[]> byteContentHttpBody = this.httpBodyParser.parse();
-            return Optional.ofNullable(byteContentHttpBody);
+            HttpBody httpBody = this.httpBodyParser.parse();
+            return Optional.ofNullable(httpBody);
         }
         return Optional.empty();
     }
