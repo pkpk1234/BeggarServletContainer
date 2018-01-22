@@ -8,6 +8,9 @@ import com.ljm.server.protocol.http.HttpResponseMessage;
 import com.ljm.server.protocol.http.parser.AbstractHttpRequestMessageParser;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * @author 李佳明 https://github.com/pkpk1234
@@ -37,6 +40,13 @@ public class HttpStaticResourceEventHandler extends AbstractHttpEventHandler {
 
     @Override
     protected HttpResponseMessage doGenerateResponseMessage(HttpRequestMessage httpRequestMessage) {
+        String path = httpRequestMessage.getRequestLine().getRequestURI().getPath();
+        Path filePath = Paths.get(docBase, path);
+        if (Files.isDirectory(filePath)) {
+            //TODO: 404
+        } else {
+
+        }
         return null;
     }
 

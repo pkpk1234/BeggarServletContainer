@@ -40,4 +40,5 @@ public class HttpResponseMessage implements HttpMessage {
     public ResponseLine getResponseLine() {
         return responseLine;
     }
+
 }
