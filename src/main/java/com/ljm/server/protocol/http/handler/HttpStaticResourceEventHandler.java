@@ -1,4 +1,4 @@
-package com.ljm.server.protocol.handler;
+package com.ljm.server.protocol.http.handler;
 
 import com.ljm.server.demo.FileTransfer;
 import com.ljm.server.event.handler.AbstractEventHandler;
@@ -30,7 +30,7 @@ public class HttpStaticResourceEventHandler extends AbstractEventHandler<Connect
         try {
             HttpRequestMessage httpRequestMessage = httpRequestMessageParser.parse(connection.getInputStream());
             String path = httpRequestMessage.getRequestLine().getRequestURI().getPath();
-            
+
         } catch (IOException e) {
             throw new HandlerException(e);
         }
