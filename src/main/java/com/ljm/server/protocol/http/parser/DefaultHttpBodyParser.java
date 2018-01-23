@@ -1,9 +1,11 @@
 package com.ljm.server.protocol.http.parser;
 
 import com.ljm.server.protocol.http.body.HttpBody;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.Arrays;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * @author 李佳明 https://github.com/pkpk1234
@@ -12,16 +14,18 @@ import java.util.Arrays;
 public class DefaultHttpBodyParser implements HttpBodyParser {
     @Override
     public HttpBody parse() {
-        int index = HttpParserContext.getBytesLengthBeforeBody();
-        byte[] httpMessageBytes = HttpParserContext.getHttpMessageBytes();
-        byte[] body = Arrays.copyOfRange(httpMessageBytes,
-                index,
-                httpMessageBytes.length);
-        String contentType = HttpParserContext.getContentType();
-        String encoding = getEncoding(contentType);
-        HttpBody httpBody =
-                new HttpBody(contentType, encoding, body);
-        return httpBody;
+        int contentLength = HttpParserContext.getBodyInfo().getContentLength();
+        InputStream inputStream = HttpParserContext.getInputStream();
+        try {
+            byte[] body = IOUtils.readFully(inputStream, contentLength);
+            String contentType = HttpParserContext.getContentType();
+            String encoding = getEncoding(contentType);
+            HttpBody httpBody =
+                    new HttpBody(contentType, encoding, body);
+            return httpBody;
+        } catch (IOException e) {
+            throw new ParserException(e);
+        }
     }
 
     private String getEncoding(String contentType) {
