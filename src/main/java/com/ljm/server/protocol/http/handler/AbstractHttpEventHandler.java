@@ -3,8 +3,10 @@ package com.ljm.server.protocol.http.handler;
 import com.ljm.server.event.handler.AbstractEventHandler;
 import com.ljm.server.event.handler.HandlerException;
 import com.ljm.server.io.connection.Connection;
+import com.ljm.server.io.connection.socket.SocketConnection;
 import com.ljm.server.protocol.http.HttpRequestMessage;
 import com.ljm.server.protocol.http.HttpResponseMessage;
+import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
 
@@ -21,7 +23,12 @@ public abstract class AbstractHttpEventHandler extends AbstractEventHandler<Conn
             doTransferToClient(responseMessage, connection);
         } catch (IOException e) {
             throw new HandlerException(e);
+        } finally {
+            if (connection instanceof SocketConnection) {
+                IOUtils.closeQuietly(((SocketConnection) connection).getSocket());
+            }
         }
+
     }
 
     /**
@@ -43,6 +50,7 @@ public abstract class AbstractHttpEventHandler extends AbstractEventHandler<Conn
 
     /**
      * 写入HttpResponseMessage到客户端
+     *
      * @param responseMessage
      * @param connection
      * @throws IOException
