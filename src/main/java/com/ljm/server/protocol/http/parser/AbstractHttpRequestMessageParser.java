@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.util.Optional;
 
 /**
@@ -60,14 +59,14 @@ public abstract class AbstractHttpRequestMessageParser extends AbstractParser im
      *
      * @return
      */
-    protected abstract RequestLine parseRequestLine() throws UnsupportedEncodingException;
+    protected abstract RequestLine parseRequestLine();
 
     /**
      * 解析并构建HTTP请求Headers集合
      *
      * @return
      */
-    protected abstract IMessageHeaders parseRequestHeaders() throws UnsupportedEncodingException;
+    protected abstract IMessageHeaders parseRequestHeaders();
 
     /**
      * 解析并构建HTTP 请求Body
@@ -98,7 +97,7 @@ public abstract class AbstractHttpRequestMessageParser extends AbstractParser im
             if ((char) i == '\r') {
                 int len = inputStream.read(temp, 0, temp.length);
                 byteArrayOutputStream.write(temp, 0, len);
-                if (new String(temp).equals("\n\r\n")) {
+                if ("\n\r\n".equals(new String(temp))) {
                     break;
                 }
             }

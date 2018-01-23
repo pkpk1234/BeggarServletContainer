@@ -1,6 +1,5 @@
 package com.ljm.server.protocol.http.handler;
 
-import com.ljm.server.demo.FileTransfer;
 import com.ljm.server.event.handler.HandlerException;
 import com.ljm.server.io.connection.Connection;
 import com.ljm.server.protocol.http.HttpRequestMessage;

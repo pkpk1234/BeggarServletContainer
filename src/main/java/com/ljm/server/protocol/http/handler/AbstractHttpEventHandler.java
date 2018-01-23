@@ -43,8 +43,9 @@ public abstract class AbstractHttpEventHandler extends AbstractEventHandler<Conn
 
     /**
      * 写入HttpResponseMessage到客户端
-     *
      * @param responseMessage
+     * @param connection
+     * @throws IOException
      */
     protected abstract void doTransferToClient(HttpResponseMessage responseMessage,
                                                Connection connection) throws IOException;

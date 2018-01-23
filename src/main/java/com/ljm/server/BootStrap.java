@@ -2,20 +2,15 @@ package com.ljm.server;
 
 import com.ljm.server.config.ServerConfig;
 import com.ljm.server.demo.EchoEventHandler;
-import com.ljm.server.demo.FileEventHandler;
-import com.ljm.server.demo.NIOEchoEventHandler;
 import com.ljm.server.event.listener.EventListener;
 import com.ljm.server.io.connection.Connection;
-import com.ljm.server.io.connector.impl.nio.SocketChannelConnector;
 import com.ljm.server.io.connector.impl.socket.SocketConnector;
 import com.ljm.server.io.connector.impl.socket.SocketConnectorFactory;
 import com.ljm.server.io.event.listener.impl.ConnectionEventListener;
-import com.ljm.server.io.event.listener.impl.SelectableChannleEventListener;
 import com.ljm.server.protocol.http.handler.HttpStaticResourceEventHandler;
 import com.ljm.server.protocol.http.parser.*;
 
 import java.io.IOException;
-import java.nio.channels.SelectionKey;
 
 /**
  * @author 李佳明 https://github.com/pkpk1234
