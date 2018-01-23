@@ -6,12 +6,14 @@ import com.ljm.server.protocol.http.HttpRequestMessage;
 import com.ljm.server.protocol.http.HttpResponseMessage;
 import com.ljm.server.protocol.http.ResponseLine;
 import com.ljm.server.protocol.http.body.HttpBody;
+import com.ljm.server.protocol.http.header.HttpHeader;
 import com.ljm.server.protocol.http.header.HttpMessageHeaders;
 import com.ljm.server.protocol.http.parser.AbstractHttpRequestMessageParser;
 import com.ljm.server.protocol.http.response.HttpResponseConstants;
 import com.ljm.server.protocol.http.response.HttpResponseMessageWriter;
 import com.ljm.server.protocol.http.response.ResponseLineConstants;
 
+import javax.activation.MimetypesFileTypeMap;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -55,20 +57,34 @@ public class HttpStaticResourceEventHandler extends AbstractHttpEventHandler {
             return HttpResponseConstants.HTTP_404;
         } else {
             ResponseLine ok = ResponseLineConstants.RES_200;
-            // TODO: 添加正确的Content-Type
+
             HttpMessageHeaders headers = HttpMessageHeaders.newBuilder()
                     .addHeader("status", "200").build();
             HttpBody httpBody = null;
             try {
+                getContentType(filePath, headers);
                 httpBody = new HttpBody(new FileInputStream(filePath.toFile()));
             } catch (FileNotFoundException e) {
                 return HttpResponseConstants.HTTP_404;
+            } catch (IOException e) {
+                throw new HandlerException(e);
             }
             HttpResponseMessage httpResponseMessage = new HttpResponseMessage(ok, headers,
                     Optional.ofNullable(httpBody));
             return httpResponseMessage;
         }
 
+    }
+
+    private void getContentType(Path filePath, HttpMessageHeaders headers) throws IOException {
+        //使用Files.probeContentType在mac上总是返回null
+        //String contentType = Files.probeContentType(filePath);
+        String contentType = MimetypesFileTypeMap.getDefaultFileTypeMap().getContentType(filePath.toString());
+        headers.addHeader(new HttpHeader("Content-Type", contentType));
+        if (contentType.indexOf("text") == -1) {
+            headers.addHeader(new HttpHeader("Content-Length",
+                    String.valueOf(filePath.toFile().length())));
+        }
     }
 
     @Override

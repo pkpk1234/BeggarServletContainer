@@ -16,20 +16,27 @@ import java.util.Optional;
  * @date 2018-01-22
  */
 public class HttpResponseMessageWriter {
-	public void write(HttpResponseMessage httpResponseMessage, Connection connection)
-			throws IOException {
-		OutputStream outputStream = connection.getOutputStream();
-		ResponseLine responseLine = httpResponseMessage.getResponseLine();
-		String responseLineString = responseLine.asString();
-		outputStream.write(responseLineString.getBytes("utf-8"));
-		IMessageHeaders headers = httpResponseMessage.getMessageHeaders();
-		String headersString = headers.asString();
-		outputStream.write(headersString.getBytes("utf-8"));
-		Optional<HttpBody> opHttpBody = httpResponseMessage.getHttpBody();
-		if (opHttpBody.isPresent()) {
-			outputStream.write("\r\n".getBytes("utf-8"));
-			IOUtils.copy(opHttpBody.get().getInputStream(), outputStream);
-		}
-		outputStream.flush();
-	}
+    public void write(HttpResponseMessage httpResponseMessage, Connection connection)
+            throws IOException {
+        OutputStream outputStream = connection.getOutputStream();
+        ResponseLine responseLine = httpResponseMessage.getResponseLine();
+        String responseLineString = responseLine.asString();
+        write(outputStream, responseLineString);
+
+        IMessageHeaders headers = httpResponseMessage.getMessageHeaders();
+        String headersString = headers.asString();
+        write(outputStream, headersString);
+
+        Optional<HttpBody> opHttpBody = httpResponseMessage.getHttpBody();
+        if (opHttpBody.isPresent()) {
+            
+            IOUtils.copy(opHttpBody.get().getInputStream(), outputStream);
+        }
+        outputStream.flush();
+    }
+
+    private void write(OutputStream outputStream, String message) throws IOException {
+        outputStream.write(message.getBytes("utf-8"));
+        outputStream.write("\r\n".getBytes());
+    }
 }
