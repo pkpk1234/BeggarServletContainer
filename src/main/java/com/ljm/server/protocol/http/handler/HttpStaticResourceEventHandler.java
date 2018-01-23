@@ -28,7 +28,6 @@ import java.util.Optional;
 public class HttpStaticResourceEventHandler extends AbstractHttpEventHandler {
 
     private final String docBase;
-    private final FileTransfer fileTransfer = new FileTransfer();
     private final AbstractHttpRequestMessageParser httpRequestMessageParser;
 
     public HttpStaticResourceEventHandler(String docBase,

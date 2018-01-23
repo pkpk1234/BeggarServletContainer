@@ -1,5 +1,7 @@
 package com.ljm.server.protocol.http.parser;
 
+import java.io.InputStream;
+
 /**
  * HTTP Message解析上下文
  *
@@ -24,6 +26,7 @@ public class HttpParserContext {
             return "utf-8";
         }
     };
+    private static final ThreadLocal<InputStream> INPUT_STREAM = new ThreadLocal<>();
 
     public static byte[] getHttpMessageBytes() {
         return HTTP_MESSAGE_BYTES.get();
@@ -81,6 +84,14 @@ public class HttpParserContext {
         ENCODING.set(encoding);
     }
 
+    public static InputStream getInputStream() {
+        return INPUT_STREAM.get();
+    }
+
+    public static void setInputStream(InputStream inputStream) {
+        INPUT_STREAM.set(inputStream);
+    }
+
     public static void removeAll() {
         HTTP_MESSAGE_BYTES.remove();
         REQUEST_QUERY_STRING.remove();
@@ -89,5 +100,6 @@ public class HttpParserContext {
         CONTENT_TYPE.remove();
         HTTP_METHOD.remove();
         ENCODING.remove();
+        INPUT_STREAM.remove();
     }
 }

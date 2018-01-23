@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.UnsupportedEncodingException;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -22,8 +21,8 @@ public class DefaultHttpHeaderParser extends AbstractParser implements HttpHeade
     public HttpMessageHeaders parse() {
         try {
             String httpText = getHttpTextFromContext();
-            httpText = getStringBeforeBody(httpText);
             HttpMessageHeaders httpMessageHeaders = doParseHttpMessageHeaders(httpText);
+            setHasBody(httpMessageHeaders);
             return httpMessageHeaders;
         } catch (UnsupportedEncodingException e) {
             throw new ParserException("Unsupported Encoding", e);
@@ -32,6 +31,7 @@ public class DefaultHttpHeaderParser extends AbstractParser implements HttpHeade
 
     /**
      * 从上下文获取bytes并转换为String
+     *
      * @return
      * @throws UnsupportedEncodingException
      */
@@ -41,23 +41,8 @@ public class DefaultHttpHeaderParser extends AbstractParser implements HttpHeade
     }
 
     /**
-     * 获取Body之前的部分，并设置是否包含Body标注和Body之前字节码到上下文中
-     * @param httpText
-     * @return
-     * @throws UnsupportedEncodingException
-     */
-    private String getStringBeforeBody(String httpText) throws UnsupportedEncodingException {
-        Matcher matcher = BLANK_LINE.matcher(httpText);
-        if (matcher.find()) {
-            int idx = matcher.end();
-            setHasBody();
-            httpText = setBytesBeforeBody(httpText, idx);
-        }
-        return httpText;
-    }
-
-    /**
      * 解析Body之前的文本构建HttpHeader，并保存到HttpMessageHeaders中
+     *
      * @param httpText
      * @return
      */
@@ -79,22 +64,12 @@ public class DefaultHttpHeaderParser extends AbstractParser implements HttpHeade
     }
 
     /**
-     * 设置body之前的字节数到上下文中
-     * @param httpText
-     * @param idx
-     * @return
-     * @throws UnsupportedEncodingException
-     */
-    private String setBytesBeforeBody(String httpText, int idx) throws UnsupportedEncodingException {
-        httpText = httpText.substring(0, idx);
-        HttpParserContext.setBytesLengthBeforeBody(httpText.getBytes("utf-8").length);
-        return httpText;
-    }
-
-    /**
      * 设置报文是否包含Body到上下文中
      */
-    private void setHasBody() {
-        HttpParserContext.setHasBody(true);
+    private void setHasBody(HttpMessageHeaders httpMessageHeaders) {
+        if (httpMessageHeaders.hasHeader("Content-Length")
+                || httpMessageHeaders.getFirstHeader("Transfer-Encoding").getValue().equals("chunked")) {
+            HttpParserContext.setHasBody(true);
+        }
     }
 }

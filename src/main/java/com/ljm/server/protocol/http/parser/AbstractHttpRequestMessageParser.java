@@ -5,6 +5,8 @@ import com.ljm.server.protocol.http.HttpRequestMessage;
 import com.ljm.server.protocol.http.RequestLine;
 import com.ljm.server.protocol.http.body.HttpBody;
 import com.ljm.server.protocol.http.header.IMessageHeaders;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -17,6 +19,7 @@ import java.util.Optional;
  * @date 2018-01-2018/1/14
  */
 public abstract class AbstractHttpRequestMessageParser extends AbstractParser implements HttpRequestMessageParser {
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractHttpRequestMessageParser.class);
 
     /**
      * 定义parse流程
@@ -26,7 +29,7 @@ public abstract class AbstractHttpRequestMessageParser extends AbstractParser im
     @Override
     public HttpRequestMessage parse(InputStream inputStream) throws IOException {
         //1.设置上下文
-        getAndSetBytesToContext(inputStream);
+        getAndSetBytesBeforeBodyToContext(inputStream);
         //2.解析构造RequestLine
         RequestLine requestLine = parseRequestLine();
         //3.解析构造QueryParameters
@@ -46,9 +49,10 @@ public abstract class AbstractHttpRequestMessageParser extends AbstractParser im
      * @param inputStream
      * @throws IOException
      */
-    private void getAndSetBytesToContext(InputStream inputStream) throws IOException {
-        byte[] bytes = copyRequestBytes(inputStream);
+    private void getAndSetBytesBeforeBodyToContext(InputStream inputStream) throws IOException {
+        byte[] bytes = copyRequestBytesBeforeBody(inputStream);
         HttpParserContext.setHttpMessageBytes(bytes);
+        HttpParserContext.setBytesLengthBeforeBody(bytes.length);
     }
 
     /**
@@ -79,12 +83,20 @@ public abstract class AbstractHttpRequestMessageParser extends AbstractParser im
      */
     protected abstract HttpQueryParameters parseHttpQueryParameters();
 
-    private byte[] copyRequestBytes(InputStream inputStream) throws IOException {
+    private byte[] copyRequestBytesBeforeBody(InputStream inputStream) throws IOException {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(inputStream.available());
-        byte[] buffer = new byte[64];
-        int readCount = -1;
-        while ((readCount = inputStream.read(buffer, 0, buffer.length)) != -1) {
-            byteArrayOutputStream.write(buffer, 0, readCount);
+        int i = -1;
+
+        byte[] temp = new byte[3];
+        while ((i = inputStream.read()) != -1) {
+            byteArrayOutputStream.write(i);
+            if ((char) i == '\r') {
+                int len = inputStream.read(temp, 0, temp.length);
+                byteArrayOutputStream.write(temp, 0, len);
+                if (new String(temp).equals("\n\r\n")) {
+                    break;
+                }
+            }
         }
         return byteArrayOutputStream.toByteArray();
     }

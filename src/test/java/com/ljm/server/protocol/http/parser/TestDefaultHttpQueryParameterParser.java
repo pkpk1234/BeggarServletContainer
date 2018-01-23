@@ -18,6 +18,7 @@ public class TestDefaultHttpQueryParameterParser {
     @Test
     public void test() {
         String queryStr = "a=123&a1=1&b=456&a=321";
+        HttpParserContext.setRequestQueryString(queryStr);
         DefaultHttpQueryParameterParser httpRequestParameterParser
                 = new DefaultHttpQueryParameterParser();
         HttpQueryParameters result = httpRequestParameterParser.parse();

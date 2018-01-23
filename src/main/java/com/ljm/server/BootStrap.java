@@ -23,10 +23,10 @@ import java.nio.channels.SelectionKey;
  */
 public class BootStrap {
     public static void main(String[] args) throws IOException {
-        /*EventListener<Connection> socketEventListener =
+        EventListener<Connection> socketEventListener =
                 new ConnectionEventListener(new EchoEventHandler());
         SocketConnector connector = SocketConnectorFactory.build(18080, socketEventListener);
-
+/*
         EventListener<Connection> socketEventListener2 =
                 new ConnectionEventListener(new FileEventHandler(System.getProperty("user.dir")));
         SocketConnector connector2 =
@@ -46,7 +46,7 @@ public class BootStrap {
 
 
         ServerConfig serverConfig = ServerConfig.builder()
-                //.addConnector(connector)
+              //  .addConnector(connector)
                 //.addConnector(connector2)
                 .addConnector(connector3)
                 //.addConnector(socketChannelConnector)
