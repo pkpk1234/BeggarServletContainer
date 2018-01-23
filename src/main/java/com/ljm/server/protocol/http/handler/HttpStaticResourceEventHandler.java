@@ -53,16 +53,16 @@ public class HttpStaticResourceEventHandler extends AbstractHttpEventHandler {
             HttpRequestMessage httpRequestMessage) {
         String path = httpRequestMessage.getRequestLine().getRequestURI().getPath();
         Path filePath = Paths.get(docBase, path);
-        if (Files.isDirectory(filePath)) {
+        //目录、无法读取的文件都返回404
+        if (Files.isDirectory(filePath) || !Files.isReadable(filePath)) {
             return HttpResponseConstants.HTTP_404;
         } else {
             ResponseLine ok = ResponseLineConstants.RES_200;
-
             HttpMessageHeaders headers = HttpMessageHeaders.newBuilder()
                     .addHeader("status", "200").build();
             HttpBody httpBody = null;
             try {
-                getContentType(filePath, headers);
+                setContentType(filePath, headers);
                 httpBody = new HttpBody(new FileInputStream(filePath.toFile()));
             } catch (FileNotFoundException e) {
                 return HttpResponseConstants.HTTP_404;
@@ -76,7 +76,14 @@ public class HttpStaticResourceEventHandler extends AbstractHttpEventHandler {
 
     }
 
-    private void getContentType(Path filePath, HttpMessageHeaders headers) throws IOException {
+    /**
+     * 根据文件后缀设置文件Content-Type
+     *
+     * @param filePath
+     * @param headers
+     * @throws IOException
+     */
+    private void setContentType(Path filePath, HttpMessageHeaders headers) throws IOException {
         //使用Files.probeContentType在mac上总是返回null
         //String contentType = Files.probeContentType(filePath);
         String contentType = MimetypesFileTypeMap.getDefaultFileTypeMap().getContentType(filePath.toString());

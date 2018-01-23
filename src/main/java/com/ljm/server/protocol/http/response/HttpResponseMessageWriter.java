@@ -29,7 +29,7 @@ public class HttpResponseMessageWriter {
 
         Optional<HttpBody> opHttpBody = httpResponseMessage.getHttpBody();
         if (opHttpBody.isPresent()) {
-            
+
             IOUtils.copy(opHttpBody.get().getInputStream(), outputStream);
         }
         outputStream.flush();

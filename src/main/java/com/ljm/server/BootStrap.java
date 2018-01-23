@@ -18,10 +18,10 @@ import java.io.IOException;
  */
 public class BootStrap {
     public static void main(String[] args) throws IOException {
-        EventListener<Connection> socketEventListener =
+        /*EventListener<Connection> socketEventListener =
                 new ConnectionEventListener(new EchoEventHandler());
         SocketConnector connector = SocketConnectorFactory.build(18080, socketEventListener);
-/*
+
         EventListener<Connection> socketEventListener2 =
                 new ConnectionEventListener(new FileEventHandler(System.getProperty("user.dir")));
         SocketConnector connector2 =

@@ -15,7 +15,6 @@ import java.util.regex.Pattern;
 public class DefaultHttpHeaderParser extends AbstractParser implements HttpHeaderParser {
     private static final String SPLITTER = ":";
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultHttpHeaderParser.class);
-    private static final Pattern BLANK_LINE = Pattern.compile("(?m)^\r\n");
 
     @Override
     public HttpMessageHeaders parse() {
