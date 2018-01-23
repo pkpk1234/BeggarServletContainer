@@ -28,13 +28,13 @@ public abstract class AbstractHttpRequestMessageParser extends AbstractParser im
      */
     @Override
     public HttpRequestMessage parse(InputStream inputStream) throws IOException {
-        //1.设置上下文
+        //1.设置上下文:设置是否有body、body之前byte数组，以及body之前byte数组长度到上下文中
         getAndSetBytesBeforeBodyToContext(inputStream);
         //2.解析构造RequestLine
         RequestLine requestLine = parseRequestLine();
         //3.解析构造QueryParameters
         HttpQueryParameters httpQueryParameters = parseHttpQueryParameters();
-        //4.解析构造HTTP请求头，并设置是否有body，如果有则body段之前byte长度到上下文中
+        //4.解析构造HTTP请求头
         IMessageHeaders messageHeaders = parseRequestHeaders();
         //5.解析构造HTTP Body，如果有个的话
         Optional<HttpBody> httpBody = parseRequestBody();
@@ -83,10 +83,15 @@ public abstract class AbstractHttpRequestMessageParser extends AbstractParser im
      */
     protected abstract HttpQueryParameters parseHttpQueryParameters();
 
+    /**
+     * 构造body(如果有)之前的字节数组
+     * @param inputStream
+     * @return
+     * @throws IOException
+     */
     private byte[] copyRequestBytesBeforeBody(InputStream inputStream) throws IOException {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(inputStream.available());
         int i = -1;
-
         byte[] temp = new byte[3];
         while ((i = inputStream.read()) != -1) {
             byteArrayOutputStream.write(i);

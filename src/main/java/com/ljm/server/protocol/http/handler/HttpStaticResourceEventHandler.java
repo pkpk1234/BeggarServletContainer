@@ -38,14 +38,13 @@ public class HttpStaticResourceEventHandler extends AbstractHttpEventHandler {
 
     @Override
     protected HttpRequestMessage doParserRequestMessage(Connection connection) {
-        HttpRequestMessage httpRequestMessage = null;
         try {
-            httpRequestMessage = httpRequestMessageParser
+            HttpRequestMessage httpRequestMessage = httpRequestMessageParser
                     .parse(connection.getInputStream());
+            return httpRequestMessage;
         } catch (IOException e) {
             throw new HandlerException(e);
         }
-        return httpRequestMessage;
     }
 
     @Override

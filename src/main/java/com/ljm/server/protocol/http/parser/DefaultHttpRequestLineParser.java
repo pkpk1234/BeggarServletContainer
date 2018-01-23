@@ -16,6 +16,7 @@ public class DefaultHttpRequestLineParser extends AbstractParser implements Http
 
     @Override
     public RequestLine parse() {
+        String exceptionMsg = "startline format illegal:";
         try {
             byte[] bytes = HttpParserContext.getHttpMessageBytes();
             String httpString = new String(bytes, "utf-8");
@@ -32,10 +33,11 @@ public class DefaultHttpRequestLineParser extends AbstractParser implements Http
                 String httpVersion = parts[2];
                 return new RequestLine(method, uri, httpVersion);
             }
+            exceptionMsg += startLine;
         } catch (UnsupportedEncodingException e) {
             throw new ParserException("Unsupported Encoding", e);
         }
         //如果不满足RequestLine的格式，抛出异常
-        throw new ParserException("startline format illegal");
+        throw new ParserException(exceptionMsg);
     }
 }
