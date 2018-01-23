@@ -40,5 +40,5 @@ public interface HttpMessage {
      *
      * @return
      */
-    Optional<HttpBody<?>> getHttpBody();
+    Optional<HttpBody> getHttpBody();
 }

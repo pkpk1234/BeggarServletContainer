@@ -49,6 +49,5 @@ public class TestDefaultHttpHeaderParser {
         HttpMessageHeaders httpHeaders = httpHeaderParser.parse();
         assertTrue(httpHeaders.hasHeader("Host"));
         assertEquals("40", httpHeaders.getFirstHeader("Content-Length").getValue());
-        LOGGER.info("" + context.getBytesLengthBeforeBody());
     }
 }

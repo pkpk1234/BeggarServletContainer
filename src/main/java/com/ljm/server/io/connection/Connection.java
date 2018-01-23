@@ -47,7 +47,17 @@ public interface Connection {
      */
     int read(byte[] bytes, int offset, int length) throws IOException;
 
+    /**
+     * 获取Socket中的输入流
+     * @return
+     * @throws IOException
+     */
     InputStream getInputStream() throws IOException;
 
+    /**
+     * 获取Socket中的输出流
+     * @return
+     * @throws IOException
+     */
     OutputStream getOutputStream() throws IOException;
 }

@@ -1,5 +1,7 @@
 package com.ljm.server.protocol.http.parser;
 
+import java.io.InputStream;
+
 /**
  * HTTP Message解析上下文
  *
@@ -9,10 +11,10 @@ public class HttpParserContext {
 
     private static final ThreadLocal<byte[]> HTTP_MESSAGE_BYTES = new ThreadLocal<>();
     private static final ThreadLocal<String> REQUEST_QUERY_STRING = new ThreadLocal<>();
-    private static final ThreadLocal<Boolean> HAS_BODY = new ThreadLocal<>();
+    private static final ThreadLocal<BodyInfo> BODY_INFO = ThreadLocal.withInitial(() -> new BodyInfo());
     private static final ThreadLocal<Integer> BYTES_LENGTH_BEFORE_BODY = new ThreadLocal<>();
-    private static final ThreadLocal<String> CONTENT_TYPE = new ThreadLocal<>();
     private static final ThreadLocal<String> HTTP_METHOD = new ThreadLocal<>();
+    private static final ThreadLocal<InputStream> INPUT_STREAM = new ThreadLocal<>();
 
     public static byte[] getHttpMessageBytes() {
         return HTTP_MESSAGE_BYTES.get();
@@ -31,11 +33,11 @@ public class HttpParserContext {
     }
 
     public static boolean getHasBody() {
-        return HAS_BODY.get();
+        return BODY_INFO.get().isHasBody();
     }
 
     public static void setHasBody(boolean iHasBody) {
-        HAS_BODY.set(iHasBody);
+        BODY_INFO.get().setHasBody(iHasBody);
     }
 
     public static int getBytesLengthBeforeBody() {
@@ -47,11 +49,11 @@ public class HttpParserContext {
     }
 
     public static String getContentType() {
-        return CONTENT_TYPE.get();
+        return BODY_INFO.get().getContentType();
     }
 
     public static void setContentType(String contentType) {
-        CONTENT_TYPE.set(contentType);
+        BODY_INFO.get().setContentType(contentType);
     }
 
     public static String getHttpMethod() {
@@ -62,12 +64,36 @@ public class HttpParserContext {
         HTTP_METHOD.set(method);
     }
 
+    public static String getENCODING() {
+        return BODY_INFO.get().getEncoding();
+    }
+
+    public static void setEncoding(String encoding) {
+        BODY_INFO.get().setEncoding(encoding);
+    }
+
+    public static InputStream getInputStream() {
+        return INPUT_STREAM.get();
+    }
+
+    public static void setInputStream(InputStream inputStream) {
+        INPUT_STREAM.set(inputStream);
+    }
+
+    public static BodyInfo getBodyInfo() {
+        return BODY_INFO.get();
+    }
+
+    public static void setBodyInfo(BodyInfo bodyInfo) {
+        BODY_INFO.set(bodyInfo);
+    }
+
     public static void removeAll() {
         HTTP_MESSAGE_BYTES.remove();
         REQUEST_QUERY_STRING.remove();
-        HAS_BODY.remove();
+        BODY_INFO.remove();
         BYTES_LENGTH_BEFORE_BODY.remove();
-        CONTENT_TYPE.remove();
         HTTP_METHOD.remove();
+        INPUT_STREAM.remove();
     }
 }

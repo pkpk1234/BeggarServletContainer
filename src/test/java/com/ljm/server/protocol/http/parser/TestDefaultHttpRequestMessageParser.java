@@ -52,9 +52,9 @@ public class TestDefaultHttpRequestMessageParser {
         assertEquals("Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727; .NET CLR 3.0.04506.648; .NET CLR 3.5.21022)"
                 , httpHeaders.getFirstHeader("User-Agent").getValue());
 
-        Optional<HttpBody<?>> opBody = requestMessage.getHttpBody();
+        Optional<HttpBody> opBody = requestMessage.getHttpBody();
         assertTrue(opBody.isPresent());
-        byte[] bodyBytes = (byte[]) opBody.get().getBodyContent();
+        byte[] bodyBytes = (byte[]) opBody.get().getContent();
         assertArrayEquals(BODY.getBytes(), bodyBytes);
     }
 }
