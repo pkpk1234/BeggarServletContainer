@@ -5,11 +5,10 @@ import com.ljm.server.protocol.http.HttpRequestMessage;
 import com.ljm.server.protocol.http.RequestLine;
 import com.ljm.server.protocol.http.body.HttpBody;
 import com.ljm.server.protocol.http.header.IMessageHeaders;
-import org.apache.commons.io.IOUtils;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.Optional;
 
@@ -48,7 +47,7 @@ public abstract class AbstractHttpRequestMessageParser extends AbstractParser im
      * @throws IOException
      */
     private void getAndSetBytesToContext(InputStream inputStream) throws IOException {
-        byte[] bytes = IOUtils.toByteArray(new InputStreamReader(inputStream), "utf-8");
+        byte[] bytes = copyRequestBytes(inputStream);
         HttpParserContext.setHttpMessageBytes(bytes);
     }
 
@@ -80,4 +79,13 @@ public abstract class AbstractHttpRequestMessageParser extends AbstractParser im
      */
     protected abstract HttpQueryParameters parseHttpQueryParameters();
 
+    private byte[] copyRequestBytes(InputStream inputStream) throws IOException {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(inputStream.available());
+        byte[] buffer = new byte[64];
+        int readCount = -1;
+        while ((readCount = inputStream.read(buffer, 0, buffer.length)) != -1) {
+            byteArrayOutputStream.write(buffer, 0, readCount);
+        }
+        return byteArrayOutputStream.toByteArray();
+    }
 }
