@@ -2,6 +2,7 @@ package com.ljm.server.protocol.http.handler;
 
 import com.ljm.server.event.handler.HandlerException;
 import com.ljm.server.io.connection.Connection;
+import com.ljm.server.protocol.http.ContentTypeUtil;
 import com.ljm.server.protocol.http.HttpRequestMessage;
 import com.ljm.server.protocol.http.HttpResponseMessage;
 import com.ljm.server.protocol.http.ResponseLine;
@@ -66,8 +67,6 @@ public class HttpStaticResourceEventHandler extends AbstractHttpEventHandler {
                 httpBody = new HttpBody(new FileInputStream(filePath.toFile()));
             } catch (FileNotFoundException e) {
                 return HttpResponseConstants.HTTP_404;
-            } catch (IOException e) {
-                throw new HandlerException(e);
             }
             HttpResponseMessage httpResponseMessage = new HttpResponseMessage(ok, headers,
                     Optional.ofNullable(httpBody));
@@ -83,15 +82,14 @@ public class HttpStaticResourceEventHandler extends AbstractHttpEventHandler {
      * @param headers
      * @throws IOException
      */
-    private void setContentType(Path filePath, HttpMessageHeaders headers) throws IOException {
-        //使用Files.probeContentType在mac上总是返回null
-        //String contentType = Files.probeContentType(filePath);
-        String contentType = MimetypesFileTypeMap.getDefaultFileTypeMap().getContentType(filePath.toString());
-        headers.addHeader(new HttpHeader("Content-Type", contentType));
-        if (contentType.indexOf("text") == -1) {
-            headers.addHeader(new HttpHeader("Content-Length",
-                    String.valueOf(filePath.toFile().length())));
+    private void setContentType(Path filePath, HttpMessageHeaders headers) {
+        String fileName = filePath.toFile().getName();
+        if (fileName.contains(".")) {
+            int idx = fileName.lastIndexOf(".");
+            fileName = fileName.substring(idx);
         }
+        String contentType = ContentTypeUtil.getCotentType(fileName);
+        headers.addHeader(new HttpHeader("Content-Type", contentType));
     }
 
     @Override
