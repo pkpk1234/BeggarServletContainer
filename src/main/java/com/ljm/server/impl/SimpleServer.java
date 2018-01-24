@@ -1,41 +1,47 @@
 package com.ljm.server.impl;
 
+import com.ljm.server.LifeCycle;
 import com.ljm.server.Server;
 import com.ljm.server.ServerStatus;
-import com.ljm.server.config.ServerConfig;
+import com.ljm.server.io.connector.Connector;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Set;
 
 /**
  * @author 李佳明 https://github.com/pkpk1234
  * @date 2018-01-2018/1/4
  */
 public class SimpleServer implements Server {
+    private static final Logger logger = LoggerFactory.getLogger(SimpleServer.class);
+    private volatile ServerStatus serverStatus = ServerStatus.STOPED;
+    private final Set<Connector> connectors;
 
-	private ServerStatus serverStatus = ServerStatus.STOPED;
-	private final int port;
+    public SimpleServer(Set<Connector> connectorList) {
+        this.connectors = connectorList;
+    }
 
-	public SimpleServer(ServerConfig serverConfig) {
-		this.port = serverConfig.getPort();
-	}
+    @Override
+    public void start() {
+        connectors.forEach(LifeCycle::start);
+        this.serverStatus = ServerStatus.STARTED;
+    }
 
-	@Override
-	public void start() {
-		this.serverStatus = ServerStatus.STARTED;
-		System.out.println("Server start");
-	}
+    @Override
+    public void stop() {
+        connectors.forEach(LifeCycle::stop);
+        this.serverStatus = ServerStatus.STOPED;
+        logger.info("Server stop");
+    }
 
-	@Override
-	public void stop() {
-		this.serverStatus = ServerStatus.STOPED;
-		System.out.println("Server stop");
-	}
+    @Override
+    public ServerStatus getStatus() {
+        return serverStatus;
+    }
 
-	@Override
-	public ServerStatus getStatus() {
-		return serverStatus;
-	}
-
-	@Override
-	public int getPort() {
-		return port;
-	}
+    @Override
+    public Set<Connector> getConnectors() {
+        return connectors;
+    }
 }

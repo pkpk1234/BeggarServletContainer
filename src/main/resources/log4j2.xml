@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="error">
+    <Properties>
+        <Property name="fileName">front.log</Property>
+    </Properties>
+    <appenders>
+        <!--控制台-->
+        <Console name="Console" target="SYSTEM_OUT">
+            <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+    </appenders>
+
+    <loggers>
+        <Root level="debug">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </loggers>
+</configuration>

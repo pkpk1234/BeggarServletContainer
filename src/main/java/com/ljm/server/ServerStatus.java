@@ -5,5 +5,8 @@ package com.ljm.server;
  * @date 2018-01-2018/1/5
  */
 public enum ServerStatus {
-    STARTED,STOPED
+    //服务器已经启动
+    STARTED,
+    //服务器已经停止
+    STOPED
 }
