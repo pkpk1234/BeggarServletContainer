@@ -4,8 +4,7 @@ install: true
 addons:
   sonarcloud:
     organization: "pkpk1234-github"
-    token:
-      secure: sonarcloud.token
+    token: sonarcloud.token
 jdk:
   - oraclejdk8
 script:
