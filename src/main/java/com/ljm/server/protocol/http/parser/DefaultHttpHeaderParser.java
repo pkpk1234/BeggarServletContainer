@@ -67,9 +67,13 @@ public class DefaultHttpHeaderParser extends AbstractParser implements HttpHeade
      */
     private void setHasBody(HttpMessageHeaders httpMessageHeaders) {
         if (httpMessageHeaders.hasHeader("Content-Length")
-                || (httpMessageHeaders.getFirstHeader("Transfer-Encoding") != null
-                    && "chunked".equals(httpMessageHeaders.getFirstHeader("Transfer-Encoding").getValue())))
-        {
+                ) {
+            HttpParserContext.setHasBody(true);
+            HttpParserContext.getBodyInfo()
+                    .setContentLength(Integer.valueOf(httpMessageHeaders.getFirstHeader
+                            ("Content-Length").getValue()));
+        } else if ((httpMessageHeaders.hasHeader("Transfer-Encoding")
+                && "chunked".equals(httpMessageHeaders.getFirstHeader("Transfer-Encoding").getValue()))) {
             HttpParserContext.setHasBody(true);
         }
     }
