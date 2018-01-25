@@ -52,6 +52,7 @@ public abstract class AbstractHttpRequestMessageParser extends AbstractParser im
         byte[] bytes = copyRequestBytesBeforeBody(inputStream);
         HttpParserContext.setHttpMessageBytes(bytes);
         HttpParserContext.setBytesLengthBeforeBody(bytes.length);
+        HttpParserContext.setInputStream(inputStream);
     }
 
     /**
@@ -84,6 +85,7 @@ public abstract class AbstractHttpRequestMessageParser extends AbstractParser im
 
     /**
      * 构造body(如果有)之前的字节数组
+     *
      * @param inputStream
      * @return
      * @throws IOException
