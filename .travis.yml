@@ -5,7 +5,7 @@ addons:
   sonarcloud:
     organization: "pkpk1234-github"
     token:
-      secure:
+      secure: sonarcloud.token
 jdk:
   - oraclejdk8
 script:
