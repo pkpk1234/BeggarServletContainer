@@ -19,9 +19,9 @@ public class DefaultHttpBodyParser implements HttpBodyParser {
         try {
             byte[] body = IOUtils.readFully(inputStream, contentLength);
             String contentType = HttpParserContext.getContentType();
-            String encoding = getEncoding(contentType);
+            String charset = getCharset(contentType);
             HttpBody httpBody =
-                    new HttpBody(contentType, encoding, body);
+                    new HttpBody(contentType, charset, body);
             return httpBody;
         } catch (IOException e) {
             throw new ParserException(e);
@@ -35,11 +35,11 @@ public class DefaultHttpBodyParser implements HttpBodyParser {
      * @param contentType
      * @return
      */
-    private String getEncoding(String contentType) {
-        String encoding = "utf-8";
+    private String getCharset(String contentType) {
+        String charset = "utf-8";
         if (StringUtils.isNotBlank(contentType) && contentType.contains(";")) {
-            encoding = contentType.split(";")[1].trim().replace("charset=", "");
+            charset = contentType.split(";")[1].trim().replace("charset=", "");
         }
-        return encoding;
+        return charset;
     }
 }

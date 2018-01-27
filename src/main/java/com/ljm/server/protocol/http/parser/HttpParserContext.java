@@ -64,7 +64,15 @@ public class HttpParserContext {
         HTTP_METHOD.set(method);
     }
 
-    public static String getENCODING() {
+    public static String getCharset() {
+        return BODY_INFO.get().getCharset();
+    }
+
+    public static void setCharset(String charset) {
+        BODY_INFO.get().setCharset(charset);
+    }
+
+    public static String getEncoding() {
         return BODY_INFO.get().getEncoding();
     }
 
