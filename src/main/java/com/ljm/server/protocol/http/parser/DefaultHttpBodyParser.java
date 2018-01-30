@@ -1,10 +1,8 @@
 package com.ljm.server.protocol.http.parser;
 
 import com.ljm.server.protocol.http.body.HttpBody;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -14,18 +12,18 @@ import java.io.InputStream;
 public class DefaultHttpBodyParser implements HttpBodyParser {
     @Override
     public HttpBody parse() {
-        int contentLength = HttpParserContext.getBodyInfo().getContentLength();
+        long contentLength = HttpParserContext.getBodyInfo().getContentLength();
         InputStream inputStream = HttpParserContext.getInputStream();
-        try {
-            byte[] body = IOUtils.readFully(inputStream, contentLength);
-            String contentType = HttpParserContext.getContentType();
-            String charset = getCharset(contentType);
-            HttpBody httpBody =
-                    new HttpBody(contentType, charset, body);
-            return httpBody;
-        } catch (IOException e) {
-            throw new ParserException(e);
-        }
+        String contentType = HttpParserContext.getContentType();
+        String encoding = HttpParserContext.getEncoding();
+        String charset = getCharset(contentType);
+        HttpBody httpBody =
+                new HttpBody();
+        httpBody.setInputStream(inputStream);
+        httpBody.setCharSet(charset);
+        httpBody.setContentLength(contentLength);
+        httpBody.setEncoding(encoding);
+        return httpBody;
     }
 
     /**

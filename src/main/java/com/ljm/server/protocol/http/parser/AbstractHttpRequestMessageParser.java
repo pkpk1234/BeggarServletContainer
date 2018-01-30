@@ -17,7 +17,7 @@ import java.util.Optional;
  * @author 李佳明 https://github.com/pkpk1234
  * @date 2018-01-2018/1/14
  */
-public abstract class AbstractHttpRequestMessageParser extends AbstractParser implements HttpRequestMessageParser {
+public abstract class AbstractHttpRequestMessageParser implements HttpRequestMessageParser {
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractHttpRequestMessageParser.class);
 
     /**

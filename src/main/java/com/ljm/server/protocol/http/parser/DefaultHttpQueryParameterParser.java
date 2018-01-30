@@ -3,11 +3,13 @@ package com.ljm.server.protocol.http.parser;
 import com.ljm.server.protocol.http.HttpQueryParameter;
 import com.ljm.server.protocol.http.HttpQueryParameters;
 
+import static com.ljm.server.protocol.http.HttpConstants.KV_SPLITTER;
+
 /**
  * @author 李佳明 https://github.com/pkpk1234
  * @date 2018-01-2018/1/15
  */
-public class DefaultHttpQueryParameterParser extends AbstractParser implements HttpQueryParameterParser {
+public class DefaultHttpQueryParameterParser implements HttpQueryParameterParser {
     private final HttpQueryParameters httpQueryParameters;
     private static final String SPLITTER = "&";
 

@@ -6,6 +6,7 @@ import com.ljm.server.protocol.http.HttpRequestMessage;
 import com.ljm.server.protocol.http.RequestLine;
 import com.ljm.server.protocol.http.body.HttpBody;
 import com.ljm.server.protocol.http.header.IMessageHeaders;
+import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
@@ -54,7 +55,8 @@ public class TestDefaultHttpRequestMessageParser {
 
         Optional<HttpBody> opBody = requestMessage.getHttpBody();
         assertTrue(opBody.isPresent());
-        byte[] bodyBytes = (byte[]) opBody.get().getContent();
-        assertArrayEquals(BODY.getBytes(), bodyBytes);
+        HttpBody httpBody = opBody.get();
+        byte[] content = IOUtils.readFully(httpBody.getInputStream(), (int) opBody.get().getContentLength());
+        assertArrayEquals(BODY.getBytes(), content);
     }
 }

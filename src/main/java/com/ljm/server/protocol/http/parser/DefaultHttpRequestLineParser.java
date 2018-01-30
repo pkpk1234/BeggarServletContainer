@@ -5,13 +5,14 @@ import com.ljm.server.protocol.http.RequestLine;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 
+import  static com.ljm.server.protocol.http.HttpConstants.*;
 /**
  * @author 李佳明 https://github.com/pkpk1234
  * @date 2018-01-2018/1/14
  * <p>
  * Method SP Request-URI SP HTTP-Version CRLF
  */
-public class DefaultHttpRequestLineParser extends AbstractParser implements HttpRequestLineParser {
+public class DefaultHttpRequestLineParser implements HttpRequestLineParser {
     private static final String SPLITTER = "\\s+";
 
     @Override

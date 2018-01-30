@@ -11,7 +11,7 @@ public class BodyInfo {
     //Content-Encoding:压缩格式，如gzip、deflate等
     private String encoding;
     private boolean hasBody;
-    private int contentLength;
+    private long contentLength;
 
     public BodyInfo() {
     }
@@ -47,11 +47,11 @@ public class BodyInfo {
         this.hasBody = hasBody;
     }
 
-    public int getContentLength() {
+    public long getContentLength() {
         return contentLength;
     }
 
-    public void setContentLength(int contentLength) {
+    public void setContentLength(long contentLength) {
         this.contentLength = contentLength;
     }
 

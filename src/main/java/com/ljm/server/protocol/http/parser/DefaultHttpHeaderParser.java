@@ -6,13 +6,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.UnsupportedEncodingException;
-import java.util.regex.Pattern;
+
+import static com.ljm.server.protocol.http.HttpConstants.*;
 
 /**
  * @author 李佳明 https://github.com/pkpk1234
  * @date 2018-01-2018/1/16
  */
-public class DefaultHttpHeaderParser extends AbstractParser implements HttpHeaderParser {
+public class DefaultHttpHeaderParser implements HttpHeaderParser {
     private static final String SPLITTER = ":";
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultHttpHeaderParser.class);
 
@@ -66,14 +67,21 @@ public class DefaultHttpHeaderParser extends AbstractParser implements HttpHeade
      * 设置报文是否包含Body到上下文中
      */
     private void setHasBody(HttpMessageHeaders httpMessageHeaders) {
-        if (httpMessageHeaders.hasHeader("Content-Length")
+        if (httpMessageHeaders.hasHeader(CONTENT_LENGTH)
                 ) {
             HttpParserContext.setHasBody(true);
-            HttpParserContext.getBodyInfo()
-                    .setContentLength(Integer.valueOf(httpMessageHeaders.getFirstHeader
-                            ("Content-Length").getValue()));
-        } else if ((httpMessageHeaders.hasHeader("Transfer-Encoding")
-                && "chunked".equals(httpMessageHeaders.getFirstHeader("Transfer-Encoding").getValue()))) {
+            if (httpMessageHeaders.hasHeader(CONTENT_LENGTH)) {
+                HttpParserContext.getBodyInfo()
+                        .setContentLength(Integer.valueOf(httpMessageHeaders.getFirstHeader
+                                (CONTENT_LENGTH).getValue()));
+            }
+            if (httpMessageHeaders.hasHeader(CONTENT_ENCODING)) {
+                HttpParserContext.setEncoding(httpMessageHeaders.getFirstHeader
+                        (CONTENT_ENCODING).getValue());
+            }
+
+        } else if ((httpMessageHeaders.hasHeader(TRANSFER_ENCODING)
+                && "chunked".equals(httpMessageHeaders.getFirstHeader(TRANSFER_ENCODING).getValue()))) {
             HttpParserContext.setHasBody(true);
         }
     }

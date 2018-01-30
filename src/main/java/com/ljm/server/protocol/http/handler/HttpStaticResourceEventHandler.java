@@ -64,7 +64,8 @@ public class HttpStaticResourceEventHandler extends AbstractHttpEventHandler {
             HttpBody httpBody = null;
             try {
                 setContentType(filePath, headers);
-                httpBody = new HttpBody(new FileInputStream(filePath.toFile()));
+                httpBody = new HttpBody();
+                httpBody.setInputStream(new FileInputStream(filePath.toFile()));
             } catch (FileNotFoundException e) {
                 return HttpResponseConstants.HTTP_404;
             }
