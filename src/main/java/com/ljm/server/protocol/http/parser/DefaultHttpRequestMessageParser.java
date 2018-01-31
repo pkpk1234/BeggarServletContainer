@@ -8,6 +8,8 @@ import com.ljm.server.protocol.http.header.IMessageHeaders;
 
 import java.util.Optional;
 
+import static com.ljm.server.protocol.http.HttpConstants.CONTENT_TYPE;
+
 /**
  * @author 李佳明 https://github.com/pkpk1234
  * @date 2018-01-2018/1/14
@@ -59,6 +61,10 @@ public class DefaultHttpRequestMessageParser extends AbstractHttpRequestMessageP
         return Optional.empty();
     }
 
+    /**
+     * 判断HTTP请求是否有Body，只支持POST和PUT
+     * @return
+     */
     private boolean isHasBodyMethod() {
         return ("POST".equals(HttpParserContext.getHttpMethod())
                 || "PUT".equals(HttpParserContext.getHttpMethod()))

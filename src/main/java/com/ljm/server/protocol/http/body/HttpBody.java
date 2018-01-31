@@ -1,5 +1,7 @@
 package com.ljm.server.protocol.http.body;
 
+import com.ljm.server.protocol.http.HttpConstants;
+
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 
@@ -8,70 +10,69 @@ import java.io.UnsupportedEncodingException;
  * @date 2018-01-2018/1/13
  */
 public class HttpBody {
-	private String contentType;
-	private String encoding;
-	private byte[] content;
-	private InputStream inputStream;
+    private String contentType;
+    //压缩格式：deflate、gzip...
+    private String encoding;
+    private String transferEncoding;
+    //编码格式：utf-8、gb2312...
+    private String charSet;
+    private HttpBodyInputStream inputStream;
+    //Body段长度
+    private long contentLength;
 
-	public InputStream getInputStream() {
-		return inputStream;
-	}
+    public HttpBody(InputStream inputStream, String transferEncoding) {
+        this.transferEncoding = transferEncoding;
+        if (transferEncoding.equals(HttpConstants.ENCODING_CHUNKED)) {
+            this.inputStream = new HttpBodyInputStream(inputStream, true);
+        } else {
+            this.inputStream = new HttpBodyInputStream(inputStream, false);
+        }
 
-	public void setInputStream(InputStream inputStream) {
-		this.inputStream = inputStream;
-	}
+    }
 
-	public HttpBody(InputStream inputStream) {
+    public String getContentType() {
+        return contentType;
+    }
 
-		this.inputStream = inputStream;
-	}
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
+    }
 
-	public HttpBody(byte[] content) {
-		this.content = content;
-	}
+    public String getEncoding() {
+        return encoding;
+    }
 
-	public HttpBody(String contentType, String encoding, byte[] content) {
-		this.contentType = contentType;
-		this.encoding = encoding;
-		this.content = content;
-	}
+    public void setEncoding(String encoding) {
+        this.encoding = encoding;
+    }
 
-	public void setContentType(String contentType) {
-		this.contentType = contentType;
-	}
+    public String getCharSet() {
+        return charSet;
+    }
 
-	public void setEncoding(String encoding) {
-		this.encoding = encoding;
-	}
+    public void setCharSet(String charSet) {
+        this.charSet = charSet;
+    }
 
-	/**
-	 * 获取HttpBody内容 无法用String表示的内容，比如图片、文件
-	 *
-	 * @return
-	 */
-	public byte[] getContent() {
-		return content;
-	}
+    public InputStream getInputStream() {
+        return inputStream;
+    }
 
-	public void setContent(byte[] content) {
-		this.content = content;
-	}
 
-	public String getContentType() {
-		return this.contentType;
-	}
+    public long getContentLength() {
+        return contentLength;
+    }
 
-	public String getEncoding() {
-		return this.encoding;
-	}
+    public void setContentLength(long contentLength) {
+        this.inputStream.setContentLength(contentLength);
+        this.contentLength = contentLength;
+    }
 
-	/**
-	 * 获取获取HttpBody内容 可以用String表示的内容，比如json字符串
-	 *
-	 * @return
-	 */
-	public String getBodyAsString() throws UnsupportedEncodingException {
-		return new String(this.content, this.encoding);
-	}
+    public String getTransferEncoding() {
+        return transferEncoding;
+    }
 
+    public void setTransferEncoding(String transferEncoding) {
+        this.transferEncoding = transferEncoding;
+    }
 }

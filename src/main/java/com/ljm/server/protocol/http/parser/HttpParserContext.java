@@ -1,5 +1,8 @@
 package com.ljm.server.protocol.http.parser;
 
+import com.ljm.server.protocol.http.HttpConstants;
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.InputStream;
 
 /**
@@ -64,7 +67,15 @@ public class HttpParserContext {
         HTTP_METHOD.set(method);
     }
 
-    public static String getENCODING() {
+    public static String getCharset() {
+        return BODY_INFO.get().getCharset();
+    }
+
+    public static void setCharset(String charset) {
+        BODY_INFO.get().setCharset(charset);
+    }
+
+    public static String getEncoding() {
         return BODY_INFO.get().getEncoding();
     }
 
@@ -86,6 +97,16 @@ public class HttpParserContext {
 
     public static void setBodyInfo(BodyInfo bodyInfo) {
         BODY_INFO.set(bodyInfo);
+    }
+
+    public static void setTransferEncoding(String transferEncoding) {
+        BODY_INFO.get().setTransferEncoding(transferEncoding);
+    }
+
+    public static String getTransferEncoding() {
+        String transferEncoding = BODY_INFO.get().getTransferEncoding();
+        return StringUtils.isBlank(transferEncoding)
+                ? HttpConstants.ENCODING_IDENTITY : transferEncoding;
     }
 
     public static void removeAll() {

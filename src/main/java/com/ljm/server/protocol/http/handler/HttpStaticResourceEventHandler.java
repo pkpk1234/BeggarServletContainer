@@ -2,10 +2,7 @@ package com.ljm.server.protocol.http.handler;
 
 import com.ljm.server.event.handler.HandlerException;
 import com.ljm.server.io.connection.Connection;
-import com.ljm.server.protocol.http.ContentTypeUtil;
-import com.ljm.server.protocol.http.HttpRequestMessage;
-import com.ljm.server.protocol.http.HttpResponseMessage;
-import com.ljm.server.protocol.http.ResponseLine;
+import com.ljm.server.protocol.http.*;
 import com.ljm.server.protocol.http.body.HttpBody;
 import com.ljm.server.protocol.http.header.HttpHeader;
 import com.ljm.server.protocol.http.header.HttpMessageHeaders;
@@ -15,6 +12,7 @@ import com.ljm.server.protocol.http.response.HttpResponseMessageWriter;
 import com.ljm.server.protocol.http.response.ResponseLineConstants;
 
 import javax.activation.MimetypesFileTypeMap;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -64,7 +62,9 @@ public class HttpStaticResourceEventHandler extends AbstractHttpEventHandler {
             HttpBody httpBody = null;
             try {
                 setContentType(filePath, headers);
-                httpBody = new HttpBody(new FileInputStream(filePath.toFile()));
+                File file = filePath.toFile();
+                httpBody = new HttpBody(new FileInputStream(file), HttpConstants.ENCODING_IDENTITY);
+                httpBody.setContentLength(file.length());
             } catch (FileNotFoundException e) {
                 return HttpResponseConstants.HTTP_404;
             }
