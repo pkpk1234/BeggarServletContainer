@@ -1,5 +1,7 @@
 package com.ljm.server.protocol.http.body;
 
+import com.ljm.server.protocol.http.HttpConstants;
+
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 
@@ -9,13 +11,23 @@ import java.io.UnsupportedEncodingException;
  */
 public class HttpBody {
     private String contentType;
-    //压缩格式：deflate、gzip...
+    //压缩格式：chunked、deflate、gzip...
     private String encoding;
     //编码格式：utf-8、gb2312...
     private String charSet;
-    private InputStream inputStream;
+    private HttpBodyInputStream inputStream;
     //Body段长度
     private long contentLength;
+
+    public HttpBody(InputStream inputStream, String encoding) {
+        this.encoding = encoding;
+        if (encoding.equals(HttpConstants.ENCODING_CHUNKED)) {
+            this.inputStream = new HttpBodyInputStream(inputStream, true);
+        } else {
+            this.inputStream = new HttpBodyInputStream(inputStream, false);
+        }
+
+    }
 
     public String getContentType() {
         return contentType;
@@ -45,15 +57,13 @@ public class HttpBody {
         return inputStream;
     }
 
-    public void setInputStream(InputStream inputStream) {
-        this.inputStream = inputStream;
-    }
 
     public long getContentLength() {
         return contentLength;
     }
 
     public void setContentLength(long contentLength) {
+        this.inputStream.setContentLength(contentLength);
         this.contentLength = contentLength;
     }
 }
