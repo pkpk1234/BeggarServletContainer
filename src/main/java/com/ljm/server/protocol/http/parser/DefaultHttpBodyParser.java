@@ -17,9 +17,11 @@ public class DefaultHttpBodyParser implements HttpBodyParser {
         String contentType = HttpParserContext.getContentType();
         String encoding = HttpParserContext.getEncoding();
         String charset = getCharset(contentType);
+        String transferEncoding = HttpParserContext.getTransferEncoding();
         HttpBody httpBody =
-                new HttpBody(inputStream,encoding);
+                new HttpBody(inputStream, transferEncoding);
         httpBody.setCharSet(charset);
+        httpBody.setEncoding(encoding);
         httpBody.setContentLength(contentLength);
         return httpBody;
     }

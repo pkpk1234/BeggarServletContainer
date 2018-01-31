@@ -12,6 +12,7 @@ public class BodyInfo {
     private String encoding;
     private boolean hasBody;
     private long contentLength;
+    private String transferEncoding;
 
     public BodyInfo() {
     }
@@ -61,5 +62,13 @@ public class BodyInfo {
 
     public void setEncoding(String encoding) {
         this.encoding = encoding;
+    }
+
+    public String getTransferEncoding() {
+        return transferEncoding;
+    }
+
+    public void setTransferEncoding(String transferEncoding) {
+        this.transferEncoding = transferEncoding;
     }
 }

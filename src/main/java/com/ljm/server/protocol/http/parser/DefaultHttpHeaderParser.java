@@ -1,5 +1,6 @@
 package com.ljm.server.protocol.http.parser;
 
+import com.ljm.server.protocol.http.HttpConstants;
 import com.ljm.server.protocol.http.header.HttpHeader;
 import com.ljm.server.protocol.http.header.HttpMessageHeaders;
 import org.slf4j.Logger;
@@ -81,8 +82,12 @@ public class DefaultHttpHeaderParser implements HttpHeaderParser {
             }
 
         } else if ((httpMessageHeaders.hasHeader(TRANSFER_ENCODING)
-                && "chunked".equals(httpMessageHeaders.getFirstHeader(TRANSFER_ENCODING).getValue()))) {
+                && HttpConstants.ENCODING_CHUNKED.equals(httpMessageHeaders.getFirstHeader(TRANSFER_ENCODING).getValue()))) {
             HttpParserContext.setHasBody(true);
+            if (httpMessageHeaders.hasHeader(TRANSFER_ENCODING)) {
+                HttpParserContext.setTransferEncoding(httpMessageHeaders.getFirstHeader
+                        (TRANSFER_ENCODING).getValue());
+            }
         }
     }
 }

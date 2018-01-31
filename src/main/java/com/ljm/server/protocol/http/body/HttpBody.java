@@ -11,17 +11,18 @@ import java.io.UnsupportedEncodingException;
  */
 public class HttpBody {
     private String contentType;
-    //压缩格式：chunked、deflate、gzip...
+    //压缩格式：deflate、gzip...
     private String encoding;
+    private String transferEncoding;
     //编码格式：utf-8、gb2312...
     private String charSet;
     private HttpBodyInputStream inputStream;
     //Body段长度
     private long contentLength;
 
-    public HttpBody(InputStream inputStream, String encoding) {
-        this.encoding = encoding;
-        if (encoding.equals(HttpConstants.ENCODING_CHUNKED)) {
+    public HttpBody(InputStream inputStream, String transferEncoding) {
+        this.transferEncoding = transferEncoding;
+        if (transferEncoding.equals(HttpConstants.ENCODING_CHUNKED)) {
             this.inputStream = new HttpBodyInputStream(inputStream, true);
         } else {
             this.inputStream = new HttpBodyInputStream(inputStream, false);
@@ -65,5 +66,13 @@ public class HttpBody {
     public void setContentLength(long contentLength) {
         this.inputStream.setContentLength(contentLength);
         this.contentLength = contentLength;
+    }
+
+    public String getTransferEncoding() {
+        return transferEncoding;
+    }
+
+    public void setTransferEncoding(String transferEncoding) {
+        this.transferEncoding = transferEncoding;
     }
 }
